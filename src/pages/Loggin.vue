@@ -35,13 +35,9 @@
       <button type="submit" class="form-button" @click="login" >
         Iniciar sesión
       </button>
-      <div v-if="modalVisible" class="modal">
-        <div class="modal-content">
-          <h2>Contenido del Modal</h2>
-          <p>Correcto inicio de Sesion</p>
-          <button @click="hideModal">Cerrar Modal</button>
-        </div>
-      </div>
+      <button type="submit" class="form-button" @click="hideModal" >
+        Mostrar Modal
+      </button>
     </form>
   </div>
 </template>
@@ -57,7 +53,7 @@ export default {
       message: "",
       selected: null,
       comboEmisor: "",
-      modalVisible: false,
+
     };
   },
   mounted() {
@@ -94,18 +90,13 @@ export default {
       const { data } = await axios.get(url);
       console.log(data);
       this.comboEmisor = data;
-    },
-    showModal() {
-      this.modalVisible = true;
-    },
-    hideModal() {
-      this.modalVisible = false;
-    },
+    }
   },
 };
 </script>
 
 <style>
+
 .container {
   display: flex;
   justify-content: center;

@@ -41,6 +41,14 @@
       <button type="submit" class="form-button" @click="login">
         Iniciar sesión
       </button>
+      <button @click="showModal">Abrir Modal</button>
+      <div v-if="modalVisible" class="modal">
+        <div class="modal-content">
+          <h2>Contenido del Modal</h2>
+          <p>Correcto inicio de Sesion</p>
+          <button @click="hideModal">Cerrar Modal</button>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -55,7 +63,8 @@ export default {
       emisor: "",
       message: "",
       selected: null,
-      comboEmisor: ""
+      comboEmisor: "",
+      modalVisible: false,
     };
   },
   mounted() {
@@ -63,8 +72,14 @@ export default {
     this.getComboEmisores();
   },
   methods: {
-
+    showModal() {
+      this.modalVisible = true;
+    },
+    hideModal() {
+      this.modalVisible = false;
+    },
     async login() {
+      this.showModal();
       this.message = "";
       let formData = {
         nombreUsuario: this.username,
@@ -97,6 +112,26 @@ export default {
 </script>
 
 <style>
+.modal{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 4px;
+  z-index: 999;
+}
+
+.modal-overaly{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 998;
+}
 .container {
   display: flex;
   justify-content: center;
