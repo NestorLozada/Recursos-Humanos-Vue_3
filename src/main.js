@@ -30,7 +30,7 @@ const router = new VueRouter({
 
 /* eslint-disable no-new */
 new Vue({
-  el: "@vue/app",
+  el: "#app",
   render: (h) => h(App),
   router,
 });
