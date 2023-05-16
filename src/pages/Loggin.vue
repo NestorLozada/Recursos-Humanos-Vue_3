@@ -52,7 +52,6 @@ export default {
       comboEmisor: ""
     };
   },
-  computed() {},
   mounted() {
     this.message = "";
     this.getComboEmisores();
@@ -65,7 +64,7 @@ export default {
         passwordUsuario: this.password,
         codigoEmisor: this.emisor,
       };
-      let url = "http://localhost:8000/api/login/";
+      let url = `${process.env.apiWebsite}/api/login/`;
       const { data } = await axios({
         method: "post",
         url: url,
@@ -73,14 +72,18 @@ export default {
       });
       console.log(data);
       this.getComboEmisores();
-      if(data.success == 1){
-        this.message = data.message;
-        this.$router.push({ path: "cenCosto" });
-      }
+      let token = data.access_token;
+      // if(token){
+           localStorage.token = token;
+      //   this.$router.push("/home");
+      // }else{
+      //   this.$router.push('/').catch(()=>{})
+      // }
     },
     async getComboEmisores() {
-      let url = "http://localhost:8000/api/getEmisor/";
+      let url = `${process.env.apiWebsite}/api/getEmisor/`;
       const { data } = await axios.get(url);
+      console.log(data);
       this.comboEmisor = data;
     },
   },

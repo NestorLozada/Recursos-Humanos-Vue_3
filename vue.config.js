@@ -18,6 +18,12 @@ module.exports = {
     plugins: [
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 6
+      }),
+      new webpack.DefinePlugin({
+        // allow access to process.env from within the vue app
+        'process.env': {
+          apiWebsite: JSON.stringify(process.env[`PRODUCTION_API_WEBSITE`]),
+        }
       })
     ]
   },

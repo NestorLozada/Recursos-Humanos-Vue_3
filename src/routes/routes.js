@@ -3,7 +3,7 @@ import DashboardLayout from '../layout/DashboardLayout.vue'
 import NotFound from '../pages/NotFoundPage.vue'
 
 // Admin pages
-import Overview from 'src/pages/Loggin.vue'
+import Overview from 'src/pages/Overview.vue'
 import UserProfile from 'src/pages/CentroCostosCRUD.vue'
 import TableList from 'src/pages/LogginAuth.vue'
 import Typography from 'src/pages/Typography.vue'
@@ -15,18 +15,11 @@ import Log from 'src/pages/Log.vue'
 const routes = [
   {
     path: '/',
-    component: DashboardLayout,
-    redirect: '/admin/overview'
-  },
-  {
-    path: '/log',
     component: Log,
-    redirect: 'admin/log'
-
   },
   {
     path: '/admin',
-    component: Log,
+    component: DashboardLayout,
     redirect: '/admin/overview',
     children: [
       {

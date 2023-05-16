@@ -80,7 +80,7 @@ export default {
   methods: {
     async obtenerCosto() {
       this.message = "";
-      let url = "http://localhost:8000/api/getCentrosCostos/";
+      let url = `${process.env.apiWebsite}/api/getCentrosCostos/`;
       const { data } = await axios.get(url);
       this.costos = data;
     },
@@ -93,7 +93,7 @@ export default {
       let formData = {
           descripcioncentrocostos: this.search,
         };
-        let url = "http://localhost:8000/api/searchCentrosCostos/";
+        let url = `${process.env.apiWebsite}/api/searchCentrosCostos/`;
         const { data } = await axios({
           method: "post",
           url: url,
@@ -116,7 +116,7 @@ export default {
           descripcioncentrocostos: costoEditado,
         };
         console.log(formData)
-        let url = "http://localhost:8000/api/updateCentrosCostos/";
+        let url = `${process.env.apiWebsite}/api/updateCentrosCostos/`;
         const { data } = await axios({
           method: "post",
           url: url,
@@ -135,7 +135,7 @@ export default {
           codigocentrocostos: costosArr[index].Codigo,
           descripcioncentrocostos: costosArr[index].NombreCentroCostos,
         };
-        let url = "http://localhost:8000/api/deleteCentrosCostos/";
+        let url = `${process.env.apiWebsite}/api/deleteCentrosCostos/`;
         const { data } = await axios({
           method: "post",
           url: url,
