@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div class="container">
     <form class="form" @submit.prevent="handleSubmit">
       <h2 class="form-title">Iniciar sesión (autorizador)</h2>
@@ -133,4 +133,3 @@ export default {
   background-color: #444;
 }
 </style>
- -->

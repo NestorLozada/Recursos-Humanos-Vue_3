@@ -2,31 +2,6 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12">
-          <card class="strpied-tabled-with-hover"
-                body-classes="table-full-width table-responsive"
-          >
-            <template slot="header">
-              <h4 class="card-title">Striped Table with Hover</h4>
-              <p class="card-category">Here is a subtitle for this table</p>
-            </template>
-            <l-table class="table-hover table-striped"
-                     :columns="columns"
-                     :data="costos">
-            </l-table>
-          </card>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<!-- <template>
-  <div>
-    <h1>Lista de costos</h1>
-    <hr />
-    <div class="row">
       <div class="column" style="margin-right: 500px">
         <button class="form-button" @click="showModal">Nuevo</button>
         <InsertCC v-show="isModalVisible" @close="closeModal" />
@@ -42,73 +17,86 @@
         </div>
       </div>
     </div>
-
-    <hr />
-    <table v-if="search == ''" class="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Editar</th>
-          <th>Eliminar</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(costo, index) in costos" :key="index">
-          <td>{{ costo.Codigo }}</td>
-          <td>{{ costo.NombreCentroCostos }}</td>
-          <td><button @click="editarCosto(1, index)">Editar</button></td>
-          <td><button @click="eliminarCosto(1, index)">Eliminar</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <table v-if="search != ''" class="table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Editar</th>
-          <th>Eliminar</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(costo, index) in costosSearch" :key="index">
-          <td>{{ costo.Codigo }}</td>
-          <td>{{ costo.NombreCentroCostos }}</td>
-          <td><button @click="editarCosto(2, index)">Editar</button></td>
-          <td><button @click="eliminarCosto(2, index)">Eliminar</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="table">
-    <thead>
-      <slot name="columns">
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Editar</th>
-          <th>Eliminar</th>
-        </tr>
-      </slot>
-    </thead>
-    <tbody>
-    <tr v-for="(item, index) in data" :key="index">
-      <slot :row="item">
-        <td v-for="column in columns" :key="column" v-if="hasValue(item, column)">{{itemValue(item, column)}}</td>
-      </slot>
-    </tr>
-    </tbody>
-  </table>
+      <div class="row">
+        <div class="col-12">
+          <card
+            class="strpied-tabled-with-hover"
+            body-classes="table-full-width table-responsive"
+          >
+            <template slot="header">
+              <h4 class="card-title">Centros de Costo</h4>
+              <p class="card-category">Tabla</p>
+            </template>
+            <table v-if="search == ''" class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Editar</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(costo, index) in costos" :key="index">
+                  <td>{{ costo.Codigo }}</td>
+                  <td>{{ costo.NombreCentroCostos }}</td>
+                  <td>
+                    <button class="form-button" @click="editarCosto(1, index)">
+                      Editar
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class="form-button"
+                      @click="eliminarCosto(1, index)"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table v-if="search != ''" class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Editar</th>
+                  <th>Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(costo, index) in costosSearch" :key="index">
+                  <td>{{ costo.Codigo }}</td>
+                  <td>{{ costo.NombreCentroCostos }}</td>
+                  <td>
+                    <button class="form-button" @click="editarCosto(2, index)">
+                      Editar
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class="form-button"
+                      @click="eliminarCosto(2, index)"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </card>
+        </div>
+      </div>
+    </div>
   </div>
-
-  
 </template>
- -->
 <script>
 import axios from "axios";
 import LTable from "src/components/Table.vue";
 import Card from "src/components/Cards/Card.vue";
 import InsertCC from "./InsertCC.vue";
+
 export default {
   components: {
     LTable,
@@ -123,27 +111,22 @@ export default {
       search: "",
       costosSearch: "",
       isModalVisible: false,
-      columns: ['Codigo','NombreCentroCostos','Mensaje'],
     };
   },
   mounted() {
     this.message = "";
     (this.ncodigo = ""), (this.nnombre = ""), this.obtenerCosto();
   },
-  created(){
+  created() {
     this.obtenerCosto();
   },
   methods: {
-
     async obtenerCosto() {
       this.message = "";
       let url = `${process.env.apiWebsite}/api/getCentrosCostos/`;
       const { data } = await axios.get(url);
-      console.log(data);
       this.costos = data;
     },
-
-
 
     showModal() {
       this.isModalVisible = true;
@@ -220,7 +203,6 @@ export default {
   border-radius: 5px;
   border: none;
   background-color: #333;
-  color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }

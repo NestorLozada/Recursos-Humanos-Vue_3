@@ -77,7 +77,6 @@ export default {
         url: url,
         data: formData,
       });
-      console.log(data);
       this.getComboEmisores();
       let token = data.access_token;
       if(token){

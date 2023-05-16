@@ -19,7 +19,7 @@
           
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" @click="logout" class="nav-link">
               Log out
             </a>
           </li>
@@ -40,6 +40,9 @@
       }
     },
     methods: {
+      logout(){
+        localStorage.token = '';
+      },
       capitalizeFirstLetter (string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
       },
