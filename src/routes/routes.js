@@ -11,7 +11,7 @@ import Icons from 'src/pages/Icons.vue'
 import Maps from 'src/pages/ListaPlantillaCRUD.vue'
 import Notifications from 'src/pages/Notifications.vue'
 import Upgrade from 'src/pages/InsertCC.vue'
-
+import Log from 'src/pages/Log.vue'
 const routes = [
   {
     path: '/',
@@ -19,8 +19,14 @@ const routes = [
     redirect: '/admin/overview'
   },
   {
+    path: '/log',
+    component: Log,
+    redirect: 'admin/log'
+
+  },
+  {
     path: '/admin',
-    component: DashboardLayout,
+    component: Log,
     redirect: '/admin/overview',
     children: [
       {
