@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Lista de costos</h1>
+    <h1>Lista de plantilla  </h1>
     <hr />
     <div class="row">
       <div class="column" style="margin-right: 500px;">
@@ -22,10 +22,11 @@
     <table v-if="search == ''" class="table">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Editar</th>
-          <th>Eliminar</th>
+          <th>CODIGO</th>
+          <th>DESCRIPCION</th>
+          <th>TIPO</th>
+          <th>AFECTA IESS</th>
+          <th>AFECTA IR</th>
         </tr>
       </thead>
       <tbody>
