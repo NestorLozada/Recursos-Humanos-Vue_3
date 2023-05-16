@@ -32,9 +32,16 @@
           <option v-for="(item, index) in comboEmisor" :key="item.Codigo" :value=item.Codigo>{{index + 1}}. {{ item.NombreEmisor }}</option>
         </select>
       </div>
-      <button type="submit" class="form-button" @click="login">
+      <button type="submit" class="form-button" @click="login" >
         Iniciar sesión
       </button>
+      <div v-if="modalVisible" class="modal">
+        <div class="modal-content">
+          <h2>Contenido del Modal</h2>
+          <p>Correcto inicio de Sesion</p>
+          <button @click="hideModal">Cerrar Modal</button>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -49,7 +56,8 @@ export default {
       emisor: "",
       message: "",
       selected: null,
-      comboEmisor: ""
+      comboEmisor: "",
+      modalVisible: false,
     };
   },
   mounted() {
@@ -58,6 +66,7 @@ export default {
   },
   methods: {
     async login() {
+      this.showModal();
       this.message = "";
       let formData = {
         nombreUsuario: this.username,
@@ -85,6 +94,12 @@ export default {
       const { data } = await axios.get(url);
       console.log(data);
       this.comboEmisor = data;
+    },
+    showModal() {
+      this.modalVisible = true;
+    },
+    hideModal() {
+      this.modalVisible = false;
     },
   },
 };
