@@ -41,10 +41,11 @@
     <table v-if="search != ''" class="table">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Editar</th>
-          <th>Eliminar</th>
+          <th>CODIGO</th>
+          <th>DESCRIPCION</th>
+          <th>TIPO</th>
+          <th>AFECTA_IESS</th>
+          <th>AFECTA_IR</th>
         </tr>
       </thead>
       <tbody>
@@ -57,7 +58,6 @@
       </tbody>
     </table>
   </div>
-  <hr />
 </template>
 
 <script>
