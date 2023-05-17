@@ -63,10 +63,21 @@
                   <td>
                     <button
                       class="form-button"
-                      @click="eliminarCosto(1, index)"
+                      @click="ShowModalEliminar()"
                     >
+                   
                       Eliminar
                     </button>
+                    <div v-if="isMEliminarVisible" class="modal1">
+                      <div class="modal-content1">
+                        <h4>Esta seguro de eliminar?</h4>
+                       
+                          <div class="btnMdiv">
+                            <button class="btnModel" @click="eliminarCosto(1, index)">Si</button>
+                            <button class="btnModel" @click="closeModal()">No</button>
+                          </div>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -126,6 +137,7 @@ export default {
       search: "",
       costosSearch: "",
       isModalVisible: false,
+      isMEliminarVisible: false,
      
     };
   },
@@ -147,8 +159,12 @@ export default {
     showModal() {
       this.isModalVisible = true;
     },
+    ShowModalEliminar(){
+      this.isMEliminarVisible=true;
+    },
     closeModal() {
       this.isModalVisible = false;
+      this.isMEliminarVisible=false;
     },
     
     async buscarCCostos() {
@@ -248,31 +264,33 @@ td {
   padding-right: 30px;
 }
 
-.modal {
+.modal1 {
   position: fixed;
   top: 0;
   left: 0;
-  width: 50%;
-  height: 50%;
+  margin: 10% 30% 50% 50%;
+  background-color: #444;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
 }
 
-.modal-content {
+.modal-content1 {
   background-color: #fff;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 20px;
   text-align: center;
 }
 
-.modal-content h3 {
+.modal-content1 h3 {
   margin-top: 0;
 }
 
-.modal-content button {
-  display: flex;
+.modal-content1 button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   background-color: #333;
@@ -283,9 +301,13 @@ td {
 .btnMdiv{
   display: flex;
   margin:5%;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.modal-content button:hover {
+.modal-content1 button:hover {
   background-color: #444;
 }
 </style>
