@@ -90,8 +90,14 @@ export default {
       });
       this.getComboEmisores();
       let token = data.access_token;
+      let user = data.user;
+      let date = data.date;
+      let company = data.company;
       if(token){
         localStorage.token = token;
+        localStorage.user = user;
+        localStorage.date = date;
+        localStorage.company = company;
         this.$router.push("/admin/overview");
       }else{
         this.$router.push('/').catch(()=>{})
