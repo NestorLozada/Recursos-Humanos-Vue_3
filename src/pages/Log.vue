@@ -41,15 +41,14 @@
       <button type="submit" class="form-button" @click="login">
         Iniciar sesión
       </button>
-      <button @click="showModal">Abrir Modal</button>
-      <div v-if="modalVisible" class="modal">
-        <div class="modal-content">
-          <h2>Contenido del Modal</h2>
-          <p>Correcto inicio de Sesion</p>
-          <button @click="hideModal">Cerrar Modal</button>
-        </div>
-      </div>
     </form>
+    <div class="modal" v-if="modalVisible">
+      <div class="modal-content">
+        <h3>Bienvenido</h3>
+        <p>¡Has iniciado sesión correctamente!</p>
+        <button @click="hideModal">Cerrar</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -72,11 +71,8 @@ export default {
     this.getComboEmisores();
   },
   methods: {
-    showModal() {
-      this.modalVisible = true;
-    },
-    hideModal() {
-      this.modalVisible = false;
+    async handleSubmit() {
+      this.login();
     },
     async login() {
       this.showModal();
@@ -107,31 +103,18 @@ export default {
       const { data } = await axios.get(url);
       this.comboEmisor = data;
     },
+
+    showModal() {
+      this.modalVisible = true;
+    },
+    hideModal() {
+      this.modalVisible = false;
+    },
   },
 };
 </script>
 
 <style>
-.modal{
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,50%);
-  background-color: white;
-  padding: 20px;
-  border-radius: 4px;
-  z-index: 999;
-}
-
-.modal-overaly{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.5);
-  z-index: 998;
-}
 .container {
   display: flex;
   justify-content: center;
@@ -181,6 +164,46 @@ export default {
 }
 
 .form-button:hover {
+  background-color: #444;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+}
+
+.modal-content button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
   background-color: #444;
 }
 </style>
