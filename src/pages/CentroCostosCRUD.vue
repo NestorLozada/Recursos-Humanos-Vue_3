@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row">
       <div class="column" style="margin-right: 500px">
-        <button class="form-button" @click="showModal">Nuevo</button>
+        <button class="form-button" @click="showModal()">Nuevo</button>
         <InsertCC v-show="isModalVisible" @close="closeModal" />
       </div>
       <div class="column">
@@ -41,10 +41,25 @@
                   <td>{{ costo.Codigo }}</td>
                   <td>{{ costo.NombreCentroCostos }}</td>
                   <td>
-                    <button class="form-button" @click="editarCosto(1, index)">
+                    <button class="form-button" @click="showModal()">
                       Editar
                     </button>
                   </td>
+                      <div v-if="isModalVisible" class="modal">
+                      <div class="modal-content">
+                        <h2>Editar costo</h2>
+                        <input
+                            type="number"
+                            id="NombreCentroCostos"
+                          />
+                        <button @click="closeModal()">Cerrar Modal</button>
+                        <button  @click="editarCosto(2, index)">
+                          Editar
+                        </button>
+                      </div>
+                    </div>
+
+                    <div v-if="modalVisible" class="modal-overlay" @click="closeModal()"></div>
                   <td>
                     <button
                       class="form-button"
@@ -111,6 +126,7 @@ export default {
       search: "",
       costosSearch: "",
       isModalVisible: false,
+     
     };
   },
   mounted() {
@@ -134,6 +150,7 @@ export default {
     closeModal() {
       this.isModalVisible = false;
     },
+    
     async buscarCCostos() {
       let formData = {
         descripcioncentrocostos: this.search,
@@ -149,6 +166,7 @@ export default {
     },
 
     async editarCosto(func, index) {
+      
       let costosArr = func == 1 ? this.costos : this.costosSearch;
       const costoEditado = prompt(
         "Editar costo",
@@ -228,5 +246,45 @@ td {
 .main-panel {
   padding-left: 30px;
   padding-right: 30px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+}
+
+.modal-content button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #444;
 }
 </style>
