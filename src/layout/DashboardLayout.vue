@@ -149,7 +149,40 @@
       },
       OpenLoginModal(){
         this.CostoLoginModal = true;
+      },
+      async CentroCostos() {
+      this.message = "";
+      let formData = {
+        nombreUsuario: this.username,
+        passwordUsuario: this.password,
+        codigoEmisor: this.emisor,
+      };
+      let url = `${process.env.apiWebsite}/api/login/`;
+      const { data } = await axios({
+        method: "post",
+        url: url,
+        data: formData,
+      });
+      console.log(data.success)
+      this.getComboEmisores();
+      if(data.success == 1){
+        let token = data.access_token;
+        this.user = data.user;
+        this.date = data.date;
+        this.company = data.company;
+        if(token){
+          localStorage.token = token;
+          localStorage.user = this.user;
+          localStorage.date = this.date;
+          localStorage.company = this.company;
+        }else{
+          this.$router.push('/').catch(()=>{})
+        }
+      }else{
+        this.showAlert(data.message)
       }
+      
+    },
     }
   }
 
