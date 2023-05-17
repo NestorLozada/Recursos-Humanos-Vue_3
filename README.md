@@ -42,4 +42,4 @@ The repo uses [vue-cli](https://github.com/vuejs/vue-cli) scaffolding which take
 ## In case of not running because of digital envelope routines 
 
 Run this code in the terminal `$env:NODE_OPTIONS = "--openssl-legacy-provider"`
-
+Dont forget that you have to be in the project folder
