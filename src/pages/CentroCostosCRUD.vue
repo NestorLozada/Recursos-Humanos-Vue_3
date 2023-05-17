@@ -2,21 +2,20 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-      <div class="column" style="margin-right: 500px">
-        <button class="form-button" @click="showModal">Nuevo</button>
-        <InsertCC v-show="isModalVisible" @close="closeModal" />
-      </div>
-      <div class="column">
-        <div class="row">
-          <div class="column">
-            <input v-model="search" placeholder="Search" />
-          </div>
-          <div class="column">
-            <button class="form-button" @click="buscarCCostos">Buscar</button>
+        <div class="column" style="margin-right: 500px">
+          <button class="form-button">Nuevo</button>
+        </div>
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <input v-model="search" placeholder="Search" />
+            </div>
+            <div class="column">
+              <button class="form-button" @click="buscarCCostos">Buscar</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
       <div class="row">
         <div class="col-12">
           <card
@@ -45,37 +44,45 @@
                       Editar
                     </button>
                   </td>
-                      <div v-if="isModalVisible" class="modal">
-                      <div class="modal-content">
-                        <h2>Editar costo</h2>
-                        <input
-                            type="number"
-                            id="NombreCentroCostos"
-                          />
-                          <div class="btnMdiv">
-                            <button class="btnModel" @click="editarCosto(2, index)">Editar</button>
-                            <button class="btnModel" @click="closeModal()">Cancelar</button>
-                          </div>
+                  <div v-if="isModalVisible" class="modal">
+                    <div class="modal-content">
+                      <h2>Editar costo</h2>
+                      <input type="number" id="NombreCentroCostos" :value="costos[index]" />{{ costos[index] }} {{ index }}
+                      <div class="btnMdiv">
+                        <button class="btnModel" @click="editarCosto(2, index)">
+                          Editar
+                        </button>
+                        <button class="btnModel" @click="closeModal()">
+                          Cancelar
+                        </button>
                       </div>
                     </div>
+                  </div>
 
-                    <div v-if="modalVisible" class="modal-overlay" @click="closeModal()"></div>
+                  <div
+                    v-if="isModalVisible"
+                    class="modal-overlay"
+                    @click="closeModal()"
+                  ></div>
                   <td>
-                    <button
-                      class="form-button"
-                      @click="ShowModalEliminar()"
-                    >
-                   
+                    <button class="form-button" @click="ShowModalEliminar()">
                       Eliminar
                     </button>
                     <div v-if="isMEliminarVisible" class="modal1">
                       <div class="modal-content1">
                         <h4>Esta seguro de eliminar?</h4>
-                       
-                          <div class="btnMdiv">
-                            <button class="btnModel" @click="eliminarCosto(1, index)">Si</button>
-                            <button class="btnModel" @click="closeModal()">No</button>
-                          </div>
+
+                        <div class="btnMdiv">
+                          <button
+                            class="btnModel"
+                            @click="eliminarCosto(1, index)"
+                          >
+                            Si
+                          </button>
+                          <button class="btnModel" @click="closeModal()">
+                            No
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </td>
@@ -138,7 +145,6 @@ export default {
       costosSearch: "",
       isModalVisible: false,
       isMEliminarVisible: false,
-     
     };
   },
   mounted() {
@@ -159,14 +165,14 @@ export default {
     showModal() {
       this.isModalVisible = true;
     },
-    ShowModalEliminar(){
-      this.isMEliminarVisible=true;
+    ShowModalEliminar() {
+      this.isMEliminarVisible = true;
     },
     closeModal() {
       this.isModalVisible = false;
-      this.isMEliminarVisible=false;
+      this.isMEliminarVisible = false;
     },
-    
+
     async buscarCCostos() {
       let formData = {
         descripcioncentrocostos: this.search,
@@ -182,7 +188,6 @@ export default {
     },
 
     async editarCosto(func, index) {
-      
       let costosArr = func == 1 ? this.costos : this.costosSearch;
       const costoEditado = prompt(
         "Editar costo",
@@ -298,9 +303,9 @@ td {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-.btnMdiv{
+.btnMdiv {
   display: flex;
-  margin:5%;
+  margin: 5%;
   transition: background-color 0.3s ease;
   display: flex;
   justify-content: center;
