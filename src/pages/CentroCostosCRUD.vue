@@ -4,7 +4,6 @@
       <div class="row">
       <div class="column" style="margin-right: 500px">
         <button class="form-button" @click="showModal">Nuevo</button>
-        <InsertCC v-show="isModalVisible" @close="closeModal" />
       </div>
       <div class="column">
         <div class="row">

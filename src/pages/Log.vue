@@ -38,7 +38,7 @@
           </option>
         </select>
       </div>
-      <button type="submit" class="form-button" @click="login">
+      <button type="submit" class="form-button">
         Iniciar sesión
       </button>
     </form>
@@ -78,7 +78,6 @@ export default {
       this.login();
     },
     async login() {
-      this.showModal();
       this.message = "";
       let formData = {
         nombreUsuario: this.username,
@@ -91,20 +90,27 @@ export default {
         url: url,
         data: formData,
       });
+      console.log(data.success)
       this.getComboEmisores();
-      let token = data.access_token;
-      this.user = data.user;
-      this.date = data.date;
-      this.company = data.company;
-      if(token){
-        localStorage.token = token;
-        localStorage.user =this.user;
-        localStorage.date =this.date;
-        localStorage.company =this.company;
-        this.$router.push("/admin/overview");
+      if(data.success == 1){
+        let token = data.access_token;
+        this.user = data.user;
+        this.date = data.date;
+        this.company = data.company;
+        if(token){
+          localStorage.token = token;
+          localStorage.user =this.user;
+          localStorage.date =this.date;
+          localStorage.company =this.company;
+          this.$router.push("/admin/overview");
+          this.showModal();
+        }else{
+          this.$router.push('/').catch(()=>{})
+        }
       }else{
-        this.$router.push('/').catch(()=>{})
+        this.showAlert(data.message)
       }
+      
     },
 
     async getComboEmisores() {
@@ -112,7 +118,10 @@ export default {
       const { data } = await axios.get(url);
       this.comboEmisor = data;
     },
-
+    showAlert(message) {
+      // Use sweetalert2
+      this.$swal(message);
+    },
     showModal() {
       this.modalVisible = true;
     },

@@ -5,6 +5,9 @@ import App from "./App.vue";
 // LightBootstrap plugin
 import LightBootstrap from "./light-bootstrap-main";
 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 import dotenv from 'dotenv';
 dotenv.config()
 // router setup
@@ -13,6 +16,7 @@ import routes from "./routes/routes";
 import "./registerServiceWorker";
 // plugin setup
 Vue.use(VueRouter);
+Vue.use(VueSweetalert2);
 Vue.use(LightBootstrap);
 
 // configure router

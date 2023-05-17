@@ -1,110 +1,151 @@
 <template>
-  <div>
-    <h1>Lista de plantilla  </h1>
-    <hr />
-    <div class="row">
-      <div class="column" style="margin-right: 500px;">
-        <button class="form-button" @click="inserView">Nuevo</button>
-      </div>
-      <div class="column">
-        <div class="row">
-          <div class="column">
-            <input v-model="search" placeholder="Search" />
-          </div>
-          <div class="column">
-            <button class="form-button" @click="buscarCCostos">Buscar</button>
+  <div class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="column" style="margin-right: 500px">
+          <button class="form-button">Nuevo</button>
+          <!-- <InsertCC v-show="isModalVisible" @close="closeModal" /> -->
+        </div>
+        <div class="column">
+          <div class="row">
+            <div class="column">
+              <input v-model="search" placeholder="Search" />
+            </div>
+            <div class="column">
+              <button class="form-button" @click="buscarCCostos">Buscar</button>
+            </div>
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-12">
+          <card
+            class="strpied-tabled-with-hover"
+            body-classes="table-full-width table-responsive"
+          >
+            <template slot="header">
+              <h4 class="card-title">Centros de Costo</h4>
+              <p class="card-category">Tabla</p>
+            </template>
+            <table v-if="search == ''" class="table">
+              <thead>
+                <tr>
+                  <th>CODIGO</th>
+                  <th>DESCRIPCION</th>
+                  <th>TIPO</th>
+                  <th>AFECTA IESS</th>
+                  <th>AFECTA IR</th>
+                  <th>EDITAR</th>
+                  <th>ELIMINAR</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(movimiento, index) in movimientos" :key="index">
+                  <td>{{ movimiento.CodigoConcepto }}</td>
+                  <td>{{ movimiento.Concepto }}</td>
+                  <td>{{ movimiento.TipoOperacion }}</td>
+                  <td>{{ movimiento.Aplica_iess }}</td>
+                  <td>{{ movimiento.Aplica_imp_renta }}</td>
+                  <td>
+                    <button class="form-button"  @click="editarCosto(1, index)">Editar</button>
+                  </td>
+                  <td>
+                    <button class="form-button" @click="eliminarCosto(1, index)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table v-if="search != ''" class="table">
+              <thead>
+                <tr>
+                  <th>CODIGO</th>
+                  <th>DESCRIPCION</th>
+                  <th>TIPO</th>
+                  <th>AFECTA IESS</th>
+                  <th>AFECTA IR</th>
+                  <th>EDITAR</th>
+                  <th>ELIMINAR</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(costo, index) in costosSearch" :key="index">
+                  <td>{{ costo.Codigo }}</td>
+                  <td>{{ costo.NombreCentroCostos }}</td>
+                  <td>
+                    <button class="form-button" @click="editarCosto(2, index)">
+                      Editar
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class="form-button"
+                      @click="eliminarCosto(2, index)"
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </card>
+        </div>
+      </div>
     </div>
-    
-    <hr />
-    <table v-if="search == ''" class="table">
-      <thead>
-        <tr>
-          <th>CODIGO</th>
-          <th>DESCRIPCION</th>
-          <th>TIPO</th>
-          <th>AFECTA IESS</th>
-          <th>AFECTA IR</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(costo, index) in costos" :key="index">
-          <td>{{ costo.Codigo }}</td>
-          <td>{{ costo.NombreCentroCostos }}</td>
-          <td><button @click="editarCosto(1, index)">Editar</button></td>
-          <td><button @click="eliminarCosto(1, index)">Eliminar</button></td>
-        </tr>
-      </tbody>
-    </table>
-    <table v-if="search != ''" class="table">
-      <thead>
-        <tr>
-          <th>CODIGO</th>
-          <th>DESCRIPCION</th>
-          <th>TIPO</th>
-          <th>AFECTA_IESS</th>
-          <th>AFECTA_IR</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(costo, index) in costosSearch" :key="index">
-          <td>{{ costo.Codigo }}</td>
-          <td>{{ costo.NombreCentroCostos }}</td>
-          <td><button @click="editarCosto(2, index)">Editar</button></td>
-          <td><button @click="eliminarCosto(2, index)">Eliminar</button></td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import LTable from "src/components/Table.vue";
+import Card from "src/components/Cards/Card.vue";
 export default {
+  components: {
+    LTable,
+    Card,
+  },
   data() {
     return {
-      costos: "",
+      movimientos: "",
       message: "",
       ncodigo: "",
       nnombre: "",
       search: "",
-      costosSearch: ""
+      movimientosSearch: "",
     };
   },
   mounted() {
     this.message = "";
-    (this.ncodigo = ""), (this.nnombre = ""), this.obtenerCosto();
+    (this.ncodigo = ""), (this.nnombre = ""), this.obtenerMovimientoPlantilla();
   },
   methods: {
-    async obtenerCosto() {
+    async obtenerMovimientoPlantilla() {
       this.message = "";
-      let url = `${process.env.apiWebsite}/api/getCentrosCostos/`;
+      let url = `${process.env.apiWebsite}/api/getMovimientoPlanilla/`;
       const { data } = await axios.get(url);
-      this.costos = data;
+      this.movimientos = data;
+      //console.log(data);
     },
 
     inserView() {
       this.$router.push({ path: "inCenCosto" });
     },
 
-    async buscarCCostos(){
+    async buscarCCostos() {
       let formData = {
-          descripcioncentrocostos: this.search,
-        };
-        let url = `${process.env.apiWebsite}/api/searchCentrosCostos/`;
-        const { data } = await axios({
-          method: "post",
-          url: url,
-          data: formData,
-        });
-        console.log(data);
+        descripcioncentrocostos: this.search,
+      };
+      let url = `${process.env.apiWebsite}/api/searchCentrosCostos/`;
+      const { data } = await axios({
+        method: "post",
+        url: url,
+        data: formData,
+      });
+      console.log(data);
       this.costosSearch = data;
     },
 
     async editarCosto(func, index) {
-      let costosArr = (func == 1) ? this.costos : this.costosSearch
+      let costosArr = func == 1 ? this.costos : this.costosSearch;
       const costoEditado = prompt(
         "Editar costo",
         costosArr[index].NombreCentroCostos
@@ -115,20 +156,20 @@ export default {
           codigocentrocostos: costosArr[index].Codigo,
           descripcioncentrocostos: costoEditado,
         };
-        console.log(formData)
+        console.log(formData);
         let url = `${process.env.apiWebsite}/api/updateCentrosCostos/`;
         const { data } = await axios({
           method: "post",
           url: url,
           data: formData,
         });
-        console.log(data)
+        console.log(data);
         this.obtenerCosto();
       }
     },
 
     async eliminarCosto(func, index) {
-      let costosArr = (func == 1) ? this.costos : this.costosSearch
+      let costosArr = func == 1 ? this.costos : this.costosSearch;
       if (confirm("¿Eliminar costo?")) {
         this.message = "";
         let formData = {
@@ -148,9 +189,9 @@ export default {
 };
 </script>
 <style>
-* {
+/* * {
   box-sizing: border-box;
-}
+} */
 .form-button {
   display: block;
   width: 100%;
@@ -164,13 +205,13 @@ export default {
 }
 
 /* Create three equal columns that floats next to each other */
-.column {
+/* .column {
   float: left;
   padding: 10px;
-}
+} */
 
 /* Clear floats after the columns */
-.row:after {
+/* .row:after {
   content: "";
   display: table;
   clear: both;
@@ -180,5 +221,5 @@ th,
 td {
   border: 1px solid black;
   border-collapse: collapse;
-}
+} */
 </style>
