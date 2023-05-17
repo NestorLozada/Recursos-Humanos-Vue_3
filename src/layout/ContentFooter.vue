@@ -9,18 +9,50 @@
         </ul>
       </nav>
       <div class="copyright text-center">
-        &copy; Coded with
-        <i class="fa fa-heart heart"></i> by
-        <a href="https://binarcode.com" target="_blank">BinarCode</a>.
-        Designed by <a href="https://www.creative-tim.com/?ref=pdf-vuejs" target="_blank">Creative Tim</a>.
+        <a><b>Usuario:</b> {{ user }}</a>
       </div>
     </div>
   </footer>
 </template>
 <script>
-  export default {}
-
+export default {
+  
+  data() {
+    return {
+      activeNotifications: false,
+      user: "",
+      date: "",
+      company: "",
+    };
+  },
+  mounted() {
+    this.getVariables()
+  },
+  methods: {
+    getVariables() {
+      this.user = localStorage.getItem("user");
+      this.date = localStorage.getItem("date");
+      this.company = localStorage.getItem("company");
+    },
+    logout() {
+      localStorage.token = "";
+      this.$router.push("/");
+    },
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    toggleNotificationDropDown() {
+      this.activeNotifications = !this.activeNotifications;
+    },
+    closeDropDown() {
+      this.activeNotifications = false;
+    },
+    toggleSidebar() {
+      this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+    },
+    hideSidebar() {
+      this.$sidebar.displaySidebar(false);
+    },
+  },
+};
 </script>
-<style>
-
-</style>

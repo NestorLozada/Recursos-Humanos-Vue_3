@@ -64,6 +64,9 @@ export default {
       selected: null,
       comboEmisor: "",
       modalVisible: false,
+      user: '',
+      date: '',
+      company: ''
     };
   },
   mounted() {
@@ -90,8 +93,14 @@ export default {
       });
       this.getComboEmisores();
       let token = data.access_token;
+      this.user = data.user;
+      this.date = data.date;
+      this.company = data.company;
       if(token){
         localStorage.token = token;
+        localStorage.user =this.user;
+        localStorage.date =this.date;
+        localStorage.company =this.company;
         this.$router.push("/admin/overview");
       }else{
         this.$router.push('/').catch(()=>{})
