@@ -46,6 +46,7 @@
       <div class="modal-content">
         <h3>Bienvenido</h3>
         <p>¡Has iniciado sesión correctamente!</p>
+        <p>Fecha/Hora de inicio: {{ currtime }}</p>
         <button @click="hideModal">Cerrar</button>
       </div>
     </div>
@@ -66,7 +67,8 @@ export default {
       modalVisible: false,
       user: '',
       date: '',
-      company: ''
+      company: '',
+      currtime: this.getCurrentDateTime(),
     };
   },
   mounted() {
@@ -76,6 +78,10 @@ export default {
   methods: {
     async handleSubmit() {
       this.login();
+    },
+    getCurrentDateTime() {
+      const currentDateTime = new Date().toLocaleString();
+      return currentDateTime;
     },
     async login() {
       this.message = "";
