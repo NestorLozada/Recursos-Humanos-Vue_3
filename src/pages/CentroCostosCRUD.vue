@@ -52,10 +52,10 @@
                             type="number"
                             id="NombreCentroCostos"
                           />
-                        <button @click="closeModal()">Cerrar Modal</button>
-                        <button  @click="editarCosto(2, index)">
-                          Editar
-                        </button>
+                          <div class="btnMdiv">
+                            <button class="btnModel" @click="editarCosto(2, index)">Editar</button>
+                            <button class="btnModel" @click="closeModal()">Cancelar</button>
+                          </div>
                       </div>
                     </div>
 
@@ -254,7 +254,6 @@ td {
   left: 0;
   width: 50%;
   height: 50%;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -273,15 +272,17 @@ td {
 }
 
 .modal-content button {
-  display: block;
-  margin: 0 auto;
-  padding: 10px 20px;
+  display: flex;
   border: none;
   border-radius: 5px;
   background-color: #333;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+.btnMdiv{
+  display: flex;
+  margin:5%;
 }
 
 .modal-content button:hover {
