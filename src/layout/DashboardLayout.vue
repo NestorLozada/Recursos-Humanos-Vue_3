@@ -10,7 +10,7 @@
         <i class="nc-icon nc-circle-09"></i>
         <p>Centro Costos</p>
       </sidebar-link>
-      <sidebar-link to="/admin/table-list">
+      <sidebar-link to="/admin/maps">
         <i class="nc-icon nc-notes"></i>
         <p>Movimiento plantilla</p>
       </sidebar-link>
