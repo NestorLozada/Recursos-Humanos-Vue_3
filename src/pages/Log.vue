@@ -103,13 +103,12 @@ export default {
         this.user = data.user;
         this.date = data.date;
         this.company = data.company;
+        this.showModal();
         if(token){
           localStorage.token = token;
-          localStorage.user =this.user;
-          localStorage.date =this.date;
-          localStorage.company =this.company;
-          this.$router.push("/admin/overview");
-          this.showModal();
+          localStorage.user = this.user;
+          localStorage.date = this.date;
+          localStorage.company = this.company;
         }else{
           this.$router.push('/').catch(()=>{})
         }
@@ -130,9 +129,11 @@ export default {
     },
     showModal() {
       this.modalVisible = true;
+      console.log('se muestra')
     },
     hideModal() {
       this.modalVisible = false;
+      this.$router.push("/admin/overview");
     },
   },
 };
