@@ -43,7 +43,7 @@
     <div class="modal" v-if="CostoLoginModal">
     <div class="modal-content">
       <h3>Iniciar sesión</h3>
-      <form @submit.prevent="login">
+      <form>
         <div class="form-group">
           <label for="username">Usuario</label>
           <input type="text" id="username" v-model="username" required>
@@ -52,7 +52,7 @@
           <label for="password">Contraseña</label>
           <input type="password" id="password" v-model="password" required>
         </div>
-        <button type="submit">Iniciar sesión</button>
+        <button type="submit" @click="login">Iniciar sesión</button>
       </form>
       <button @click="closeLoginModal">Cerrar</button>
     </div>
@@ -60,6 +60,43 @@
   </div>
   
 </template>
+<script lang="js">
+import axios from "axios";
+export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+  methods: {
+    async login() {
+      this.message = "";
+      let formData = {
+        usuario: this.username,
+        password: this.password
+      };
+      let url = `${process.env.apiWebsite}/api/loginAutorizador/`;
+      const { data } = await axios({
+        method: "post",
+        url: url,
+        data: formData,
+      });
+      console.log(data.success)
+      if(data.success == 1){
+        message = 'Ingreso Exitoso'
+        this.showAlert(message)
+      }else{
+        this.showAlert(data.message)
+      }
+    },
+    showAlert(message) {
+      this.$swal(message);
+    }
+  },
+};
+</script>
+
 <style lang="scss">
 .modal {
   position: fixed;
