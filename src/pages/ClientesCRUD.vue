@@ -12,7 +12,7 @@
               <input v-model="search" placeholder="Search" />
             </div>
             <div class="column">
-              <button class="form-button" @click="buscarCCostos">Buscar</button>
+              <button class="form-button" @click="buscarCliente">Buscar</button>
             </div>
           </div>
         </div>
@@ -24,7 +24,7 @@
               body-classes="table-full-width table-responsive"
             >
               <template slot="header">
-                <h4 class="card-title">Centros de Costo</h4>
+                <h4 class="card-title">Cliente</h4>
                 <p class="card-category">Tabla</p>
               </template>
               <table v-if="search == ''" class="table">
@@ -32,8 +32,11 @@
                   <tr>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Editar</th>
-                    <th>Eliminar</th>
+                    <th>Género</th>
+                    <th>Estado trabajador</th>
+                    <th>Tipo Contrato</th>
+                    <th>Tipo Cese</th>
+                    <th>Estado Civil</th>
                   </tr>
                 </thead>
                 <tbody>
