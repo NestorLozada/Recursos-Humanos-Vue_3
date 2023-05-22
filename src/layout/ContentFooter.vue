@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer">
+  <!-- <footer class="footer">
     <div class="container-fluid">
       <nav>
         <ul class="footer-menu">
@@ -12,7 +12,7 @@
         <a><b>Usuario:</b> {{ user }}</a>
       </div>
     </div>
-  </footer>
+  </footer> -->
 </template>
 <script>
 export default {

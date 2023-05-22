@@ -20,7 +20,7 @@
         <p>Trabajador</p>
       </sidebar-link>
       <sidebar-link to="/admin/clientes">
-        <i class="nc-icon nc-paper-2"></i>
+        <i class="nc-icon nc-circle-09"></i>
         <p>Clientes</p>
       </sidebar-link>
       <!-- <sidebar-link to="/admin/icons">
