@@ -12,6 +12,7 @@ import Maps from 'src/pages/ListaPlantillaCRUD.vue'
 import Notifications from 'src/pages/Notifications.vue'
 import Upgrade from 'src/pages/InsertCC.vue'
 import Log from 'src/pages/Log.vue'
+import clientes from 'src/pages/ClientesCRUD.vue'
 const routes = [
   {
     path: '/',
@@ -61,6 +62,11 @@ const routes = [
         path: 'upgrade',
         name: 'Upgrade to PRO',
         component: Upgrade
+      },
+      {
+        path: 'clientes',
+        name: 'Clientes',
+        component: clientes
       }
     ]
   },

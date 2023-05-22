@@ -16,7 +16,11 @@
       </sidebar-link>
       <sidebar-link to="/admin/typography">
         <i class="nc-icon nc-paper-2"></i>
-        <p>Trabajdor</p>
+        <p>Trabajador</p>
+      </sidebar-link>
+      <sidebar-link to="/admin/clientes">
+        <i class="nc-icon nc-paper-2"></i>
+        <p>Clientes</p>
       </sidebar-link>
       <!-- <sidebar-link to="/admin/icons">
         <i class="nc-icon nc-atom"></i>
