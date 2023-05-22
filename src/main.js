@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import jQuery from 'jquery';
 import App from "./App.vue";
 
 // LightBootstrap plugin
@@ -7,7 +8,7 @@ import LightBootstrap from "./light-bootstrap-main";
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-
+window.$ = window.jQuery = jQuery;
 import dotenv from 'dotenv';
 dotenv.config()
 // router setup

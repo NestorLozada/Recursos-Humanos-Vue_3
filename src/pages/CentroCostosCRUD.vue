@@ -18,10 +18,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <card
-            class="strpied-tabled-with-hover"
-            body-classes="table-full-width table-responsive"
-          >
+          <card class="strpied-tabled-with-hover" body-classes="table-full-width table-responsive">
             <template slot="header">
               <h4 class="card-title">Centros de Costo</h4>
               <p class="card-category">Tabla</p>
@@ -40,43 +37,18 @@
                   <td>{{ costo.Codigo }}</td>
                   <td>{{ costo.NombreCentroCostos }}</td>
                   <td>
-                    <button class="form-button" @click="showModal()">
-                      Editar
-                    </button>
+                    <button class="form-button" @click="editarCosto(costo)">
+                      Editar</button>
                   </td>
-                  <div v-if="isModalVisible" class="modal">
-                    <div class="modal-content">
-                      <h2>Editar costo</h2>
-                      <input type="number" id="NombreCentroCostos" :value="costos[index]" />{{ costos[index] }} {{ index }}
-                      <div class="btnMdiv">
-                        <button class="btnModel" @click="editarCosto(2, index)">
-                          Editar
-                        </button>
-                        <button class="btnModel" @click="closeModal()">
-                          Cancelar
-                        </button>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div
-                    v-if="isModalVisible"
-                    class="modal-overlay"
-                    @click="closeModal()"
-                  ></div>
+                  <div v-if="isModalVisible" class="modal-overlay" @click="closeModal()"></div>
                   <td>
-                    <button class="form-button" @click="ShowModalEliminar()">
-                      Eliminar
-                    </button>
-                    <div v-if="isMEliminarVisible" class="modal1">
+                    <button class="form-button" @click="eliminarCosto(costo)">Eliminar</button>
+                    <!--                     <div v-if="isMEliminarVisible" class="modal1">
                       <div class="modal-content1">
                         <h4>Esta seguro de eliminar?</h4>
-
                         <div class="btnMdiv">
-                          <button
-                            class="btnModel"
-                            @click="eliminarCosto(1, index)"
-                          >
+                          <button class="btnModel" @click="eliminarCosto(1, index)">
                             Si
                           </button>
                           <button class="btnModel" @click="closeModal()">
@@ -84,7 +56,7 @@
                           </button>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                   </td>
                 </tr>
               </tbody>
@@ -103,15 +75,12 @@
                   <td>{{ costo.Codigo }}</td>
                   <td>{{ costo.NombreCentroCostos }}</td>
                   <td>
-                    <button class="form-button" @click="editarCosto(2, index)">
+                    <button class="form-button" @click="editarCosto(costo)">
                       Editar
                     </button>
                   </td>
                   <td>
-                    <button
-                      class="form-button"
-                      @click="eliminarCosto(2, index)"
-                    >
+                    <button class="form-button" @click="eliminarCosto(2, index)">
                       Eliminar
                     </button>
                   </td>
@@ -122,10 +91,59 @@
         </div>
       </div>
     </div>
+
+
+    <!-- Modal -->
+    <div v-if="isModalVisible" class="modal modal-style" id="editcc" tabindex="-1" role="dialog"
+      aria-labelledby="editLabel" aria-hidden="true">>
+      <div class="modal-content">
+        <h2>Editar costo N°<b>{{ costo.CodigoE }}</b></h2>
+        <div class="modal-body">
+          <div class="form-group inputModal">
+            <input type="hidden" id="Codigo" v-model="costo.CodigoE" />
+            <input type="text" id="NombreCentroCostos" v-model="costo.NombreCentroCostosE" />
+          </div>
+        </div>
+        <div class="modal-footer "></div>
+        <div class="row btns">
+          <div class="column">
+            <button class="" style="margin: 0 20px;" @click="updateCosto(costo.CodigoE, costo.NombreCentroCostosE)">
+              Editar
+            </button>
+          </div>
+          <div class="column">
+            <button class="" style="margin: 0 20px;" @click="closeModal()">
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div v-if="isMEliminarVisible" class="modal modal-style" id="editcc" tabindex="-1" role="dialog"
+      aria-labelledby="editLabel" aria-hidden="true">>
+      <div class="modal-content">
+        <h4>Esta seguro de eliminar el centro de costo N°<b>{{ costo.CodigoE }}</b></h4>
+        <input type="hidden" id="Codigo" v-model="costo.CodigoE" />
+        <input type="hidden" id="NombreCentroCostos" v-model="costo.NombreCentroCostosE" />
+        <div class="modal-footer "></div>
+        <div class="row btns">
+          <div class="column">
+            <button class="btnModel" @click="deleteCosto(costo.CodigoE, costo.NombreCentroCostosE)">Si</button>
+          </div>
+          <div class="column">
+            <button style="margin: 0 20px;" @click="closeModal()">No</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-</template>
+</div></template>
 <script>
 import axios from "axios";
+import * as $ from "jquery";
 import LTable from "src/components/Table.vue";
 import Card from "src/components/Cards/Card.vue";
 import InsertCC from "./InsertCC.vue";
@@ -138,6 +156,10 @@ export default {
   data() {
     return {
       costos: [],
+      costo: {
+        CodigoE: '',
+        NombreCentroCostosE: ''
+      },
       message: "",
       ncodigo: "",
       nnombre: "",
@@ -165,14 +187,18 @@ export default {
     showModal() {
       this.isModalVisible = true;
     },
-    ShowModalEliminar() {
+    eliminarCosto(costo) {
       this.isMEliminarVisible = true;
+      console.log(costo)
+      this.costo.CodigoE = costo.Codigo
     },
     closeModal() {
       this.isModalVisible = false;
       this.isMEliminarVisible = false;
     },
-
+    showAlert(message) {
+      this.$swal(message);
+    },
     async buscarCCostos() {
       let formData = {
         descripcioncentrocostos: this.search,
@@ -187,56 +213,57 @@ export default {
       this.costosSearch = data;
     },
 
-    async editarCosto(func, index) {
-      let costosArr = func == 1 ? this.costos : this.costosSearch;
-      const costoEditado = prompt(
-        "Editar costo",
-        costosArr[index].NombreCentroCostos
-      );
-      if (costoEditado !== null) {
-        this.message = "";
-        let formData = {
-          codigocentrocostos: costosArr[index].Codigo,
-          descripcioncentrocostos: costoEditado,
-        };
-        console.log(formData);
-        let url = `${process.env.apiWebsite}/api/updateCentrosCostos/`;
-        const { data } = await axios({
-          method: "post",
-          url: url,
-          data: formData,
-        });
-        console.log(data);
-        this.obtenerCosto();
-      }
+    editarCosto(costo) {
+      console.log('entra')
+      console.log(costo)
+      this.isModalVisible = true;
+      this.costo.CodigoE = costo.Codigo
+      this.costo.NombreCentroCostosE = costo.NombreCentroCostos
     },
 
-    async eliminarCosto(func, index) {
-      let costosArr = func == 1 ? this.costos : this.costosSearch;
-      if (confirm("¿Eliminar costo?")) {
-        this.message = "";
-        let formData = {
-          codigocentrocostos: costosArr[index].Codigo,
-          descripcioncentrocostos: costosArr[index].NombreCentroCostos,
-        };
-        let url = `${process.env.apiWebsite}/api/deleteCentrosCostos/`;
-        const { data } = await axios({
-          method: "post",
-          url: url,
-          data: formData,
-        });
-        this.obtenerCosto();
-      }
+    async updateCosto(index, NombreCentroCostos) {
+      this.isModalVisible = false;
+      let formData = {
+        codigocentrocostos: index,
+        descripcioncentrocostos: NombreCentroCostos,
+      };
+      console.log(formData);
+      let url = `${process.env.apiWebsite}/api/updateCentrosCostos/`;
+      const { data } = await axios({
+        method: "post",
+        url: url,
+        data: formData,
+      });
+      console.log(data);
+      this.showAlert(data.message)
+      this.obtenerCosto();
     },
+
+
+    async deleteCosto(index, NombreCentroCostos) {
+      this.isMEliminarVisible = false;
+      let formData = {
+        codigocentrocostos: index,
+        descripcioncentrocostos: NombreCentroCostos,
+      };
+      let url = `${process.env.apiWebsite}/api/deleteCentrosCostos/`;
+      const { data } = await axios({
+        method: "post",
+        url: url,
+        data: formData,
+      });
+      console.log(data);
+      this.showAlert(data.message)
+      this.obtenerCosto();
+    }
   },
 };
 </script>
+
 <style>
-/* * {
-  box-sizing: border-box;
-} */
 .form-button {
   display: block;
+  margin: 0 20px;
   width: 100%;
   padding: 10px;
   border-radius: 5px;
@@ -246,24 +273,6 @@ export default {
   transition: background-color 0.3s ease;
 }
 
-/* Create three equal columns that floats next to each other */
-/* .column {
-  float: left;
-  padding: 10px;
-} */
-
-/* Clear floats after the columns */
-/* .row:after {
-  content: "";
-  display: table;
-  clear: both;
-} */
-/* table,
-th,
-td {
-  border: 1px solid black;
-  border-collapse: collapse;
-} */
 .main-panel {
   padding-left: 30px;
   padding-right: 30px;
@@ -303,6 +312,7 @@ td {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
 .btnMdiv {
   display: flex;
   margin: 5%;
@@ -314,5 +324,18 @@ td {
 
 .modal-content1 button:hover {
   background-color: #444;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+}
+
+.inputModal {
+  width: 500px;
+}
+
+.modal-content {
+  width: auto;
 }
 </style>
