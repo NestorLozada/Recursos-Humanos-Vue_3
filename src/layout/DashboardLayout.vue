@@ -54,7 +54,7 @@
         </div>
         <button type="submit" @click="login">Iniciar sesión</button>
       </form>
-      <button @click="closeLoginModal">Cerrar</button>
+      <button @click="closeLoginModal">Volver</button>
     </div>
   </div>
   </div>
@@ -70,26 +70,26 @@ export default {
     };
   },
   methods: {
-    async login() {
-      this.message = "";
-      let formData = {
-        usuario: this.username,
-        password: this.password
-      };
-      let url = `${process.env.apiWebsite}/api/loginAutorizador/`;
-      const { data } = await axios({
-        method: "post",
-        url: url,
-        data: formData,
-      });
-      console.log(data.success)
-      if(data.success == 1){
-        message = 'Ingreso Exitoso'
-        this.showAlert(message)
-      }else{
-        this.showAlert(data.message)
-      }
-    },
+    // async login() {
+    //   this.message = "";
+    //   let formData = {
+    //     usuario: this.username,
+    //     password: this.password
+    //   };
+    //   let url = `${process.env.apiWebsite}/api/loginAutorizador/`;
+    //   const { data } = await axios({
+    //     method: "post",
+    //     url: url,
+    //     data: formData,
+    //   });
+    //   console.log(data.success)
+    //   if(data.success == 1){
+    //     message = 'Ingreso Exitoso'
+    //     this.showAlert(message)
+    //   }else{
+    //     this.showAlert(data.message)
+    //   }
+    // },
     showAlert(message) {
       this.$swal(message);
     }
@@ -182,6 +182,7 @@ export default {
         }
       },
       closeLoginModal(){
+        this.$router.push('Overview').catch(()=>{}),
         this.CostoLoginModal = false;
       },
       OpenLoginModal(){
