@@ -180,6 +180,7 @@ export default {
       this.isMEliminarVisible = true;
       console.log(costo)
       this.costo.CodigoE = costo.Codigo
+      this.costo.NombreCentroCostosE = costo.NombreCentroCostos
     },
     closeModal() {
       this.isModalVisible = false;
