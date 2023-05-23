@@ -78,8 +78,7 @@
                   <td>
                     <button
                       class="form-button"
-                      @click="eliminarCosto(2, index)"
-                    >
+                      @click="eliminarCosto(2, index)">
                       Eliminar
                     </button>
                   </td>
@@ -93,13 +92,115 @@
     <!-- Modal -->
     <div v-if="isModalVisible" class="modal modal-style" id="editcc" tabindex="-1" role="dialog"
       aria-labelledby="editLabel" aria-hidden="true">>
-      <div class="modal-content">
-        <h2>Editar costo N°<b>{{ costo.CodigoE }}</b></h2>
+      <div class="modal-content1">
+        <h2>Editar Movimiento<b>{{ costo.CodigoE }}</b></h2>
         <div class="modal-body">
-          <div class="form-group inputModal">
-            <input type="hidden" id="Codigo" v-model="costo.CodigoE" />
-            <input type="text" id="NombreCentroCostos" v-model="costo.NombreCentroCostosE" />
+         
+          <div class="form-group">
+            <label for="movimientoPlanilla">Movimiento Planilla:</label>
+            <input type="text" class="form-control" id="movimientoPlanilla" placeholder="Ingrese el movimiento de planilla">
           </div>
+          <div class="form-group">
+            <label for="codigoConcepto">Código de Concepto:</label>
+            <input type="text" class="form-control" id="codigoConcepto" placeholder="Ingrese el código de concepto">
+          </div>
+          <div class="form-group">
+            <label for="concepto">Concepto:</label>
+            <input type="text" class="form-control" id="concepto" placeholder="Ingrese el concepto">
+          </div>
+          <div class="form-group">
+            <label for="prioridad">Prioridad:</label>
+            <input type="number" class="form-control" id="prioridad" placeholder="Ingrese la prioridad">
+          </div>
+          <div class="form-group">
+            <label for="cuenta1">Cuenta 1:</label>
+            <input type="text" class="form-control" id="cuenta1" placeholder="Ingrese la cuenta 1">
+          </div>
+          <div class="form-group">
+            <label for="cuenta2">Cuenta 2:</label>
+            <input type="text" class="form-control" id="cuenta2" placeholder="Ingrese la cuenta 2">
+          </div>
+          <div class="form-group">
+            <label for="cuenta3">Cuenta 3:</label>
+            <input type="text" class="form-control" id="cuenta3" placeholder="Ingrese la cuenta 3">
+          </div>
+          <div class="form-group">
+            <label for="cuenta4">Cuenta 4:</label>
+            <input type="text" class="form-control" id="cuenta4" placeholder="Ingrese la cuenta 4">
+          </div>
+         <div>
+          <label for="movimientoPlanilla">Movimiento Planilla:</label>
+      <input type="text" id="movimientoPlanilla"><br><br>
+
+      <label for="codigoConcepto">Código de Concepto:</label>
+      <input type="text" id="codigoConcepto"><br><br>
+
+      <label for="ingresos">Ingresos:</label>
+      <select id="ingresos">
+        <option value="opcion1">Opción 1</option>
+        <option value="opcion2">Opción 2</option>
+        <option value="opcion3">Opción 3</option>
+      </select><br><br>
+
+      <label for="cuentaCorriente">Cuenta Corriente:</label>
+      <select id="cuentaCorriente">
+        <option value="opcion1">Opción 1</option>
+        <option value="opcion2">Opción 2</option>
+        <option value="opcion3">Opción 3</option>
+      </select><br><br>
+
+      <label for="movimientoExcepcion1">Movimiento Excepción 1:</label>
+      <select id="movimientoExcepcion1">
+        <option value="opcion1">Opción 1</option>
+        <option value="opcion2">Opción 2</option>
+        <option value="opcion3">Opción 3</option>
+      </select><br><br>
+
+      <label for="movimientoExcepcion2">Movimiento Excepción 2:</label>
+      <select id="movimientoExcepcion2">
+        <option value="opcion1">Opción 1</option>
+        <option value="opcion2">Opción 2</option>
+        <option value="opcion3">Opción 3</option>
+      </select><br><br>
+         </div>
+         <!--
+          <label for="movimientoPlanilla">Movimiento Planilla:</label>
+          <input type="text" id="movimientoPlanilla"><br><br>
+
+          <label for="codigoConcepto">Código de Concepto:</label>
+          <input type="text" id="codigoConcepto"><br><br>
+
+          <label for="ingresos">Ingresos:</label>
+          <select id="ingresos">
+            <option value="opcion1">Opción 1</option>
+            <option value="opcion2">Opción 2</option>
+            <option value="opcion3">Opción 3</option>
+          </select><br><br>
+
+          <label for="cuentaCorriente">Cuenta Corriente:</label>
+          <select id="cuentaCorriente">
+            <option value="opcion1">Opción 1</option>
+            <option value="opcion2">Opción 2</option>
+            <option value="opcion3">Opción 3</option>
+          </select><br><br>
+
+          <label for="movimientoExcepcion1">Movimiento Excepción 1:</label>
+          <select id="movimientoExcepcion1">
+            <option value="opcion1">Opción 1</option>
+            <option value="opcion2">Opción 2</option>
+            <option value="opcion3">Opción 3</option>
+          </select><br><br>
+
+          <label for="movimientoExcepcion2">Movimiento Excepción 2:</label>
+          <select id="movimientoExcepcion2">
+            <option value="opcion1">Opción 1</option>
+            <option value="opcion2">Opción 2</option>
+            <option value="opcion3">Opción 3</option>
+          </select><br><br>
+         -->
+          
+                 
+        
         </div>
         <div class="modal-footer "></div>
         <div class="row btns">
@@ -115,7 +216,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <div v-if="isMEliminarVisible" class="modal modal-style" id="editcc" tabindex="-1" role="dialog"
@@ -267,7 +367,7 @@ export default {
   background-color: #fff;
   padding: 20px;
   border-radius: 20px;
-  text-align: center;
+  text-align: left;
 }
 
 .modal-content1 h3 {
@@ -306,11 +406,22 @@ export default {
 
 .inputModal {
   width: 500px;
+  justify-content: left;
 }
 
 .modal-content {
   width: auto;
+  justify-content: left;
 }
+.ingresodatos{
+  display: flex;
+  padding: 1%;
+}
+.ingresodatos input{
+  justify-content: left;
+  margin-left: 20px;
+}
+
 /* Create three equal columns that floats next to each other */
 /* .column {
   float: left;
