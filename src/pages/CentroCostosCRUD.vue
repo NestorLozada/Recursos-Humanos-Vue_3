@@ -18,7 +18,9 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <card class="strpied-tabled-with-hover" body-classes="table-full-width table-responsive">
+          <card 
+          class="strpied-tabled-with-hover" 
+          body-classes="table-full-width table-responsive">
             <template slot="header">
               <h4 class="card-title">Centros de Costo</h4>
               <p class="card-category">Tabla</p>
@@ -44,19 +46,6 @@
                   <div v-if="isModalVisible" class="modal-overlay" @click="closeModal()"></div>
                   <td>
                     <button class="form-button" @click="eliminarCosto(costo)">Eliminar</button>
-                    <!--                     <div v-if="isMEliminarVisible" class="modal1">
-                      <div class="modal-content1">
-                        <h4>Esta seguro de eliminar?</h4>
-                        <div class="btnMdiv">
-                          <button class="btnModel" @click="eliminarCosto(1, index)">
-                            Si
-                          </button>
-                          <button class="btnModel" @click="closeModal()">
-                            No
-                          </button>
-                        </div>
-                      </div>
-                    </div> -->
                   </td>
                 </tr>
               </tbody>

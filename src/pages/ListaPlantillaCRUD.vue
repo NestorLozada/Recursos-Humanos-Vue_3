@@ -4,7 +4,6 @@
       <div class="row">
         <div class="column" style="margin-right: 500px">
           <button class="form-button">Nuevo</button>
-          <!-- <InsertCC v-show="isModalVisible" @close="closeModal" /> -->
         </div>
         <div class="column">
           <div class="row">
@@ -24,7 +23,7 @@
             body-classes="table-full-width table-responsive"
           >
             <template slot="header">
-              <h4 class="card-title">Centros de Costo</h4>
+              <h4 class="card-title">Movimiento Plantilla</h4>
               <p class="card-category">Tabla</p>
             </template>
             <table v-if="search == ''" class="table">
@@ -47,7 +46,7 @@
                   <td>{{ movimiento.Aplica_iess }}</td>
                   <td>{{ movimiento.Aplica_imp_renta }}</td>
                   <td>
-                    <button class="form-button"  @click="editarCosto(1, index)">Editar</button>
+                    <button class="form-button"  @click="editarCosto(costo)">Editar</button>
                   </td>
                   <td>
                     <button class="form-button" @click="eliminarCosto(1, index)">Eliminar</button>
@@ -91,6 +90,52 @@
         </div>
       </div>
     </div>
+    <!-- Modal -->
+    <div v-if="isModalVisible" class="modal modal-style" id="editcc" tabindex="-1" role="dialog"
+      aria-labelledby="editLabel" aria-hidden="true">>
+      <div class="modal-content">
+        <h2>Editar costo N°<b>{{ costo.CodigoE }}</b></h2>
+        <div class="modal-body">
+          <div class="form-group inputModal">
+            <input type="hidden" id="Codigo" v-model="costo.CodigoE" />
+            <input type="text" id="NombreCentroCostos" v-model="costo.NombreCentroCostosE" />
+          </div>
+        </div>
+        <div class="modal-footer "></div>
+        <div class="row btns">
+          <div class="column">
+            <button class="" style="margin: 0 20px;" @click="updateCosto(costo.CodigoE, costo.NombreCentroCostosE)">
+              Editar
+            </button>
+          </div>
+          <div class="column">
+            <button class="" style="margin: 0 20px;" @click="closeModal()">
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div v-if="isMEliminarVisible" class="modal modal-style" id="editcc" tabindex="-1" role="dialog"
+      aria-labelledby="editLabel" aria-hidden="true">>
+      <div class="modal-content">
+        <h4>Esta seguro de eliminar el centro de costo N°<b>{{ costo.CodigoE }}</b></h4>
+        <input type="hidden" id="Codigo" v-model="costo.CodigoE" />
+        <input type="hidden" id="NombreCentroCostos" v-model="costo.NombreCentroCostosE" />
+        <div class="modal-footer "></div>
+        <div class="row btns">
+          <div class="column">
+            <button class="btnModel" @click="deleteCosto(costo.CodigoE, costo.NombreCentroCostosE)">Si</button>
+          </div>
+          <div class="column">
+            <button style="margin: 0 20px;" @click="closeModal()">No</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </template>
 
@@ -111,6 +156,8 @@ export default {
       nnombre: "",
       search: "",
       movimientosSearch: "",
+      isModalVisible: false,
+      isMEliminarVisible: false,
     };
   },
   mounted() {
@@ -118,6 +165,7 @@ export default {
     (this.ncodigo = ""), (this.nnombre = ""), this.obtenerMovimientoPlantilla();
   },
   methods: {
+   
     async obtenerMovimientoPlantilla() {
       this.message = "";
       let url = `${process.env.apiWebsite}/api/getMovimientoPlanilla/`;
@@ -125,11 +173,24 @@ export default {
       this.movimientos = data;
       //console.log(data);
     },
-
+    showModal() {
+      this.isModalVisible = true;
+    },
+    eliminarCosto(costo) {
+      this.isMEliminarVisible = true;
+      console.log(costo)
+      this.costo.CodigoE = costo.Codigo
+    },
+    closeModal() {
+      this.isModalVisible = false;
+      this.isMEliminarVisible = false;
+    },
     inserView() {
       this.$router.push({ path: "inCenCosto" });
     },
-
+    showAlert(message) {
+      this.$swal(message);
+    },
     async buscarCCostos() {
       let formData = {
         descripcioncentrocostos: this.search,
@@ -144,47 +205,30 @@ export default {
       this.costosSearch = data;
     },
 
-    async editarCosto(func, index) {
-      let costosArr = func == 1 ? this.costos : this.costosSearch;
-      const costoEditado = prompt(
-        "Editar costo",
-        costosArr[index].NombreCentroCostos
-      );
-      if (costoEditado !== null) {
-        this.message = "";
-        let formData = {
-          codigocentrocostos: costosArr[index].Codigo,
-          descripcioncentrocostos: costoEditado,
-        };
-        console.log(formData);
-        let url = `${process.env.apiWebsite}/api/updateCentrosCostos/`;
-        const { data } = await axios({
-          method: "post",
-          url: url,
-          data: formData,
-        });
-        console.log(data);
-        this.obtenerCosto();
-      }
+    editarCosto(costo) {
+      console.log('entra')
+      console.log(costo)
+      this.isModalVisible = true;
+      this.costo.CodigoE = costo.Codigo
+      this.costo.NombreCentroCostosE = costo.NombreCentroCostos
     },
 
-    async eliminarCosto(func, index) {
-      let costosArr = func == 1 ? this.costos : this.costosSearch;
-      if (confirm("¿Eliminar costo?")) {
-        this.message = "";
-        let formData = {
-          codigocentrocostos: costosArr[index].Codigo,
-          descripcioncentrocostos: costosArr[index].NombreCentroCostos,
-        };
-        let url = `${process.env.apiWebsite}/api/deleteCentrosCostos/`;
-        const { data } = await axios({
-          method: "post",
-          url: url,
-          data: formData,
-        });
-        this.obtenerCosto();
-      }
-    },
+    async deleteCosto(index, NombreCentroCostos) {
+      this.isMEliminarVisible = false;
+      let formData = {
+        codigocentrocostos: index,
+        descripcioncentrocostos: NombreCentroCostos,
+      };
+      let url = `${process.env.apiWebsite}/api/deleteCentrosCostos/`;
+      const { data } = await axios({
+        method: "post",
+        url: url,
+        data: formData,
+      });
+      console.log(data);
+      this.showAlert(data.message)
+      this.obtenerCosto();
+    }
   },
 };
 </script>
@@ -203,7 +247,66 @@ export default {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+.modal1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 10% 30% 50% 50%;
+  background-color: #444;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
 
+.modal-content1 {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.modal-content1 h3 {
+  margin-top: 0;
+}
+
+.modal-content1 button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnMdiv {
+  display: flex;
+  margin: 5%;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content1 button:hover {
+  background-color: #444;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+}
+
+.inputModal {
+  width: 500px;
+}
+
+.modal-content {
+  width: auto;
+}
 /* Create three equal columns that floats next to each other */
 /* .column {
   float: left;
