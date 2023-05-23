@@ -150,6 +150,10 @@ export default {
   },
   data() {
     return {
+      costo: {
+        CodigoE: '',
+        NombreCentroCostosE: ''
+      },
       movimientos: "",
       message: "",
       ncodigo: "",
