@@ -95,29 +95,27 @@
             <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="codigoplanilla">Codigo Planilla:</label>
-                  <input type="text" class="form-control" id="codigoplanilla" placeholder="Ingrese el codigo de planilla">
+                  <label for="CodigoConcepto">Codigo Planilla:</label>
+                  <input type="text" class="form-control" id="CodigoConcepto" placeholder="Ingrese el codigo de planilla" v-model="movimiento.CodigoConcepto">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="concepto">Concepto:</label>
-                  <input type="text" class="form-control" id="concepto" placeholder="Ingrese el concepto">
+                  <input type="text" class="form-control" id="concepto" placeholder="Ingrese el concepto" v-model="movimiento.Concepto">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="prioridad">Prioridad:</label>
-                  <input type="number" class="form-control" id="prioridad" placeholder="Ingrese la prioridad">
+                  <label for="Prioridad">Prioridad:</label>
+                  <input type="number" class="form-control" id="Prioridad" placeholder="Ingrese la Prioridad" v-model="movimiento.Prioridad">
                 </div>
               </div>
               <div class="column marginColum">
-                <div class="form-group">
+                <div class="form-group">{{ movimiento.TipoOperacion }}
                   <label for="tipoOperacion">Tipo de Operacion:</label>
-                  <select class="form-control" id="tipoOperacion">
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
+                  <select class="form-control" id="tipoOperacion" v-model="movimiento.TipoOperacion">
+                    <option v-for="(tipoOp) in TipoOperacionCombo" :value="tipoOp.CodigoTipooperacion" :selected="movimiento.TipoOperacion === tipoOp.CodigoTipooperacion">{{ tipoOp.CodigoTipooperacion }}</option>
                   </select>
                 </div>
               </div>
@@ -125,26 +123,26 @@
             <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="cuenta1">Cuenta 1:</label>
-                  <input type="text" class="form-control" id="cuenta1" placeholder="Ingrese la cuenta 1">
+                  <label for="Cuenta1">Cuenta 1:</label>
+                  <input type="text" class="form-control" id="Cuenta1" placeholder="Ingrese la cuenta 1" v-model="movimiento.Cuenta1">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="cuenta2">Cuenta 2:</label>
-                  <input type="text" class="form-control" id="cuenta2" placeholder="Ingrese la cuenta 2">
+                  <label for="Cuenta2">Cuenta 2:</label>
+                  <input type="text" class="form-control" id="Cuenta2" placeholder="Ingrese la cuenta 2" v-model="movimiento.Cuenta2">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="cuenta3">Cuenta 3:</label>
-                  <input type="text" class="form-control" id="cuenta3" placeholder="Ingrese la cuenta 3">
+                  <label for="Cuenta3">Cuenta 3:</label>
+                  <input type="text" class="form-control" id="Cuenta3" placeholder="Ingrese la cuenta 3" v-model="movimiento.Cuenta3">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="cuenta4">Cuenta 4:</label>
-                  <input type="text" class="form-control" id="cuenta4" placeholder="Ingrese la cuenta 4">
+                  <label for="Cuenta4">Cuenta 4:</label>
+                  <input type="text" class="form-control" id="Cuenta4" placeholder="Ingrese la cuenta 4" v-model="movimiento.Cuenta4">
                 </div>
               </div>
             </div>
@@ -152,8 +150,8 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="movimientoExcepcion1">Movimiento Excepción 1:</label>
-                  <select class="form-control" id="movimientoExcepcion1">
-                    <option value="opcion1">Opción 1</option>
+                  <select class="form-control" id="movimientoExcepcion1" v-model="movimiento.MovimientoExcepcion1">
+                    <option value="opcion1" selected>Opción 1</option>
                     <option value="opcion2">Opción 2</option>
                     <option value="opcion3">Opción 3</option>
                   </select>
@@ -162,7 +160,7 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="movimientoExcepcion2">Movimiento Excepción 2:</label>
-                  <select class="form-control" id="movimientoExcepcion2">
+                  <select class="form-control" id="movimientoExcepcion2" v-model="movimiento.MovimientoExcepcion2">
                     <option value="opcion1">Opción 1</option>
                     <option value="opcion2">Opción 2</option>
                     <option value="opcion3">Opción 3</option>
@@ -172,7 +170,7 @@
               <div class="column marginColum">
                 <!-- <div class="form-group"> -->
                   <label for="movimientoExcepcion3">Movimiento Excepción 3:</label>
-                  <select class="form-control" id="movimientoExcepcion3">
+                  <select class="form-control" id="movimientoExcepcion3" v-model="movimiento.MovimientoExcepcion3">
                     <option value="opcion1">Opción 1</option>
                     <option value="opcion2">Opción 2</option>
                     <option value="opcion3">Opción 3</option>
@@ -181,128 +179,54 @@
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Traba_Aplica_iess">Aplica IESSs:</label>
-                  <input type="text" class="form-control" id="Traba_Aplica_iess" placeholder="Ingrese sin aplica IESS">
+                  <label for="Aplica_iess">Aplica IESS:</label>
+                  <select class="form-control" id="Aplica_iess" v-model="movimiento.Aplica_iess">
+                    <option value="opcion1">Opción 1</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+                  </select>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Traba_Proyecto_imp_renta">Impuesto Renta:</label>
-                  <input type="text" class="form-control" id="Traba_Proyecto_imp_renta" placeholder="Ingrese impuesto renta">
-                </div>
-              </div>
-              <div class="column marginColum">
-                <div class="form-group">
-                  <label for="Aplica_Proy_Renta">Aplica Renta:</label>
-                  <input type="text" class="form-control" id="Aplica_Proy_Renta" placeholder="Ingrese impuesto renta">
+                  <label for="Aplica_imp_renta">Impuesto Renta:</label>
+                  <select class="form-control" id="Aplica_imp_renta" v-model="movimiento.Aplica_imp_renta">
+                    <option value="opcion1">Opción 1</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+                  </select>
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Empresa_Afecta_Iess">Empresa Afecta IESS:</label>
-                  <input type="text" class="form-control" id="Empresa_Afecta_Iess" placeholder="Empresa Afecta IESS">
+                  <select class="form-control" id="Empresa_Afecta_Iess" v-model="movimiento.Empresa_Afecta_Iess">
+                    <option value="opcion1">Opción 1</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+                  </select>
                 </div>
               </div>
               <div class="column marginColum">
                 <!-- <div class="form-group">
-                  <label for="Traba_Aplica_iess">Aplica IESS:</label>
-                  <input type="text" class="form-control" id="Traba_Aplica_iess" placeholder="Ingrese sin aplica IESS">
+                  <label for="Aplica_Proy_Renta">Aplica Renta:</label>
+                  <select class="form-control" id="Aplica_Proy_Renta" v-model="movimiento.Aplica_Proy_Renta">
+                    <option value="opcion1">Opción 1</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+                  </select>
+                </div> -->
+              </div>
+              <div class="column marginColum">
+                <!-- <div class="form-group">
+                  <label for="Aplica_iess">Aplica IESS:</label>
+                  <input type="text" class="form-control" id="Aplica_iess" placeholder="Ingrese sin aplica IESS">
                 </div> -->
               </div>
             </div>
           <!-- </div> -->
-
-          <!-- <div class="row">
-            <div class="column marginColum">
-              <div class="form-group">
-                <label for="concepto">Concepto:</label>
-                <input type="text" class="form-control" id="concepto" placeholder="Ingrese el concepto">
-              </div>
-              <div class="form-group">
-                <label for="movimientoPlanilla">Movimiento Planilla:</label>
-                <input type="text" class="form-control" id="movimientoPlanilla"
-                  placeholder="Ingrese el movimiento de planilla">
-              </div>
-              <div class="form-group">
-                <label for="cuenta1">Cuenta 1:</label>
-                <input type="text" class="form-control" id="cuenta1" placeholder="Ingrese la cuenta 1">
-              </div>
-              <div class="form-group">
-                <label for="ingresos">Ingresos:</label>
-                <select class="form-control" id="ingresos">
-                  <option value="opcion1">Opción 1</option>
-                  <option value="opcion2">Opción 2</option>
-                  <option value="opcion3">Opción 3</option>
-                </select><br><br>
-              </div>
-            </div>
-
-            <div class="column marginColum">
-              <div class="form-group">
-                <label for="prioridad">Prioridad:</label>
-                <input type="number" class="form-control" id="prioridad" placeholder="Ingrese la prioridad">
-              </div>
-              <div class="form-group">
-                <label for="codigoConcepto">Código de Concepto:</label>
-                <input type="text" class="form-control" id="codigoConcepto" placeholder="Ingrese el código de concepto">
-              </div>
-              <div class="form-group">
-                <label for="cuenta2">Cuenta 2:</label>
-                <input type="text" class="form-control" id="cuenta2" placeholder="Ingrese la cuenta 2">
-              </div>
-              <div class="form-group">
-                <label for="cuentaCorriente">Cuenta Corriente:</label>
-                <select class="form-control" id="cuentaCorriente">
-                  <option value="opcion1">Opción 1</option>
-                  <option value="opcion2">Opción 2</option>
-                  <option value="opcion3">Opción 3</option>
-                </select><br><br>
-              </div>
-            </div>
-
-            <div class="column marginColum">
-              <div class="form-group">
-                <label for="movimientoExcepcion2">Tipo de Operacion:</label>
-                <select class="form-control" id="movimientoExcepcion2">
-                  <option value="opcion1">Opción 1</option>
-                  <option value="opcion2">Opción 2</option>
-                  <option value="opcion3">Opción 3</option>
-                </select><br><br>
-              </div>
-              <div class="form-group">
-                <label for="cuenta3">Cuenta 3:</label>
-                <input type="text" class="form-control" id="cuenta3" placeholder="Ingrese la cuenta 3">
-              </div>
-              <div class="form-group">
-                <label for="movimientoExcepcion1">Movimiento Excepción 1:</label>
-                <select class="form-control" id="movimientoExcepcion1">
-                  <option value="opcion1">Opción 1</option>
-                  <option value="opcion2">Opción 2</option>
-                  <option value="opcion3">Opción 3</option>
-                </select><br><br>
-              </div>
-            </div>
-
-            <div class="column marginColum">
-
-              <div class="form-group">
-                <label for="cuenta4">Cuenta 4:</label>
-                <input type="text" class="form-control" id="cuenta4" placeholder="Ingrese la cuenta 4">
-              </div>
-              <div class="form-group">
-                <label for="movimientoExcepcion2">Movimiento Excepción 2:</label>
-                <select class="form-control" id="movimientoExcepcion2">
-                  <option value="opcion1">Opción 1</option>
-                  <option value="opcion2">Opción 2</option>
-                  <option value="opcion3">Opción 3</option>
-                </select><br><br>
-              </div>
-            </div>
-            <div class="column">
-            </div>
-          </div> -->
         </div>
         <div class="modal-footer "></div>
         <div class="row btns">
@@ -353,22 +277,28 @@ export default {
   data() {
     return {
       movimiento: {
-        conceptos: '',
-        prioridad: '',
-        tipooperacion: '',
-        cuenta1: '',
-        cuenta2: '',
-        cuenta3: '',
-        cuenta4: '',
-        Movimientoxcepcion1: '',
-        Movimientoxcepcion2: '',
-        Movimientoxcepcion3: '',
-        Traba_Aplica_iess: '',
-        Traba_Proyecto_imp_renta: '',
+        CodigoConcepto: '',
+        Concepto: '',
+        Prioridad: '',
+        TipoOperacion: '',
+        Cuenta1: '',
+        Cuenta2: '',
+        Cuenta3: '',
+        Cuenta4: '',
+        MovimientoExcepcion1: '',
+        MovimientoExcepcion2: '',
+        MovimientoExcepcion3: '',
+        Aplica_iess: '',
+        Aplica_imp_renta: '',
         Aplica_Proy_Renta: '',
         Empresa_Afecta_Iess: '',
       },
       movimientos: "",
+      TipoOperacionCombo: "",
+      movExcepcion1y2Combo: "",
+      movExcepcion3Combo: "",
+      trabaAfectaIESSCombo: "",
+      trabAfecImpuestoRentaCombo: "",
       message: "",
       search: "",
       movimientosSearch: "",
@@ -378,9 +308,44 @@ export default {
   },
   mounted() {
     this.message = "";
-    (this.ncodigo = ""), (this.nnombre = ""), this.obtenerMovimientoPlantilla();
+    this.obtenerMovimientoPlantilla();
+    this.getTiposOperacion();
+    this.getMovExcepcion1y2();
+    this.getMovExcepcion3();
+    this.getTrabAfecImpuestoRenta();
+    this.getTrabaAfectaIESS();
   },
   methods: {
+    async getTiposOperacion(){
+      let url = `${process.env.apiWebsite}/api/getTiposOperacion/`;
+      const { data } = await axios.get(url);
+      console.log(data);
+      this.TipoOperacionCombo = data;
+    },
+    async getMovExcepcion1y2(){
+      let url = `${process.env.apiWebsite}/api/getMovExcepcion1y2/`;
+      const { data } = await axios.get(url);
+      console.log(data);
+      this.movExcepcion1y2Combo = data;
+    },
+    async getMovExcepcion3(){
+      let url = `${process.env.apiWebsite}/api/getMovExcepcion3/`;
+      const { data } = await axios.get(url);
+      console.log(data);
+      this.movExcepcion3Combo = data;
+    },
+    async getTrabaAfectaIESS(){
+      let url = `${process.env.apiWebsite}/api/getTrabaAfectaIESS/`;
+      const { data } = await axios.get(url);
+      console.log(data);
+      this.trabaAfectaIESSCombo = data;
+    },
+    async getTrabAfecImpuestoRenta(){
+      let url = `${process.env.apiWebsite}/api/getTrabAfecImpuestoRenta/`;
+      const { data } = await axios.get(url);
+      console.log(data);
+      this.trabAfecImpuestoRentaCombo = data;
+    },
 
     async obtenerMovimientoPlantilla() {
       this.message = "";
@@ -389,6 +354,8 @@ export default {
       this.movimientos = data;
       //console.log(data);
     },
+
+
     showModal() {
       this.isModalVisible = true;
     },
@@ -421,12 +388,25 @@ export default {
       this.costosSearch = data;
     },
 
-    editarMovimiento(costo) {
+    editarMovimiento(movimiento) {
       console.log('entra')
-      console.log(costo)
+      console.log(movimiento)
       this.isModalVisible = true;
-      this.costo.CodigoE = costo.Codigo
-      this.costo.NombreCentroCostosE = costo.NombreCentroCostos
+      this.movimiento.CodigoConcepto = movimiento.CodigoConcepto;
+      this.movimiento.Concepto = movimiento.Concepto;
+      this.movimiento.Prioridad = movimiento.Prioridad;
+      this.movimiento.TipoOperacion = movimiento.TipoOperacion;
+      this.movimiento.Cuenta1 = movimiento.Cuenta1;
+      this.movimiento.Cuenta2 = movimiento.Cuenta2;
+      this.movimiento.Cuenta3 = movimiento.Cuenta3;
+      this.movimiento.Cuenta4 = movimiento.Cuenta4;
+      this.movimiento.MovimientoExcepcion1 = movimiento.MovimientoExcepcion1;
+      this.movimiento.MovimientoExcepcion2 = movimiento.MovimientoExcepcion2;
+      this.movimiento.MovimientoExcepcion3 = movimiento.MovimientoExcepcion3;
+      this.movimiento.Aplica_iess = movimiento.Aplica_iess;
+      this.movimiento.Aplica_imp_renta = movimiento.Aplica_imp_renta;
+      this.movimiento.Aplica_Proy_Renta = movimiento.Aplica_Proy_Renta;
+      this.movimiento.Empresa_Afecta_Iess = movimiento.Empresa_Afecta_Iess;
     },
 
     async deleteCosto(index, NombreCentroCostos) {
@@ -449,9 +429,6 @@ export default {
 };
 </script>
 <style>
-/* * {
-  box-sizing: border-box;
-} */
 .form-button {
   display: block;
   width: 100%;
