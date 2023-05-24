@@ -113,12 +113,12 @@
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="movimientoExcepcion2">Tipo de Operacion:</label>
-                  <select class="form-control" id="movimientoExcepcion2">
+                  <label for="tipoOperacion">Tipo de Operacion:</label>
+                  <select class="form-control" id="tipoOperacion">
                     <option value="opcion1">Opción 1</option>
                     <option value="opcion2">Opción 2</option>
                     <option value="opcion3">Opción 3</option>
-                  </select><br><br>
+                  </select>
                 </div>
               </div>
             </div>
@@ -462,6 +462,9 @@ export default {
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+.form-control{
+  width: 250px;
 }
 
 .modal1 {
