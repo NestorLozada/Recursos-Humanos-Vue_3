@@ -11,7 +11,7 @@
               <input v-model="search" placeholder="Search" />
             </div>
             <div class="column">
-              <button class="form-button" @click="buscarCCostos">Buscar</button>
+              <button class="form-button" @click="buscarMovimiento">Buscar</button>
             </div>
           </div>
         </div>
@@ -43,10 +43,10 @@
                   <td>{{ movimiento.Aplica_iess }}</td>
                   <td>{{ movimiento.Aplica_imp_renta }}</td>
                   <td>
-                    <button class="form-button" @click="editarCosto(costo)">Editar</button>
+                    <button class="form-button" @click="editarMovimiento(movimiento)">Editar</button>
                   </td>
                   <td>
-                    <button class="form-button" @click="eliminarCosto(1, index)">Eliminar</button>
+                    <button class="form-button" @click="eliminarMovimiento(movimiento)">Eliminar</button>
                   </td>
                 </tr>
               </tbody>
@@ -64,16 +64,16 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(costo, index) in costosSearch" :key="index">
-                  <td>{{ costo.Codigo }}</td>
-                  <td>{{ costo.NombreCentroCostos }}</td>
+                <tr v-for="(movimiento, index) in movimientosSearch" :key="index">
+                  <td>{{ movimiento.Codigo }}</td>
+                  <td>{{ movimiento.NombreCentroCostos }}</td>
                   <td>
-                    <button class="form-button" @click="editarCosto(2, index)">
+                    <button class="form-button" @click="editarMovimiento(2, index)">
                       Editar
                     </button>
                   </td>
                   <td>
-                    <button class="form-button" @click="eliminarCosto(2, index)">
+                    <button class="form-button" @click="eliminarMovimiento(2, index)">
                       Eliminar
                     </button>
                   </td>
@@ -84,14 +84,142 @@
         </div>
       </div>
     </div>
+
     <!-- Modal -->
     <div v-if="isModalVisible" class="modal modal-style" id="editcc" tabindex="-1" role="dialog"
       aria-labelledby="editLabel" aria-hidden="true">>
       <div class="modal-content1">
-        <h2>Editar Movimiento<b>{{ costo.CodigoE }}</b></h2>
+        <h2>Insertar Movimiento</h2>
         <div class="modal-body">
-          <div class="row">
+          <!-- <div class="row"> -->
+            <div class="row">
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="codigoplanilla">Codigo Planilla:</label>
+                  <input type="text" class="form-control" id="codigoplanilla" placeholder="Ingrese el codigo de planilla">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="concepto">Concepto:</label>
+                  <input type="text" class="form-control" id="concepto" placeholder="Ingrese el concepto">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="prioridad">Prioridad:</label>
+                  <input type="number" class="form-control" id="prioridad" placeholder="Ingrese la prioridad">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="movimientoExcepcion2">Tipo de Operacion:</label>
+                  <select class="form-control" id="movimientoExcepcion2">
+                    <option value="opcion1">Opción 1</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+                  </select><br><br>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="cuenta1">Cuenta 1:</label>
+                  <input type="text" class="form-control" id="cuenta1" placeholder="Ingrese la cuenta 1">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="cuenta2">Cuenta 2:</label>
+                  <input type="text" class="form-control" id="cuenta2" placeholder="Ingrese la cuenta 2">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="cuenta3">Cuenta 3:</label>
+                  <input type="text" class="form-control" id="cuenta3" placeholder="Ingrese la cuenta 3">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="cuenta4">Cuenta 4:</label>
+                  <input type="text" class="form-control" id="cuenta4" placeholder="Ingrese la cuenta 4">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="movimientoExcepcion1">Movimiento Excepción 1:</label>
+                  <select class="form-control" id="movimientoExcepcion1">
+                    <option value="opcion1">Opción 1</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+                  </select>
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="movimientoExcepcion2">Movimiento Excepción 2:</label>
+                  <select class="form-control" id="movimientoExcepcion2">
+                    <option value="opcion1">Opción 1</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+                  </select>
+                </div>
+              </div>
+              <div class="column marginColum">
+                <!-- <div class="form-group"> -->
+                  <label for="movimientoExcepcion3">Movimiento Excepción 3:</label>
+                  <select class="form-control" id="movimientoExcepcion3">
+                    <option value="opcion1">Opción 1</option>
+                    <option value="opcion2">Opción 2</option>
+                    <option value="opcion3">Opción 3</option>
+                  </select>
+                <!-- </div> -->
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Traba_Aplica_iess">Aplica IESSs:</label>
+                  <input type="text" class="form-control" id="Traba_Aplica_iess" placeholder="Ingrese sin aplica IESS">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Traba_Proyecto_imp_renta">Impuesto Renta:</label>
+                  <input type="text" class="form-control" id="Traba_Proyecto_imp_renta" placeholder="Ingrese impuesto renta">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Aplica_Proy_Renta">Aplica Renta:</label>
+                  <input type="text" class="form-control" id="Aplica_Proy_Renta" placeholder="Ingrese impuesto renta">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Empresa_Afecta_Iess">Empresa Afecta IESS:</label>
+                  <input type="text" class="form-control" id="Empresa_Afecta_Iess" placeholder="Empresa Afecta IESS">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <!-- <div class="form-group">
+                  <label for="Traba_Aplica_iess">Aplica IESS:</label>
+                  <input type="text" class="form-control" id="Traba_Aplica_iess" placeholder="Ingrese sin aplica IESS">
+                </div> -->
+              </div>
+            </div>
+          <!-- </div> -->
+
+          <!-- <div class="row">
             <div class="column marginColum">
+              <div class="form-group">
+                <label for="concepto">Concepto:</label>
+                <input type="text" class="form-control" id="concepto" placeholder="Ingrese el concepto">
+              </div>
               <div class="form-group">
                 <label for="movimientoPlanilla">Movimiento Planilla:</label>
                 <input type="text" class="form-control" id="movimientoPlanilla"
@@ -110,7 +238,12 @@
                 </select><br><br>
               </div>
             </div>
+
             <div class="column marginColum">
+              <div class="form-group">
+                <label for="prioridad">Prioridad:</label>
+                <input type="number" class="form-control" id="prioridad" placeholder="Ingrese la prioridad">
+              </div>
               <div class="form-group">
                 <label for="codigoConcepto">Código de Concepto:</label>
                 <input type="text" class="form-control" id="codigoConcepto" placeholder="Ingrese el código de concepto">
@@ -128,10 +261,15 @@
                 </select><br><br>
               </div>
             </div>
+
             <div class="column marginColum">
               <div class="form-group">
-                <label for="concepto">Concepto:</label>
-                <input type="text" class="form-control" id="concepto" placeholder="Ingrese el concepto">
+                <label for="movimientoExcepcion2">Tipo de Operacion:</label>
+                <select class="form-control" id="movimientoExcepcion2">
+                  <option value="opcion1">Opción 1</option>
+                  <option value="opcion2">Opción 2</option>
+                  <option value="opcion3">Opción 3</option>
+                </select><br><br>
               </div>
               <div class="form-group">
                 <label for="cuenta3">Cuenta 3:</label>
@@ -146,11 +284,9 @@
                 </select><br><br>
               </div>
             </div>
+
             <div class="column marginColum">
-              <div class="form-group">
-                <label for="prioridad">Prioridad:</label>
-                <input type="number" class="form-control" id="prioridad" placeholder="Ingrese la prioridad">
-              </div>
+
               <div class="form-group">
                 <label for="cuenta4">Cuenta 4:</label>
                 <input type="text" class="form-control" id="cuenta4" placeholder="Ingrese la cuenta 4">
@@ -165,51 +301,8 @@
               </div>
             </div>
             <div class="column">
-
-
-
-
-
             </div>
-          </div>
-          <!--
-          <label for="movimientoPlanilla">Movimiento Planilla:</label>
-          <input type="text" id="movimientoPlanilla"><br><br>
-
-          <label for="codigoConcepto">Código de Concepto:</label>
-          <input type="text" id="codigoConcepto"><br><br>
-
-          <label for="ingresos">Ingresos:</label>
-          <select id="ingresos">
-            <option value="opcion1">Opción 1</option>
-            <option value="opcion2">Opción 2</option>
-            <option value="opcion3">Opción 3</option>
-          </select><br><br>
-
-          <label for="cuentaCorriente">Cuenta Corriente:</label>
-          <select id="cuentaCorriente">
-            <option value="opcion1">Opción 1</option>
-            <option value="opcion2">Opción 2</option>
-            <option value="opcion3">Opción 3</option>
-          </select><br><br>
-
-          <label for="movimientoExcepcion1">Movimiento Excepción 1:</label>
-          <select id="movimientoExcepcion1">
-            <option value="opcion1">Opción 1</option>
-            <option value="opcion2">Opción 2</option>
-            <option value="opcion3">Opción 3</option>
-          </select><br><br>
-
-          <label for="movimientoExcepcion2">Movimiento Excepción 2:</label>
-          <select id="movimientoExcepcion2">
-            <option value="opcion1">Opción 1</option>
-            <option value="opcion2">Opción 2</option>
-            <option value="opcion3">Opción 3</option>
-          </select><br><br>
-         -->
-
-
-
+          </div> -->
         </div>
         <div class="modal-footer "></div>
         <div class="row btns">
@@ -259,14 +352,24 @@ export default {
   },
   data() {
     return {
-      costo: {
-        CodigoE: '',
-        NombreCentroCostosE: ''
+      movimiento: {
+        conceptos: '',
+        prioridad: '',
+        tipooperacion: '',
+        cuenta1: '',
+        cuenta2: '',
+        cuenta3: '',
+        cuenta4: '',
+        Movimientoxcepcion1: '',
+        Movimientoxcepcion2: '',
+        Movimientoxcepcion3: '',
+        Traba_Aplica_iess: '',
+        Traba_Proyecto_imp_renta: '',
+        Aplica_Proy_Renta: '',
+        Empresa_Afecta_Iess: '',
       },
       movimientos: "",
       message: "",
-      ncodigo: "",
-      nnombre: "",
       search: "",
       movimientosSearch: "",
       isModalVisible: false,
@@ -289,7 +392,7 @@ export default {
     showModal() {
       this.isModalVisible = true;
     },
-    eliminarCosto(costo) {
+    eliminarMovimiento(costo) {
       this.isMEliminarVisible = true;
       console.log(costo)
       this.costo.CodigoE = costo.Codigo
@@ -304,11 +407,11 @@ export default {
     showAlert(message) {
       this.$swal(message);
     },
-    async buscarCCostos() {
+    async buscarMovimiento() {
       let formData = {
-        descripcioncentrocostos: this.search,
+        Concepto: this.search,
       };
-      let url = `${process.env.apiWebsite}/api/searchCentrosCostos/`;
+      let url = `${process.env.apiWebsite}/api/searchMovimientoPlanilla/`;
       const { data } = await axios({
         method: "post",
         url: url,
@@ -318,7 +421,7 @@ export default {
       this.costosSearch = data;
     },
 
-    editarCosto(costo) {
+    editarMovimiento(costo) {
       console.log('entra')
       console.log(costo)
       this.isModalVisible = true;
@@ -434,9 +537,10 @@ export default {
   margin-left: 20px;
 }
 
-.marginColum{
+.marginColum {
   margin: 0 5px;
 }
+
 
 /* Create three equal columns that floats next to each other */
 /* .column {

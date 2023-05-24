@@ -1,14 +1,14 @@
 <template>
   <div class="content">
     <div class="container-fluid">
-      <div class="row">
+      <div class="row rowM">
         <div class="column" style="margin-right: 500px">
-          <button class="form-button">Nuevo</button>
+          <button class="form-button" @click="insertarCosto">Nuevo</button>
         </div>
         <div class="column">
-          <div class="row">
+          <div class="row search">
             <div class="column">
-              <input v-model="search" placeholder="Search" />
+              <input v-model="search" class="form-control" placeholder="Search" />
             </div>
             <div class="column">
               <button class="form-button" @click="buscarCCostos">Buscar</button>
@@ -18,9 +18,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <card 
-          class="strpied-tabled-with-hover" 
-          body-classes="table-full-width table-responsive">
+          <card class="strpied-tabled-with-hover" body-classes="table-full-width table-responsive">
             <template slot="header">
               <h4 class="card-title">Centros de Costo</h4>
               <p class="card-category">Tabla</p>
@@ -69,7 +67,7 @@
                     </button>
                   </td>
                   <td>
-                    <button class="form-button" @click="eliminarCosto(2, index)">
+                    <button class="form-button" @click="eliminarCosto(costo)">
                       Eliminar
                     </button>
                   </td>
@@ -89,8 +87,8 @@
         <h2>Editar costo N°<b>{{ costo.CodigoE }}</b></h2>
         <div class="modal-body">
           <div class="form-group inputModal">
-            <input type="hidden" id="Codigo" v-model="costo.CodigoE" />
-            <input type="text" id="NombreCentroCostos" v-model="costo.NombreCentroCostosE" />
+            <input class="form-control" type="hidden" id="Codigo" v-model="costo.CodigoE" />
+            <input class="form-control" type="text" id="NombreCentroCostos" v-model="costo.NombreCentroCostosE" />
           </div>
         </div>
         <div class="modal-footer "></div>
@@ -110,7 +108,7 @@
 
     </div>
 
-    <div v-if="isMEliminarVisible" class="modal modal-style" id="editcc" tabindex="-1" role="dialog"
+    <div v-if="isMEliminarVisible" class="modal modal-style" id="deletecc" tabindex="-1" role="dialog"
       aria-labelledby="editLabel" aria-hidden="true">>
       <div class="modal-content">
         <h4>Esta seguro de eliminar el centro de costo N°<b>{{ costo.CodigoE }}</b></h4>
@@ -128,8 +126,36 @@
       </div>
 
     </div>
+
+    <div v-if="isMInsertarVisible" class="modal modal-style" id="insertcc" tabindex="-1" role="dialog"
+      aria-labelledby="editLabel" aria-hidden="true">>
+      <div class="modal-content">
+        <h2>Insertar Centro Costo</h2>
+        <div>
+          <div class="form-group inputModal">
+            <label for="movimientoPlanilla">Código</label>
+            <input type="number" placeholder="Código Centro Costos" class="form-control" id="Codigo" v-model="costo.CodigoE" />
+          </div>
+          <div class="form-group inputModal">
+            <label for="movimientoPlanilla">Descripción</label>
+            <input type="text" placeholder="Descripción Centro Costos" class="form-control" id="NombreCentroCostos" v-model="costo.NombreCentroCostosE" />
+          </div>
+        </div>
+        <div class="modal-footer"></div>
+        <div class="row btns">
+          <div class="column">
+            <button class="btnModel" @click="deleteCosto(costo.CodigoE, costo.NombreCentroCostosE)">Si</button>
+          </div>
+          <div class="column">
+            <button style="margin: 0 20px;" @click="closeModal()">No</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
   </div>
-</div></template>
+</template>
 <script>
 import axios from "axios";
 import * as $ from "jquery";
@@ -156,6 +182,7 @@ export default {
       costosSearch: "",
       isModalVisible: false,
       isMEliminarVisible: false,
+      isMInsertarVisible: false,
     };
   },
   mounted() {
@@ -185,6 +212,7 @@ export default {
     closeModal() {
       this.isModalVisible = false;
       this.isMEliminarVisible = false;
+      this.isMInsertarVisible = false;
     },
     showAlert(message) {
       this.$swal(message);
@@ -201,6 +229,27 @@ export default {
       });
       console.log(data);
       this.costosSearch = data;
+    },
+
+    insertarCosto() {
+      this.isMInsertarVisible = true;
+    },
+
+    async insetCosto(codigo, NombreCentroCostos) {
+      this.isMInsertarVisible = false;
+      let formData = {
+        codigocentrocostos: codigo,
+        descripcioncentrocostos: NombreCentroCostos,
+      };
+      let url = `${process.env.apiWebsite}/api/insertCentrosCostos/`;
+      const { data } = await axios({
+        method: "post",
+        url: url,
+        data: formData,
+      });
+      console.log(data);
+      this.showAlert(data.message)
+      this.obtenerCosto();
     },
 
     editarCosto(costo) {
@@ -251,6 +300,10 @@ export default {
 </script>
 
 <style>
+.rowM{
+ display: flex;
+
+}
 .form-button {
   display: block;
   margin: 0 20px;
@@ -327,5 +380,9 @@ export default {
 
 .modal-content {
   width: auto;
+}
+
+.search{
+  justify-self: flex-end;
 }
 </style>
