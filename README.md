@@ -43,3 +43,5 @@ The repo uses [vue-cli](https://github.com/vuejs/vue-cli) scaffolding which take
 
 Run this code in the terminal `$env:NODE_OPTIONS = "--openssl-legacy-provider"`
 Dont forget that you have to be in the project folder
+## `.env` Creation 
+- In the main folder you must create a `.env` file in that file you sould add the key of the api (backend)
