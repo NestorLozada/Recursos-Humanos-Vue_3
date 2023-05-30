@@ -58,9 +58,3 @@ export default {
   },
 };
 </script>
-<style>
-.nav-item {
-  margin-right: 10px;
-  margin-top: 5px;
-}
-</style>

@@ -108,6 +108,7 @@ export default {
           localStorage.token = token;
           localStorage.user = this.user;
           localStorage.date = this.date;
+          localStorage.codigoEmisor = data.cod_emisor
           localStorage.company = this.company;
         }else{
           this.$router.push('/').catch(()=>{})

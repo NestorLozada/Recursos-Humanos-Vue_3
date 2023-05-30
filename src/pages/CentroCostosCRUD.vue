@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="container-fluid">
-      <div class="row rowM">
+      <div class="row rowSearchNew">
         <div class="column" style="margin-right: 500px">
           <button class="form-button" @click="insertarCosto">Nuevo</button>
         </div>
@@ -84,17 +84,17 @@
     <div v-if="isModalVisible" class="modal modal-style" id="editcc" tabindex="-1" role="dialog"
       aria-labelledby="editLabel" aria-hidden="true">>
       <div class="modal-content">
-        <h2>Editar costo N°<b>{{ costo.CodigoE }}</b></h2>
+        <h2>Editar costo N°<b>{{ costoE.CodigoE }}</b></h2>
         <div class="modal-body">
           <div class="form-group inputModal">
-            <input class="form-control" type="hidden" id="Codigo" v-model="costo.CodigoE" />
-            <input class="form-control" type="text" id="NombreCentroCostos" v-model="costo.NombreCentroCostosE" />
+            <input class="form-control" type="hidden" id="Codigo" v-model="costoE.CodigoE" />
+            <input class="form-control" type="text" id="NombreCentroCostos" v-model="costoE.NombreCentroCostosE" />
           </div>
         </div>
         <div class="modal-footer "></div>
         <div class="row btns">
           <div class="column">
-            <button class="" style="margin: 0 20px;" @click="updateCosto(costo.CodigoE, costo.NombreCentroCostosE)">
+            <button class="" style="margin: 0 20px;" @click="updateCosto(costoE.CodigoE, costoE.NombreCentroCostosE)">
               Editar
             </button>
           </div>
@@ -144,7 +144,7 @@
         <div class="modal-footer"></div>
         <div class="row btns">
           <div class="column">
-            <button class="btnModel" @click="deleteCosto(costo.CodigoE, costo.NombreCentroCostosE)">Si</button>
+            <button class="btnModel" @click="insetCosto(costo.CodigoE, costo.NombreCentroCostosE)">Si</button>
           </div>
           <div class="column">
             <button style="margin: 0 20px;" @click="closeModal()">No</button>
@@ -175,6 +175,10 @@ export default {
         CodigoE: '',
         NombreCentroCostosE: ''
       },
+      costoE: {
+        CodigoE: '',
+        NombreCentroCostosE: ''
+      },
       message: "",
       ncodigo: "",
       nnombre: "",
@@ -191,6 +195,7 @@ export default {
   },
   created() {
     this.obtenerCosto();
+
   },
   methods: {
     async obtenerCosto() {
@@ -233,6 +238,8 @@ export default {
 
     insertarCosto() {
       this.isMInsertarVisible = true;
+      this.costoE.CodigoE = ''
+      this.costoE.NombreCentroCostosE = ''
     },
 
     async insetCosto(codigo, NombreCentroCostos) {
@@ -248,7 +255,7 @@ export default {
         data: formData,
       });
       console.log(data);
-      this.showAlert(data.message)
+      this.showAlert(data.message.Mensaje)
       this.obtenerCosto();
     },
 
@@ -256,8 +263,8 @@ export default {
       console.log('entra')
       console.log(costo)
       this.isModalVisible = true;
-      this.costo.CodigoE = costo.Codigo
-      this.costo.NombreCentroCostosE = costo.NombreCentroCostos
+      this.costoE.CodigoE = costo.Codigo
+      this.costoE.NombreCentroCostosE = costo.NombreCentroCostos
     },
 
     async updateCosto(index, NombreCentroCostos) {
@@ -298,7 +305,6 @@ export default {
   },
 };
 </script>
-
 <style>
 .rowM{
  display: flex;

@@ -6,7 +6,7 @@ import NotFound from '../pages/NotFoundPage.vue'
 import Overview from 'src/pages/Overview.vue'
 import UserProfile from 'src/pages/CentroCostosCRUD.vue'
 import TableList from 'src/pages/LogginAuth.vue'
-import Typography from 'src/pages/Typography.vue'
+import Trabajadores from 'src/pages/Trabajadores.vue'
 import Icons from 'src/pages/Icons.vue'
 import Maps from 'src/pages/ListaPlantillaCRUD.vue'
 import Notifications from 'src/pages/Notifications.vue'
@@ -40,8 +40,8 @@ const routes = [
       },
       {
         path: 'typography',
-        name: 'Typography',
-        component: Typography
+        name: 'Trabajadores',
+        component: Trabajadores
       },
       {
         path: 'icons',
