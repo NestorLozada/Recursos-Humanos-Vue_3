@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row rowSearchNew">
         <div class="column" style="margin-right: 500px">
-          <button class="form-button" @click="insertarMovPlantilla">Nuevo</button>
+          <button class="form-button" @click="insertarTrabajador">Nuevo</button>
         </div>
         <div class="column">
           <!-- <div class="row">
@@ -50,7 +50,7 @@
                     <button class="form-button" @click="editarMovimiento(trabajador)">Editar</button>
                   </td>
                   <td>
-                    <button class="form-button" @click="eliminarMovimiento(trabajador)">Eliminar</button>
+                    <button class="form-button" @click="eliminarTrabajador(trabajador)">Eliminar</button>
                   </td>
                 </tr>
               </tbody>
@@ -82,7 +82,7 @@
                     <button class="form-button" @click="editarMovimiento(trabajador)">Editar</button>
                   </td>
                   <td>
-                    <button class="form-button" @click="eliminarMovimiento(trabajador)">Eliminar</button>
+                    <button class="form-button" @click="eliminarTrabajador(trabajador)">Eliminar</button>
                   </td>
                 </tr>
               </tbody>
@@ -96,129 +96,242 @@
     <div v-if="isModalVisible" class="modal modal-style" id="editTrabajador" tabindex="-1" role="dialog"
       aria-labelledby="editLabel" aria-hidden="true">>
       <div class="modal-content1">
-        <h2>Editar Movimiento</h2>
+        <h2>Editar Trabajador</h2>
         <div class="modal-body">
           <!-- <div class="row"> -->
             <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="CodigoConcepto">Codigo Planilla:</label>
-                  <input type="text" class="form-control" id="CodigoConcepto" placeholder="Ingrese el codigo de planilla" v-model="movimientoE.CodigoConcepto" readonly>
-                </div>
-              </div>
-              <div class="column marginColum">
-                <div class="form-group">
-                  <label for="concepto">Concepto:</label>
-                  <input type="text" class="form-control" id="concepto" placeholder="Ingrese el concepto" v-model="movimientoE.Concepto">
-                </div>
-              </div>
-              <div class="column marginColum">
-                <div class="form-group">
-                  <label for="Prioridad">Prioridad:</label>
-                  <input type="number" class="form-control" id="Prioridad" placeholder="Ingrese la Prioridad" v-model="movimientoE.Prioridad">
-                </div>
-              </div>
-              <div class="column marginColum">
-                <div class="form-group">
-                  <label for="tipoOperacion">Tipo de Operacion:</label>
-                  <select class="form-control" id="tipoOperacion" v-model="movimientoE.TipoOperacion">
-                    <option v-for="(tipoOp) in TipoTrabajadorCombo" :value="tipoOp.NombreOperacion" :selected="movimientoE.TipoOperacion === tipoOp.CodigoTipooperacion">{{ tipoOp.CodigoTipooperacion }}</option>
+                  <label for="tipoOperacion">Tipo Trabajador:</label>
+                  <select class="form-control" id="tipoOperacion" v-model="trabajadorE.Tipo_trabajador">
+                    <option v-for="(tipoTra) in TipoTrabajadorCombo" :value="tipoTra.Descripcion" :selected="tipoTra.Codigo === trabajadorE.Tipo_trabajador">{{ tipoTra.Codigo }}</option>
                   </select>
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="CodigoConcepto">Apellido Paterno:</label>
+                  <input type="text" class="form-control" id="CodigoConcepto" placeholder="Ingrese el Apellido Paterno" v-model="trabajadorE.Apellido_Paterno">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="concepto">Apellido Materno:</label>
+                  <input type="text" class="form-control" id="concepto" placeholder="Ingrese el Apellido Materno" v-model="trabajadorE.Apellido_Materno">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Prioridad">Nombres:</label>
+                  <input type="text" class="form-control" id="Nombres" placeholder="Ingrese la Nombres" v-model="trabajadorE.Nombres">
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Cuenta1">Cuenta 1:</label>
-                  <input type="text" class="form-control" id="Cuenta1" placeholder="Ingrese la cuenta 1" v-model="movimientoE.Cuenta1">
+                  <label for="tipoOperacion">Identificacion:</label>
+                  <input type="text" class="form-control" id="Identificacion" placeholder="Ingrese la Identificacion" v-model="trabajadorE.Identificacion">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Cuenta2">Cuenta 2:</label>
-                  <input type="text" class="form-control" id="Cuenta2" placeholder="Ingrese la cuenta 2" v-model="movimientoE.Cuenta2">
+                  <label for="Entidad_Bancaria">Entidad Bancaria:</label>
+                  <input type="text" class="form-control" id="Entidad_Bancaria" placeholder="Ingrese la Entidad Bancaria" v-model="trabajadorE.Entidad_Bancaria">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Cuenta3">Cuenta 3:</label>
-                  <input type="text" class="form-control" id="Cuenta3" placeholder="Ingrese la cuenta 3" v-model="movimientoE.Cuenta3">
+                  <label for="CarnetIESS">Carnet IESS:</label>
+                  <input type="text" class="form-control" id="CarnetIESS" placeholder="Ingrese el Carnet IESS" v-model="trabajadorE.CarnetIESS">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Cuenta4">Cuenta 4:</label>
-                  <input type="text" class="form-control" id="Cuenta4" placeholder="Ingrese la cuenta 4" v-model="movimientoE.Cuenta4">
+                  <label for="Direccion">Direccion:</label>
+                  <input type="text" class="form-control" id="Direccion" placeholder="Ingrese la Direccion" v-model="trabajadorE.Direccion">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Telefono_Fijo">Telefono Fijo:</label>
+                  <input type="text" class="form-control" id="Telefono_Fijo" placeholder="Ingrese el Telefono Fijo" v-model="trabajadorE.Telefono_Fijo">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Telefono_Movil">Telefono Movil:</label>
+                  <input type="text" class="form-control" id="Telefono_Movil" placeholder="Ingrese el Telefono Movil" v-model="trabajadorE.Telefono_Movil">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Genero">Genero:</label>
+                  <select class="form-control" id="Genero" v-model="trabajadorE.Genero">
+                    <option v-for="(gene) in GeneroCombo" :value="gene.Descripcion" :selected="trabajadorE.Genero === gene.Codigo">{{ gene.Codigo }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Nro_Cuenta_Bancaria">Nro Cuenta Bancaria:</label>
+                  <input type="text" class="form-control" id="Nro_Cuenta_Bancaria" placeholder="Ingrese el Nro Cuenta Bancaria" v-model="trabajadorE.Nro_Cuenta_Bancaria">
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="movimientoExcepcion1">Movimiento Excepción 1:</label>
-                  <select class="form-control" id="movimientoExcepcion1" v-model="movimientoE.MovimientoExcepcion1">
-                    <option v-for="(moExc1y2) in GeneroCombo" :value="moExc1y2.DesripMovimientoExce" :selected="movimientoE.MovimientoExcepcion1 === moExc1y2.CodigoMovimientoExce">{{ moExc1y2.CodigoMovimientoExce }}</option>
+                  <label for="Codigo_Categoria_Ocupacion">Codigo Categoria Ocupacion:</label>
+                  <input type="text" class="form-control" id="Codigo_Categoria_Ocupacion" placeholder="Ingrese el Codigo Categoria Ocupacion" v-model="trabajadorE.Codigo_Categoria_Ocupacion">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Ocupacion">Ocupacion:</label>
+                  <input type="text" class="form-control" id="Ocupacion" placeholder="Ingrese el Ocupacion" v-model="trabajadorE.Ocupacion">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Centro_Costos">Centro Costos:</label>
+                  <select class="form-control" id="Centro_Costos" v-model="trabajadorE.Centro_Costos">
+                    <option v-for="(cenCos) in CentroCostosCombo" :value="cenCos.Codigo" :selected="trabajadorE.Centro_Costos === cenCos.NombreCentroCostos">{{ cenCos.Codigo }} - {{ cenCos.NombreCentroCostos }}</option>
                   </select>
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="movimientoExcepcion2">Movimiento Excepción 2:</label>
-                  <select class="form-control" id="movimientoExcepcion2" v-model="movimientoE.MovimientoExcepcion2">
-                    <option v-for="(moExc1y2) in GeneroCombo" :value="moExc1y2.DesripMovimientoExce" :selected="movimientoE.MovimientoExcepcion2 === moExc1y2.CodigoMovimientoExce">{{ moExc1y2.CodigoMovimientoExce }}</option>
+                  <label for="Ocupacion">Nivel Salarial:</label>
+                  <input type="text" class="form-control" id="Nivel_Salarial" placeholder="Ingrese el Nivel Salarial" v-model="trabajadorE.Nivel_Salarial">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="EstadoTrabajador">Estado Trabajador:</label>
+                  <select class="form-control" id="EstadoTrabajador" v-model="trabajadorE.EstadoTrabajador">
+                    <option v-for="(estTra) in EstadoTrabajadorCombo" :value="estTra.Descripcion" :selected="trabajadorE.Codigo === estTra.EstadoTrabajador">{{ estTra.Codigo }}</option>
                   </select>
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="movimientoExcepcion3">Movimiento Excepción 3:</label>
-                  <select class="form-control" id="movimientoExcepcion3" v-model="movimientoE.MovimientoExcepcion3">
-                    <option v-for="(moExc3) in EstadoTrabajadorCombo" :value="moExc3.DesripMovimientoExce" :selected="movimientoE.MovimientoExcepcion3 === moExc3.CodigoMovimientoExce">{{ moExc3.CodigoMovimientoExce }}</option>
+                  <label for="Tipo_Contrato">Tipo Contrato:</label>
+                  <select class="form-control" id="Tipo_Contrato" v-model="trabajadorE.Tipo_Contrato">
+                    <option v-for="(tipoCon) in TipoContratoCombo" :value="tipoCon.Descripcion" :selected="trabajadorE.Tipo_Contrato === tipoCon.Codigo">{{ tipoCon.Codigo }}</option>
                   </select>
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Aplica_iess">Aplica IESS:</label>
-                  <select class="form-control" id="Aplica_iess" v-model="movimientoE.Aplica_iess">
-                    <option v-for="(trabaIess) in TipoCeseCombo" :value="trabaIess.DesripMovimientoExce" :selected="movimientoE.Aplica_iess === trabaIess.CodigoMovimientoExce">{{ trabaIess.CodigoMovimientoExce }}</option>
+                  <label for="Tipo_Cese">Tipo Cese:</label>
+                  <select class="form-control" id="Tipo_Cese" v-model="trabajadorE.Tipo_Cese">
+                    <option v-for="(tipoCese) in TipoCeseCombo" :value="tipoCese.Descripcion" :selected="trabajadorE.Tipo_Cese === tipoCese.Codigo">{{ tipoCese.Codigo }}</option>
                   </select>
                 </div>
               </div>
-            </div>
-            <div class="row">
+              
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Aplica_imp_renta">Impuesto Renta:</label>
-                  <select class="form-control" id="Aplica_imp_renta" v-model="movimientoE.Aplica_imp_renta">
-                    <option v-for="(trabaImpRenta) in TipoContratoCombo" :value="trabaImpRenta.DesripMovimientoExce" :selected="movimientoE.Aplica_imp_renta === trabaImpRenta.CodigoMovimientoExce">{{ trabaImpRenta.CodigoMovimientoExce }}</option>
+                  <label for="EstadoCivil">Estado Civil</label>
+                  <select class="form-control" id="EstadoCivil" v-model="trabajadorE.EstadoCivil">
+                    <option v-for="(estCivi) in EstadoCivilCombo" :value="estCivi.Descripcion" :selected="trabajadorE.EstadoCivil === estCivi.Codigo">{{ estCivi.Codigo }}</option>
                   </select>
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Empresa_Afecta_Iess">Empresa Afecta IESS:</label>
-                  <select class="form-control" id="Empresa_Afecta_Iess" v-model="movimientoE.Empresa_Afecta_Iess">
-                    <option v-for="(trabaIess) in TipoCeseCombo" :value="trabaIess.DesripMovimientoExce" :selected="movimientoE.Empresa_Afecta_Iess === trabaIess.CodigoMovimientoExce">{{ trabaIess.CodigoMovimientoExce }}</option>
+                  <label for="TipodeComision">Tipo de Comision:</label>
+                  <input type="text" class="form-control" id="TipodeComision" placeholder="Ingrese el Tipo de Comision" v-model="trabajadorE.TipodeComision">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="FechaNacimiento">Fecha de Nacimiento:</label>
+                  <input type="date" class="form-control" id="FechaNacimiento" placeholder="Ingrese el Fecha de Nacimiento" v-model="trabajadorE.FechaNacimiento">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="FechaIngreso">Fecha de Ingreso:</label>
+                  <input type="date" class="form-control" id="FechaIngreso" placeholder="Ingrese el Fecha de Ingreso" v-model="trabajadorE.FechaIngreso">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="FechaCese">Fecha de Cese:</label>
+                  <input type="date" class="form-control" id="FechaCese" placeholder="Ingrese el Fecha de Cese" v-model="trabajadorE.FechaCese">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="PeriododeVacaciones">Periodo de Vacaciones:</label>
+                  <input type="number" class="form-control" id="PeriododeVacaciones" placeholder="Ingrese el Periodo de Vacaciones" v-model="trabajadorE.PeriododeVacaciones">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="FechaReingreso">Fecha de Reingreso:</label>
+                  <input type="date" class="form-control" id="FechaReingreso" placeholder="Ingrese el Fecha de Reingreso" v-model="trabajadorE.FechaReingreso">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="EsReingreso">Es Reingreso:</label>
+                  <select class="form-control" id="EsReingreso" v-model="trabajadorE.EsReingreso">
+                    <option v-for="(esRein) in EsReingresoCombo" :value="esRein.Descripcion" :selected="trabajadorE.EsReingreso === esRein.Codigo">{{ esRein.Codigo }}</option>
                   </select>
                 </div>
               </div>
               <div class="column marginColum">
-                <!-- <div class="form-group">
-                  <label for="Aplica_Proy_Renta">Aplica Renta:</label>
-                  <select class="form-control" id="Aplica_Proy_Renta" v-model="movimiento.Aplica_Proy_Renta">
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-                  </select>
-                </div> -->
+                <div class="form-group">
+                  <label for="BancoCTA_CTE">Banco CTA CTE:</label>
+                  <input type="text" class="form-control" id="BancoCTA_CTE" placeholder="Ingrese el Banco CTA CTE" v-model="trabajadorE.BancoCTA_CTE">
+                </div>
               </div>
               <div class="column marginColum">
-                <!-- <div class="form-group">
-                  <label for="Aplica_iess">Aplica IESS:</label>
-                  <input type="text" class="form-control" id="Aplica_iess" placeholder="Ingrese sin aplica IESS">
-                </div> -->
+                <div class="form-group">
+                  <label for="Tipo_Cuenta">Tipo Cuenta:</label>
+                  <select class="form-control" id="Tipo_Cuenta" v-model="trabajadorE.Tipo_Cuenta">
+                    <option v-for="(tipoCuen) in TipoCuentaCombo" :value="tipoCuen.Descripcion" :selected="trabajadorE.Tipo_Cuenta === tipoCuen.Codigo">{{ tipoCuen.Codigo }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="BoniComplementaria">Bonificacion Complementaria:</label>
+                  <input type="number" class="form-control" id="BoniComplementaria" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajadorE.BoniComplementaria">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="BoniEspecial">Bonificacion Especial:</label>
+                  <input type="number" class="form-control" id="BoniEspecial" placeholder="Ingrese el Bonificacion Especial" v-model="trabajadorE.BoniEspecial">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Remuneracion_Minima">Remuneracion Minima:</label>
+                  <input type="number" class="form-control" id="Remuneracion_Minima" placeholder="Ingrese el Remuneracion Minima" v-model="trabajadorE.Remuneracion_Minima">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="CuotaCuentaCorriente">Cuota Cuenta Corriente:</label>
+                  <input type="number" class="form-control" id="CuotaCuentaCorriente" placeholder="Ingrese el Cuota Cuenta Corriente" v-model="trabajadorE.CuotaCuentaCorriente">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Fondo_Reserva">Fondo Reserva:</label>
+                  <input type="text" class="form-control" id="Fondo_Reserva" placeholder="Ingrese el Fondo Reserva" v-model="trabajadorE.Fondo_Reserva">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group mesageArea">
+                  <label for="Mensaje">Mensaje:</label>
+                  <textarea type="text" class="form-control" id="Mensaje" placeholder="Mensaje (Opcional)" v-model="trabajadorE.Mensaje"></textarea>
+                </div>
               </div>
             </div>
           <!-- </div> -->
@@ -226,14 +339,10 @@
         <div class="modal-footer "></div>
         <div class="row btns">
           <div class="column">
-            <button class="" style="margin: 0 20px;" @click="updateMovPlan(movimientoE)">
-              Editar
-            </button>
+            <button class="" style="margin: 0 20px;" @click="updateTrabajador(trabajadorE)">Editar</button>
           </div>
           <div class="column">
-            <button class="" style="margin: 0 20px;" @click="closeModal()">
-              Cancelar
-            </button>
+            <button class="" style="margin: 0 20px;" @click="closeModal()">Cancelar</button>
           </div>
         </div>
       </div>
@@ -242,13 +351,13 @@
     <div v-if="isMEliminarVisible" class="modal modal-style" id="deleteTrabajador" tabindex="-1" role="dialog"
       aria-labelledby="editLabel" aria-hidden="true">>
       <div class="modal-content">
-        <h4>Esta seguro de eliminar el Movimiento de Plantilla <br><br>"<b>{{ movimiento.CodigoConcepto }}</b> - {{ movimiento.Concepto }}"</h4>
-        <input type="hidden" id="Codigo" v-model="movimiento.CodigoConcepto" />
-        <input type="hidden" id="NombreCentroCostos" v-model="movimiento.Concepto" />
+        <h4>Esta seguro de eliminar el Trabajador N° <br><br><b>{{ trabajador.Id_Trabajador }}</b></h4>
+        <input type="hidden" id="Codigo" v-model="trabajador.COMP_Codigo" />
+        <input type="hidden" id="NombreCentroCostos" v-model="trabajador.Id_Trabajador" />
         <div class="modal-footer "></div>
         <div class="row btns">
           <div class="column">
-            <button class="btnModel" @click="deleteMovPlan(movimiento.CodigoConcepto, movimiento.Concepto)">Si</button>
+            <button class="btnModel" @click="deleteTrabajador(trabajador.COMP_Codigo, trabajador.Id_Trabajador)">Si</button>
           </div>
           <div class="column">
             <button style="margin: 0 20px;" @click="closeModal()">No</button>
@@ -268,130 +377,235 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="tipoOperacion">Tipo Trabajador:</label>
-                  <select class="form-control" id="tipoOperacion" v-model="movimiento.TipoOperacion">
-                    <option v-for="(tipoOp) in TipoTrabajadorCombo" :value="tipoOp.NombreOperacion" :selected="tipoOp.CodigoTipooperacion === movimiento.TipoOperacion">{{ tipoOp.CodigoTipooperacion }}</option>
+                  <select class="form-control" id="tipoOperacion" v-model="trabajador.Tipo_trabajador">
+                    <option v-for="(tipoTra) in TipoTrabajadorCombo" :value="tipoTra.Descripcion" :selected="tipoTra.Codigo === trabajador.Tipo_trabajador">{{ tipoTra.Codigo }}</option>
                   </select>
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="CodigoConcepto">Codigo Planilla:</label>
-                  <input type="text" class="form-control" id="CodigoConcepto" placeholder="Ingrese el codigo de planilla" v-model="movimiento.CodigoConcepto" readonly>
+                  <label for="CodigoConcepto">Apellido Paterno:</label>
+                  <input type="text" class="form-control" id="CodigoConcepto" placeholder="Ingrese el Apellido Paterno" v-model="trabajador.Apellido_Paterno">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="concepto">Concepto:</label>
-                  <input type="text" class="form-control" id="concepto" placeholder="Ingrese el concepto" v-model="movimiento.Concepto">
+                  <label for="concepto">Apellido Materno:</label>
+                  <input type="text" class="form-control" id="concepto" placeholder="Ingrese el Apellido Materno" v-model="trabajador.Apellido_Materno">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Prioridad">Prioridad:</label>
-                  <input type="number" class="form-control" id="Prioridad" placeholder="Ingrese la Prioridad" v-model="movimiento.Prioridad">
-                </div>
-              </div>
-              <div class="column marginColum">
-                <div class="form-group">
-                  <label for="tipoOperacion">Tipo de Operacion:</label>
-                  <select class="form-control" id="tipoOperacion" v-model="movimiento.TipoOperacion">
-                    <option v-for="(tipoOp) in TipoTrabajadorCombo" :value="tipoOp.NombreOperacion" :selected="tipoOp.CodigoTipooperacion === movimiento.TipoOperacion">{{ tipoOp.CodigoTipooperacion }}</option>
-                  </select>
+                  <label for="Prioridad">Nombres:</label>
+                  <input type="number" class="form-control" id="Nombres" placeholder="Ingrese la Nombres" v-model="trabajador.Nombres">
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Cuenta1">Cuenta 1:</label>
-                  <input type="text" class="form-control" id="Cuenta1" placeholder="Ingrese la cuenta 1" v-model="movimiento.Cuenta1">
+                  <label for="tipoOperacion">Identificacion:</label>
+                  <input type="number" class="form-control" id="Identificacion" placeholder="Ingrese la Identificacion" v-model="trabajador.Identificacion">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Cuenta2">Cuenta 2:</label>
-                  <input type="text" class="form-control" id="Cuenta2" placeholder="Ingrese la cuenta 2" v-model="movimiento.Cuenta2">
+                  <label for="Entidad_Bancaria">Entidad Bancaria:</label>
+                  <input type="text" class="form-control" id="Entidad_Bancaria" placeholder="Ingrese la Entidad Bancaria" v-model="trabajador.Entidad_Bancaria">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Cuenta3">Cuenta 3:</label>
-                  <input type="text" class="form-control" id="Cuenta3" placeholder="Ingrese la cuenta 3" v-model="movimiento.Cuenta3">
+                  <label for="CarnetIESS">Carnet IESS:</label>
+                  <input type="text" class="form-control" id="CarnetIESS" placeholder="Ingrese el Carnet IESS" v-model="trabajador.CarnetIESS">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Cuenta4">Cuenta 4:</label>
-                  <input type="text" class="form-control" id="Cuenta4" placeholder="Ingrese la cuenta 4" v-model="movimiento.Cuenta4">
+                  <label for="Direccion">Direccion:</label>
+                  <input type="text" class="form-control" id="Direccion" placeholder="Ingrese la Direccion" v-model="trabajador.Direccion">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Telefono_Fijo">Telefono Fijo:</label>
+                  <input type="text" class="form-control" id="Telefono_Fijo" placeholder="Ingrese el Telefono Fijo" v-model="trabajador.Telefono_Fijo">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Telefono_Movil">Telefono Movil:</label>
+                  <input type="text" class="form-control" id="Telefono_Movil" placeholder="Ingrese el Telefono Movil" v-model="trabajador.Telefono_Movil">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Genero">Genero:</label>
+                  <select class="form-control" id="Genero" v-model="trabajador.Genero">
+                    <option v-for="(gene) in GeneroCombo" :value="gene.Descripcion" :selected="trabajador.Genero === gene.Codigo">{{ gene.Codigo }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Nro_Cuenta_Bancaria">Nro Cuenta Bancaria:</label>
+                  <input type="text" class="form-control" id="Nro_Cuenta_Bancaria" placeholder="Ingrese el Nro Cuenta Bancaria" v-model="trabajador.Nro_Cuenta_Bancaria">
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="movimientoExcepcion1">Movimiento Excepción 1:</label>
-                  <select class="form-control" id="movimientoExcepcion1" v-model="movimiento.MovimientoExcepcion1">
-                    <option v-for="(moExc1y2) in GeneroCombo" :value="moExc1y2.DesripMovimientoExce" :selected="movimiento.MovimientoExcepcion1 === moExc1y2.CodigoMovimientoExce">{{ moExc1y2.CodigoMovimientoExce }}</option>
+                  <label for="Codigo_Categoria_Ocupacion">Codigo Categoria Ocupacion:</label>
+                  <input type="text" class="form-control" id="Codigo_Categoria_Ocupacion" placeholder="Ingrese el Codigo Categoria Ocupacion" v-model="trabajador.Codigo_Categoria_Ocupacion">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Ocupacion">Ocupacion:</label>
+                  <input type="text" class="form-control" id="Ocupacion" placeholder="Ingrese el Ocupacion" v-model="trabajador.Ocupacion">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Centro_Costos">Centro Costos:</label>
+                  <select class="form-control" id="Centro_Costos" v-model="trabajador.Centro_Costos">
+                    <option v-for="(cenCos) in CentroCostosCombo" :value="cenCos.Codigo" :selected="trabajador.Centro_Costos === cenCos.NombreCentroCostos">{{ cenCos.Codigo }} - {{ cenCos.NombreCentroCostos }}</option>
                   </select>
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="movimientoExcepcion2">Movimiento Excepción 2:</label>
-                  <select class="form-control" id="movimientoExcepcion2" v-model="movimiento.MovimientoExcepcion2">
-                    <option v-for="(moExc1y2) in GeneroCombo" :value="moExc1y2.DesripMovimientoExce" :selected="movimiento.MovimientoExcepcion2 === moExc1y2.CodigoMovimientoExce">{{ moExc1y2.CodigoMovimientoExce }}</option>
+                  <label for="Ocupacion">Nivel Salarial:</label>
+                  <input type="text" class="form-control" id="Nivel_Salarial" placeholder="Ingrese el Nivel Salarial" v-model="trabajador.Nivel_Salarial">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="EstadoTrabajador">Estado Trabajador:</label>
+                  <select class="form-control" id="EstadoTrabajador" v-model="trabajador.EstadoTrabajador">
+                    <option v-for="(estTra) in EstadoTrabajadorCombo" :value="estTra.Descripcion" :selected="trabajador.Codigo === estTra.EstadoTrabajador">{{ estTra.Codigo }}</option>
                   </select>
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="movimientoExcepcion3">Movimiento Excepción 3:</label>
-                  <select class="form-control" id="movimientoExcepcion3" v-model="movimiento.MovimientoExcepcion3">
-                    <option v-for="(moExc3) in EstadoTrabajadorCombo" :value="moExc3.DesripMovimientoExce" :selected="movimiento.MovimientoExcepcion3 === moExc3.CodigoMovimientoExce">{{ moExc3.CodigoMovimientoExce }}</option>
+                  <label for="Tipo_Contrato">Tipo Contrato:</label>
+                  <select class="form-control" id="Tipo_Contrato" v-model="trabajador.Tipo_Contrato">
+                    <option v-for="(tipoCon) in TipoContratoCombo" :value="tipoCon.Descripcion" :selected="trabajador.Tipo_Contrato === tipoCon.Codigo">{{ tipoCon.Codigo }}</option>
                   </select>
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Aplica_iess">Aplica IESS:</label>
-                  <select class="form-control" id="Aplica_iess" v-model="movimiento.Aplica_iess">
-                    <option v-for="(trabaIess) in TipoCeseCombo" :value="trabaIess.DesripMovimientoExce" :selected="movimiento.Aplica_iess === trabaIess.CodigoMovimientoExce">{{ trabaIess.CodigoMovimientoExce }}</option>
+                  <label for="Tipo_Cese">Tipo Cese:</label>
+                  <select class="form-control" id="Tipo_Cese" v-model="trabajador.Tipo_Cese">
+                    <option v-for="(tipoCese) in TipoCeseCombo" :value="tipoCese.Descripcion" :selected="trabajador.Tipo_Cese === tipoCese.Codigo">{{ tipoCese.Codigo }}</option>
                   </select>
                 </div>
               </div>
-            </div>
-            <div class="row">
+              
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Aplica_imp_renta">Impuesto Renta:</label>
-                  <select class="form-control" id="Aplica_imp_renta" v-model="movimiento.Aplica_imp_renta">
-                    <option v-for="(trabaImpRenta) in TipoContratoCombo" :value="trabaImpRenta.DesripMovimientoExce" :selected="movimiento.Aplica_imp_renta === trabaImpRenta.CodigoMovimientoExce">{{ trabaImpRenta.CodigoMovimientoExce }}</option>
+                  <label for="EstadoCivil">Estado Civil</label>
+                  <select class="form-control" id="EstadoCivil" v-model="trabajador.EstadoCivil">
+                    <option v-for="(estCivi) in EstadoCivilCombo" :value="estCivi.Descripcion" :selected="trabajador.EstadoCivil === estCivi.Codigo">{{ estCivi.Codigo }}</option>
                   </select>
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Empresa_Afecta_Iess">Empresa Afecta IESS:</label>
-                  <select class="form-control" id="Empresa_Afecta_Iess" v-model="movimiento.Empresa_Afecta_Iess">
-                    <option v-for="(trabaIess) in TipoCeseCombo" :value="trabaIess.DesripMovimientoExce" :selected="movimiento.Empresa_Afecta_Iess === trabaIess.CodigoMovimientoExce">{{ trabaIess.CodigoMovimientoExce }}</option>
+                  <label for="TipodeComision">Tipo de Comision:</label>
+                  <input type="text" class="form-control" id="TipodeComision" placeholder="Ingrese el Tipo de Comision" v-model="trabajador.TipodeComision">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="FechaNacimiento">Fecha de Nacimiento:</label>
+                  <input type="date" class="form-control" id="FechaNacimiento" placeholder="Ingrese el Fecha de Nacimiento" v-model="trabajador.FechaNacimiento">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="FechaIngreso">Fecha de Ingreso:</label>
+                  <input type="date" class="form-control" id="FechaIngreso" placeholder="Ingrese el Fecha de Ingreso" v-model="trabajador.FechaIngreso">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="FechaCese">Fecha de Cese:</label>
+                  <input type="date" class="form-control" id="FechaCese" placeholder="Ingrese el Fecha de Cese" v-model="trabajador.FechaCese">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="PeriododeVacaciones">Periodo de Vacaciones:</label>
+                  <input type="number" class="form-control" id="PeriododeVacaciones" placeholder="Ingrese el Periodo de Vacaciones" v-model="trabajador.PeriododeVacaciones">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="FechaReingreso">Fecha de Reingreso:</label>
+                  <input type="date" class="form-control" id="FechaReingreso" placeholder="Ingrese el Fecha de Reingreso" v-model="trabajador.FechaReingreso">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="EsReingreso">Es Reingreso:</label>
+                  <select class="form-control" id="EsReingreso" v-model="trabajador.EsReingreso">
+                    <option v-for="(esRein) in EsReingresoCombo" :value="esRein.Descripcion" :selected="trabajador.EsReingreso === esRein.Codigo">{{ esRein.Codigo }}</option>
                   </select>
                 </div>
               </div>
               <div class="column marginColum">
-                <!-- <div class="form-group">
-                  <label for="Aplica_Proy_Renta">Aplica Renta:</label>
-                  <select class="form-control" id="Aplica_Proy_Renta" v-model="movimiento.Aplica_Proy_Renta">
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-                  </select>
-                </div> -->
+                <div class="form-group">
+                  <label for="BancoCTA_CTE">Banco CTA CTE:</label>
+                  <input type="text" class="form-control" id="BancoCTA_CTE" placeholder="Ingrese el Banco CTA CTE" v-model="trabajador.BancoCTA_CTE">
+                </div>
               </div>
               <div class="column marginColum">
-                <!-- <div class="form-group">
-                  <label for="Aplica_iess">Aplica IESS:</label>
-                  <input type="text" class="form-control" id="Aplica_iess" placeholder="Ingrese sin aplica IESS">
-                </div> -->
+                <div class="form-group">
+                  <label for="Tipo_Cuenta">Tipo Cuenta:</label>
+                  <select class="form-control" id="Tipo_Cuenta" v-model="trabajador.Tipo_Cuenta">
+                    <option v-for="(tipoCuen) in TipoCuentaCombo" :value="tipoCuen.Descripcion" :selected="trabajador.Tipo_Cuenta === tipoCuen.Codigo">{{ tipoCuen.Codigo }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="BoniComplementaria">Bonificacion Complementaria:</label>
+                  <input type="number" class="form-control" id="BoniComplementaria" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajador.BoniComplementaria">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="BoniEspecial">Bonificacion Especial:</label>
+                  <input type="number" class="form-control" id="BoniEspecial" placeholder="Ingrese el Bonificacion Especial" v-model="trabajador.BoniEspecial">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Remuneracion_Minima">Remuneracion Minima:</label>
+                  <input type="number" class="form-control" id="Remuneracion_Minima" placeholder="Ingrese el Remuneracion Minima" v-model="trabajador.Remuneracion_Minima">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="CuotaCuentaCorriente">Cuota Cuenta Corriente:</label>
+                  <input type="number" class="form-control" id="CuotaCuentaCorriente" placeholder="Ingrese el Cuota Cuenta Corriente" v-model="trabajador.CuotaCuentaCorriente">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="Fondo_Reserva">Fondo Reserva:</label>
+                  <input type="text" class="form-control" id="Fondo_Reserva" placeholder="Ingrese el Fondo Reserva" v-model="trabajador.Fondo_Reserva">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group mesageArea">
+                  <label for="Mensaje">Mensaje:</label>
+                  <textarea type="text" class="form-control" id="Mensaje" placeholder="Mensaje (Opcional)" v-model="trabajador.Mensaje"></textarea>
+                </div>
               </div>
             </div>
           <!-- </div> -->
@@ -399,14 +613,10 @@
         <div class="modal-footer "></div>
         <div class="row btns">
           <div class="column">
-            <button class="" style="margin: 0 20px;" @click="insertMovPlan(movimiento)">
-              Insertar
-            </button>
+            <button class="" style="margin: 0 20px;" @click="insertTrabajador(trabajador)">Insertar</button>
           </div>
           <div class="column">
-            <button class="" style="margin: 0 20px;" @click="closeModal()">
-              Cancelar
-            </button>
+            <button class="" style="margin: 0 20px;" @click="closeModal()">Cancelar</button>
           </div>
         </div>
       </div>
@@ -427,6 +637,7 @@ export default {
     return {
       trabajador: {
         COMP_Codigo: '',
+        Id_Trabajador: '',
         Tipo_trabajador: '',
         Prioridad: '',
         Apellido_Paterno: '',
@@ -472,6 +683,7 @@ export default {
       },
       trabajadorE: {
         CodigoConcepto: '',
+        Id_Trabajador: '',
         Concepto: '',
         Prioridad: '',
         TipoOperacion: '',
@@ -544,6 +756,7 @@ export default {
     this.getEstadoCivil();
     this.getEsReingreso();
     this.getTipoCuenta();
+    this.getCentrosCostos();
   },
   created() {
     this.getTrabajadores();
@@ -552,55 +765,55 @@ export default {
     async getTipoTrabajador(){
       let url = `${process.env.apiWebsite}/api/getTipoTrabajador/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.TipoTrabajadorCombo = data;
     },
     async getGenero(){
       let url = `${process.env.apiWebsite}/api/getGenero/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.GeneroCombo = data;
     },
     async getEstadoTrabajador(){
       let url = `${process.env.apiWebsite}/api/getEstadoTrabajador/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.EstadoTrabajadorCombo = data;
     },
     async getTipoCese(){
       let url = `${process.env.apiWebsite}/api/getTipoCese/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.TipoCeseCombo = data;
     },
     async getTipoContrato(){
       let url = `${process.env.apiWebsite}/api/getTipoContrato/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.TipoContratoCombo = data;
     },
     async getEstadoCivil(){
       let url = `${process.env.apiWebsite}/api/getEstadoCivil/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.EstadoCivilCombo = data;
     },
     async getEsReingreso(){
       let url = `${process.env.apiWebsite}/api/getEsReingreso/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.EsReingresoCombo = data;
     },
     async getTipoCuenta(){
       let url = `${process.env.apiWebsite}/api/getTipoCuenta/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.TipoCuentaCombo = data;
     },
     async getCentrosCostos(){
       let url = `${process.env.apiWebsite}/api/getCentrosCostos/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.CentroCostosCombo = data;
     },
     async getTrabajadores() {
@@ -615,18 +828,18 @@ export default {
         data: formData,
       });
       this.trabajadores = data;
-      //console.log(data);
+      ////console.log(data);
     },
 
 
     showModal() {
       this.isModalVisible = true;
     },
-    eliminarMovimiento(movimiento) {
+    eliminarTrabajador(trabajador) {
       this.isMEliminarVisible = true;
-      console.log(movimiento)
-      this.movimiento.CodigoConcepto = movimiento.CodigoConcepto
-      this.movimiento.Concepto = movimiento.Concepto
+      console.log(trabajador)
+      this.trabajador.COMP_Codigo = trabajador.COMP_Codigo
+      this.trabajador.Tipo_trabajador = trabajador.Tipo_trabajador
     },
     closeModal() {
       this.isModalVisible = false;
@@ -649,26 +862,16 @@ export default {
       console.log(data);
       this.costosSearch = data;
     },
-    insertarMovPlantilla() {
+    insertarTrabajador() {
       this.isMInsertarVisible = true;
-      /* this.movimiento.CodigoConcepto = ''
-      this.movimiento.Concepto = ''
-      this.movimiento.Prioridad = ''
-      this.movimiento.TipoOperacion = ''
-      this.movimiento.Cuenta1 = ''
-      this.movimiento.Cuenta2 = ''
-      this.movimiento.Cuenta3 = ''
-      this.movimiento.Cuenta4 = ''
-      this.movimiento.MovimientoExcepcion1 = ''
-      this.movimiento.MovimientoExcepcion2 = ''
-      this.movimiento.MovimientoExcepcion3 = ''
-      this.movimiento.Aplica_iess = ''
-      this.movimiento.Aplica_imp_renta = ''
-      this.movimiento.Aplica_Proy_Renta = ''
-      this.movimiento.Empresa_Afecta_Iess = ''  */   
+      const keys = Object.keys(this.trabajador);
+      keys.forEach((key) => {
+        //console.log(key)
+        this.trabajador[key] = '';
+      });  
     },
 
-    async insertMovPlan(movimiento) {
+    async insertTrabajador(trabajador) {
       
       let formData = {
         conceptos : movimiento.Concepto,
@@ -699,28 +902,28 @@ export default {
       this.getTrabajadores();
     },
 
-    editarMovimiento(movimiento) {
-      console.log('entra')
-      console.log(movimiento)
-      this.isModalVisible = true;
-      this.movimientoE.CodigoConcepto = movimiento.CodigoConcepto;
-      this.movimientoE.Concepto = movimiento.Concepto;
-      this.movimientoE.Prioridad = movimiento.Prioridad;
-      this.movimientoE.TipoOperacion = movimiento.TipoOperacion;
-      this.movimientoE.Cuenta1 = movimiento.Cuenta1;
-      this.movimientoE.Cuenta2 = movimiento.Cuenta2;
-      this.movimientoE.Cuenta3 = movimiento.Cuenta3;
-      this.movimientoE.Cuenta4 = movimiento.Cuenta4;
-      this.movimientoE.MovimientoExcepcion1 = movimiento.MovimientoExcepcion1;
-      this.movimientoE.MovimientoExcepcion2 = movimiento.MovimientoExcepcion2;
-      this.movimientoE.MovimientoExcepcion3 = movimiento.MovimientoExcepcion3;
-      this.movimientoE.Aplica_iess = movimiento.Aplica_iess;
-      this.movimientoE.Aplica_imp_renta = movimiento.Aplica_imp_renta;
-      this.movimientoE.Aplica_Proy_Renta = movimiento.Aplica_Proy_Renta;
-      this.movimientoE.Empresa_Afecta_Iess = movimiento.Empresa_Afecta_Iess;
+    getDate(oldDate){
+      const fecha = new Date(oldDate);
+      const dia = fecha.getDate();
+      const mes = fecha.getMonth() + 1; // Los meses en JavaScript comienzan desde 0
+      const anio = fecha.getFullYear();
+      const date = `${anio}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}`;
+      return date;
     },
 
-    async updateMovPlan(movimiento) {
+    editarMovimiento(trabajador) {
+      console.log('entra');
+      console.log(trabajador);
+      this.isModalVisible = true;
+
+      this.trabajadorE = Object.assign({}, trabajador);
+      this.trabajadorE.FechaNacimiento = this.getDate(trabajador.FechaNacimiento)
+      this.trabajadorE.FechaIngreso = this.getDate(trabajador.FechaIngreso)
+      this.trabajadorE.FechaCese = this.getDate(trabajador.FechaCese)
+      this.trabajadorE.FechaReingreso = this.getDate(trabajador.FechaReingreso)
+    },
+
+    async updateTrabajador(trabajadorE) {
       this.isModalVisible = false;
       let formData = {
         codigoplanilla : movimiento.CodigoConcepto,
@@ -751,13 +954,13 @@ export default {
       this.getTrabajadores();
     },
 
-    async deleteMovPlan(codConcepto, concepto) {
+    async deleteTrabajador(COMP_Codigo, Id_Trabajador) {
       this.isMEliminarVisible = false;
       let formData = {
-        codigomovimiento: codConcepto,
-        descripcionomovimiento: concepto,
+        sucursal: COMP_Codigo,
+        codigoempleado: Id_Trabajador,
       };
-      let url = `${process.env.apiWebsite}/api/deleteMovimientoPlanilla/`;
+      let url = `${process.env.apiWebsite}/api/deleteTrabajador/`;
       const { data } = await axios({
         method: "post",
         url: url,
@@ -808,6 +1011,8 @@ export default {
   padding: 20px;
   border-radius: 20px;
   text-align: left;
+  width: 142vh;
+  margin-right: 0;
 }
 
 .modal-content1 h3 {
@@ -866,5 +1071,27 @@ export default {
 
 .marginColum {
   margin: 0 5px;
+}
+
+/* .modal{
+    display: block !important; /* I added this to see the modal, you don't need this
+}
+
+.modal-dialog{
+  display: inline-block;
+    overflow-y: initial !important
+} */
+.modal-body{
+    height: 68vh;
+    overflow-y: scroll;
+}
+
+.mesageArea{
+  column-count: 2;
+  column-gap: 20px;
+}
+
+.row{
+  display: flex;
 }
 </style>
