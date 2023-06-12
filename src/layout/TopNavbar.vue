@@ -2,9 +2,7 @@
   <nav class="navbar navbar-expand-lg">
     <ul class="navbar-nav ml-auto ">
       <li class="nav-item">
-        <a>
-          <b>{{ user }}</b> 
-        </a>
+        <a><b>{{ user }}</b></a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto ">

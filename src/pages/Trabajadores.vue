@@ -10,9 +10,9 @@
             <div class="column">
               <input v-model="search" class="form-control" placeholder="Search" />
             </div>
-            <div class="column">
+            <!-- <div class="column">
               <button class="form-button" @click="buscarTrabajador">Buscar</button>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -26,26 +26,28 @@
             <table v-if="search == ''" class="table">
               <thead>
                 <tr>
+                  <th><b>N°</b></th>
                   <th>ID</th>
                   <th>TIPO TRABAJADOR</th>
                   <th>NOMBRES</th>
                   <th>APELLIDOS</th>
                   <th>DNI</th>
-                  <th>BANCO</th>
-                  <th>TELEFONO</th>
+                  <!-- <th>BANCO</th> -->
+             <!-- <th>TELEFONO</th> -->
                   <th>EDITAR</th>
                   <th>ELIMINAR</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(trabajador, index) in trabajadores" :key="index">
+                  <td><b>{{ index + 1}}</b></td>
                   <td>{{ trabajador.Id_Trabajador }}</td>
                   <td>{{ trabajador.Tipo_trabajador }}</td>
                   <td>{{ trabajador.Nombres }}</td>
                   <td>{{ trabajador.Apellido_Paterno }} {{ trabajador.Apellido_Materno }}</td>
                   <td>{{ trabajador.Identificacion }}</td>
-                  <td>{{ trabajador.Entidad_Bancaria }}</td>
-                  <td>{{ trabajador.Telefono_Movil }}</td>
+                  <!-- <td>{{ trabajador.Entidad_Bancaria }}</td> -->
+                  <!-- <td>{{ trabajador.Telefono_Movil }}</td> -->
                   <td>
                     <button class="form-button" @click="editarTrabajador(trabajador)">Editar</button>
                   </td>
@@ -58,26 +60,28 @@
             <table v-if="search != ''" class="table">
               <thead>
                 <tr>
+                  <th><b>N°</b></th>
                   <th>ID</th>
                   <th>TIPO TRABAJADOR</th>
                   <th>NOMBRES</th>
                   <th>APELLIDOS</th>
                   <th>DNI</th>
-                  <th>BANCO</th>
-                  <th>TELEFONO</th>
+                  <!-- <th>BANCO</th> -->
+                  <!-- <th>TELEFONO</th> -->
                   <th>EDITAR</th>
                   <th>ELIMINAR</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(trabajador, index) in trabajadoresFiltrados" :key="index">
+                  <td><b>{{ index + 1 }}</b></td>
                   <td>{{ trabajador.Id_Trabajador }}</td>
                   <td>{{ trabajador.Tipo_trabajador }}</td>
                   <td>{{ trabajador.Nombres }}</td>
                   <td>{{ trabajador.Apellido_Paterno }} {{ trabajador.Apellido_Materno }}</td>
                   <td>{{ trabajador.Identificacion }}</td>
-                  <td>{{ trabajador.Entidad_Bancaria }}</td>
-                  <td>{{ trabajador.Telefono_Movil }}</td>
+                  <!-- <td>{{ trabajador.Entidad_Bancaria }}</td> -->
+             <!-- <td>{{ trabajador.Telefono_Movil }}</td> -->
                   <td>
                     <button class="form-button" @click="editarTrabajador(trabajador)">Editar</button>
                   </td>
@@ -103,6 +107,7 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="tipoOperacion">Tipo Trabajador:</label>
+                  <input type="hidden" v-model="trabajadorE.Id_Trabajador" />
                   <select class="form-control" id="tipoOperacion" v-model="trabajadorE.Tipo_trabajador">
                     <option v-for="(tipoTra) in TipoTrabajadorCombo" :value="tipoTra.Descripcion" :selected="tipoTra.Codigo === trabajadorE.Tipo_trabajador">{{ tipoTra.Codigo }}</option>
                   </select>
@@ -126,8 +131,7 @@
                   <input type="text" class="form-control" id="Nombres" placeholder="Ingrese la Nombres" v-model="trabajadorE.Nombres">
                 </div>
               </div>
-            </div>
-            <div class="row">
+              
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="tipoOperacion">Identificacion:</label>
@@ -178,8 +182,6 @@
                   <input type="text" class="form-control" id="Nro_Cuenta_Bancaria" placeholder="Ingrese el Nro Cuenta Bancaria" v-model="trabajadorE.Nro_Cuenta_Bancaria">
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Codigo_Categoria_Ocupacion">Codigo Categoria Ocupacion:</label>
@@ -285,16 +287,22 @@
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="BancoCTA_CTE">Banco CTA CTE:</label>
-                  <input type="text" class="form-control" id="BancoCTA_CTE" placeholder="Ingrese el Banco CTA CTE" v-model="trabajadorE.BancoCTA_CTE">
-                </div>
-              </div>
-              <div class="column marginColum">
-                <div class="form-group">
                   <label for="Tipo_Cuenta">Tipo Cuenta:</label>
                   <select class="form-control" id="Tipo_Cuenta" v-model="trabajadorE.Tipo_Cuenta">
                     <option v-for="(tipoCuen) in TipoCuentaCombo" :value="tipoCuen.Descripcion" :selected="trabajadorE.Tipo_Cuenta === tipoCuen.Codigo">{{ tipoCuen.Codigo }}</option>
                   </select>
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="FormaCalculo13ro">Forma Calculo 13ro:</label>
+                  <input type="number" class="form-control" id="FormaCalculo13ro" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajadorE.FormaCalculo13ro">
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="FormaCalculo14ro">Forma Calculo 14ro:</label>
+                  <input type="number" class="form-control" id="FormaCalculo14ro" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajadorE.FormaCalculo14ro">
                 </div>
               </div>
               <div class="column marginColum">
@@ -313,12 +321,6 @@
                 <div class="form-group">
                   <label for="Remuneracion_Minima">Remuneracion Minima:</label>
                   <input type="number" class="form-control" id="Remuneracion_Minima" placeholder="Ingrese el Remuneracion Minima" v-model="trabajadorE.Remuneracion_Minima">
-                </div>
-              </div>
-              <div class="column marginColum">
-                <div class="form-group">
-                  <label for="CuotaCuentaCorriente">Cuota Cuenta Corriente:</label>
-                  <input type="number" class="form-control" id="CuotaCuentaCorriente" placeholder="Ingrese el Cuota Cuenta Corriente" v-model="trabajadorE.CuotaCuentaCorriente">
                 </div>
               </div>
               <div class="column marginColum">
@@ -352,8 +354,8 @@
       aria-labelledby="editLabel" aria-hidden="true">>
       <div class="modal-content">
         <h4>Esta seguro de eliminar el Trabajador N° <br><br><b>{{ trabajadorE.Id_Trabajador }}</b></h4>
-        <input type="hidden" id="Codigo" v-model="trabajadorE.COMP_Codigo" />
-        <input type="hidden" id="NombreCentroCostos" v-model="trabajadorE.Id_Trabajador" />
+        <input type="hidden" v-model="trabajadorE.COMP_Codigo" />
+        <input type="hidden" v-model="trabajadorE.Id_Trabajador" />
         <div class="modal-footer "></div>
         <div class="row btns">
           <div class="column">
@@ -619,14 +621,18 @@
 import axios from "axios";
 import LTable from "src/components/Table.vue";
 import Card from "src/components/Cards/Card.vue";
+import Paginate from 'vuejs-paginate';
 /* import validarIdentificacion from "src/assets/js/validarIdentificacion.js" */
 export default {
   components: {
     LTable,
     Card,
+    Paginate,
   },
   data() {
     return {
+      currentPage: 1,
+      itemsPerPage: 10,
       trabajador: {
         Tipo_trabajador: '',
         Apellido_Paterno: '',
@@ -666,11 +672,13 @@ export default {
         Mensaje: '',
       },
       trabajadorE: {
+        Tipo_trabajador: '',
         CodigoConcepto: '',
         Id_Trabajador: '',
         Concepto: '',
         Prioridad: '',
         TipoOperacion: '',
+        Apellido_Paterno: '',
         Apellido_Materno: '',
         Nombres: '',
         Identificacion: '',
@@ -697,17 +705,12 @@ export default {
         FechaReingreso: '',
         Fecha_Ult_Actualizacion: '',
         EsReingreso: '',
-        BancoCTA_CTE: '',
         Tipo_Cuenta: '',
-        RSV_Indem_Acumul: '',
-        Año_Ult_Rsva_Indemni: '',
-        Mes_Ult_Rsva_Indemni: '',
         FormaCalculo13ro: '',
         FormaCalculo14ro: '',
         BoniComplementaria: '',
         BoniEspecial: '',
         Remuneracion_Minima: '',
-        CuotaCuentaCorriente: '',
         Fondo_Reserva: '',
         Mensaje: '',
       },
@@ -759,8 +762,19 @@ export default {
           trabajador.Identificacion.toLowerCase().includes(searchTerm);
       });
     },
+    trabajadoresPaginados() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = this.currentPage * this.itemsPerPage;
+      return this.trabajadoresFiltrados.slice(startIndex, endIndex);
+    },
+    totalPages() {
+      return Math.ceil(this.trabajadoresFiltrados.length / this.itemsPerPage);
+    },
   },
   methods: {
+    changePage(pageNumber) {
+    this.currentPage = pageNumber;
+  },
     async getTipoTrabajador(){
       let url = `${process.env.apiWebsite}/api/getTipoTrabajador/`;
       const { data } = await axios.get(url);
@@ -841,7 +855,7 @@ export default {
     showAlert(message) {
       this.$swal(message);
     },
-    buscarTrabajador() {
+    /* buscarTrabajador() {
     this.trabajadoresSearch = this.trabajadores.filter(trabajador => {
       // Aplica los criterios de búsqueda según tus necesidades
       return trabajador.Nombres.toLowerCase().includes(this.search.toLowerCase()) ||
@@ -849,7 +863,7 @@ export default {
              trabajador.Apellido_Materno.toLowerCase().includes(this.search.toLowerCase()) ||
              trabajador.Identificacion.toLowerCase().includes(this.search.toLowerCase());
     });
-  },
+    }, */
     insertarTrabajador() {
       this.isMInsertarVisible = true;
       const keys = Object.keys(this.trabajador);
@@ -866,6 +880,8 @@ export default {
       keys.forEach((key) => {
         formData[key] = trabajador[key];
       });
+      formData['Fecha_Ult_Actualizacion'] = this.getDate(new Date);
+      //console.log(getDate(new Date));
       console.log(formData);
       let url = `${process.env.apiWebsite}/api/insertTrabajador/`;
       const { data } = await axios({
@@ -905,9 +921,10 @@ export default {
       keys.forEach((key) => {
         formData[key] = trabajadorE[key];
       });
+      formData['Fecha_Ult_Actualizacion'] = this.getDate(new Date);
       console.log(formData);
-      this.isModalVisible = false;
-      let url = `${process.env.apiWebsite}/api/updateMovimientoPlanilla/`;
+      //this.isModalVisible = false;
+      let url = `${process.env.apiWebsite}/api/updateTrabajador/`;
       const { data } = await axios({
         method: "post",
         url: url,

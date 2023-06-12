@@ -81,7 +81,7 @@
 
 
     <!-- Modal -->
-    <div v-if="isModalVisible" class="modal modal-style" id="editcc" tabindex="-1" role="dialog"
+    <div v-if="isModalVisible" class="modal modal-style modalCC" id="editcc" tabindex="-1" role="dialog"
       aria-labelledby="editLabel" aria-hidden="true">>
       <div class="modal-content">
         <h2>Editar costo N°<b>{{ costoE.CodigoE }}</b></h2>
@@ -94,14 +94,10 @@
         <div class="modal-footer "></div>
         <div class="row btns">
           <div class="column">
-            <button class="" style="margin: 0 20px;" @click="updateCosto(costoE.CodigoE, costoE.NombreCentroCostosE)">
-              Editar
-            </button>
+            <button class="" style="margin: 0 20px;" @click="updateCosto(costoE.CodigoE, costoE.NombreCentroCostosE)">Editar</button>
           </div>
           <div class="column">
-            <button class="" style="margin: 0 20px;" @click="closeModal()">
-              Cancelar
-            </button>
+            <button class="" style="margin: 0 20px;" @click="closeModal()">Cancelar</button>
           </div>
         </div>
       </div>
@@ -195,7 +191,6 @@ export default {
   },
   created() {
     this.obtenerCosto();
-
   },
   methods: {
     async obtenerCosto() {
