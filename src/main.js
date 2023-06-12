@@ -15,6 +15,8 @@ dotenv.config()
 import routes from "./routes/routes";
 
 import "./registerServiceWorker";
+import { isLoggedIn } from './guards';
+
 // plugin setup
 Vue.use(VueRouter);
 Vue.use(VueSweetalert2);
@@ -31,6 +33,14 @@ const router = new VueRouter({
       return { x: 0, y: 0 };
     }
   },
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !isLoggedIn()) {
+    next('/');
+  } else {
+    next();
+  }
 });
 
 /* eslint-disable no-new */

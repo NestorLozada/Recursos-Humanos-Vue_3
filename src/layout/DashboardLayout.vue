@@ -4,18 +4,17 @@
       <mobile-menu slot="content"></mobile-menu>
       <sidebar-link to="/admin/overview">
         <i class="nc-icon nc-chart-pie-35"></i>
-        <p>Mantenimiento</p>
+        <p>Dashboard</p>
       </sidebar-link>
-      <sidebar-link to="/admin/user">
+      <sidebar-link to="/admin/centrocosto">
         <i class="nc-icon nc-circle-09"></i>
         <p>Centro Costos</p>
-        <!-- <p @click="OpenLoginModal()">Centro Costos</p> -->
       </sidebar-link>
-      <sidebar-link to="/admin/maps">
+      <sidebar-link to="/admin/movplantillas">
         <i class="nc-icon nc-notes"></i>
         <p>Movimiento plantilla</p>
       </sidebar-link>
-      <sidebar-link to="/admin/typography">
+      <sidebar-link to="/admin/trabajadores">
         <i class="nc-icon nc-paper-2"></i>
         <p>Trabajador</p>
       </sidebar-link>
@@ -45,124 +44,9 @@
 
       <content-footer></content-footer>
     </div>
-    <!-- <div class="modal" v-if="CostoLoginModal">
-    <div class="modal-content">
-      <h3>Iniciar sesión</h3>
-      <form>
-        <div class="form-group">
-          <label for="username">Usuario</label>
-          <input type="text" id="username" v-model="username" required>
-        </div>
-        <div class="form-group">
-          <label for="password">Contraseña</label>
-          <input type="password" id="password" v-model="password" required>
-        </div>
-        <button type="submit" @click="login">Iniciar sesión</button>
-      </form>
-      <button @click="closeLoginModal">Volver</button>
-    </div>
-  </div> -->
   </div>
   
 </template>
-<script lang="js">
-import axios from "axios";
-export default {
-  data() {
-    return {
-      username: "",
-      password: "",
-    };
-  },
-  methods: {
-    async login() {
-      this.message = "";
-      let formData = {
-        usuario: this.username,
-        password: this.password
-      };
-      let url = `${process.env.apiWebsite}/api/loginAutorizador/`;
-      const { data } = await axios({
-        method: "post",
-        url: url,
-        data: formData,
-      });
-      console.log(data.success)
-      if(data.success == 1){
-        message = 'Ingreso Exitoso'
-        this.showAlert(message)
-      }else{
-        this.showAlert(data.message)
-      }
-    },
-    showAlert(message) {
-      this.$swal(message);
-    }
-  },
-};
-</script>
-
-<style lang="scss">
-// .modal {
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background-color: rgba(0, 0, 0, 0.5);
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   z-index: 999;
-// }
-
-// .modal-content {
-//   background-color: #fff;
-//   padding: 20px;
-//   border-radius: 5px;
-//   text-align: center;
-// }
-
-// .modal-content h3 {
-//   margin-top: 0;
-// }
-
-// .modal-content form {
-//   margin-bottom: 20px;
-// }
-
-// .modal-content .form-group {
-//   margin-bottom: 10px;
-// }
-
-// .modal-content label {
-//   display: block;
-//   font-weight: bold;
-// }
-
-// .modal-content input {
-//   width: 100%;
-//   padding: 8px;
-//   border-radius: 5px;
-//   border: 1px solid #ccc;
-// }
-
-// .modal-content button {
-//   display: inline-block;
-//   padding: 8px 16px;
-//   border-radius: 5px;
-//   border: none;
-//   background-color: #333;
-//   color: #fff;
-//   cursor: pointer;
-//   transition: background-color 0.3s ease;
-// }
-
-// .modal-content button:hover {
-//   background-color: #444;
-// }
-
-</style>
 <script>
   import TopNavbar from './TopNavbar.vue'
   import ContentFooter from './ContentFooter.vue'
@@ -171,7 +55,7 @@ export default {
   export default {
     data(){
       return{
-        CostoLoginModal: false
+
       }
     },
     components: {
@@ -186,46 +70,6 @@ export default {
           this.$sidebar.displaySidebar(false)
         }
       },
-      // closeLoginModal(){
-      //   this.$router.push('Overview').catch(()=>{}),
-      //   this.CostoLoginModal = false;
-      // },
-      // OpenLoginModal(){
-      //   this.CostoLoginModal = true;
-      // },
-      async CentroCostos() {
-      this.message = "";
-      let formData = {
-        nombreUsuario: this.username,
-        passwordUsuario: this.password,
-        codigoEmisor: this.emisor,
-      };
-      let url = `${process.env.apiWebsite}/api/login/`;
-      const { data } = await axios({
-        method: "post",
-        url: url,
-        data: formData,
-      });
-      console.log(data.success)
-      this.getComboEmisores();
-      if(data.success == 1){
-        let token = data.access_token;
-        this.user = data.user;
-        this.date = data.date;
-        this.company = data.company;
-        if(token){
-          localStorage.token = token;
-          localStorage.user = this.user;
-          localStorage.date = this.date;
-          localStorage.company = this.company;
-        }else{
-          this.$router.push('/').catch(()=>{})
-        }
-      }else{
-        this.showAlert(data.message)
-      }
-      
-    },
     }
   }
 

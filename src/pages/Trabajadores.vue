@@ -47,7 +47,7 @@
                   <td>{{ trabajador.Entidad_Bancaria }}</td>
                   <td>{{ trabajador.Telefono_Movil }}</td>
                   <td>
-                    <button class="form-button" @click="editarMovimiento(trabajador)">Editar</button>
+                    <button class="form-button" @click="editarTrabajador(trabajador)">Editar</button>
                   </td>
                   <td>
                     <button class="form-button" @click="eliminarTrabajador(trabajador)">Eliminar</button>
@@ -79,7 +79,7 @@
                   <td>{{ trabajador.Entidad_Bancaria }}</td>
                   <td>{{ trabajador.Telefono_Movil }}</td>
                   <td>
-                    <button class="form-button" @click="editarMovimiento(trabajador)">Editar</button>
+                    <button class="form-button" @click="editarTrabajador(trabajador)">Editar</button>
                   </td>
                   <td>
                     <button class="form-button" @click="eliminarTrabajador(trabajador)">Eliminar</button>
@@ -351,13 +351,13 @@
     <div v-if="isMEliminarVisible" class="modal modal-style" id="deleteTrabajador" tabindex="-1" role="dialog"
       aria-labelledby="editLabel" aria-hidden="true">>
       <div class="modal-content">
-        <h4>Esta seguro de eliminar el Trabajador N° <br><br><b>{{ trabajador.Id_Trabajador }}</b></h4>
-        <input type="hidden" id="Codigo" v-model="trabajador.COMP_Codigo" />
-        <input type="hidden" id="NombreCentroCostos" v-model="trabajador.Id_Trabajador" />
+        <h4>Esta seguro de eliminar el Trabajador N° <br><br><b>{{ trabajadorE.Id_Trabajador }}</b></h4>
+        <input type="hidden" id="Codigo" v-model="trabajadorE.COMP_Codigo" />
+        <input type="hidden" id="NombreCentroCostos" v-model="trabajadorE.Id_Trabajador" />
         <div class="modal-footer "></div>
         <div class="row btns">
           <div class="column">
-            <button class="btnModel" @click="deleteTrabajador(trabajador.COMP_Codigo, trabajador.Id_Trabajador)">Si</button>
+            <button class="btnModel" @click="deleteTrabajador(trabajadorE.COMP_Codigo, trabajadorE.Id_Trabajador)">Si</button>
           </div>
           <div class="column">
             <button style="margin: 0 20px;" @click="closeModal()">No</button>
@@ -376,8 +376,8 @@
             <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="tipoOperacion">Tipo Trabajador:</label>
-                  <select class="form-control" id="tipoOperacion" v-model="trabajador.Tipo_trabajador">
+                  <label for="tipoTrabajador">Tipo Trabajador:</label>
+                  <select class="form-control" id="tipoTrabajador" v-model="trabajador.Tipo_trabajador">
                     <option v-for="(tipoTra) in TipoTrabajadorCombo" :value="tipoTra.Descripcion" :selected="tipoTra.Codigo === trabajador.Tipo_trabajador">{{ tipoTra.Codigo }}</option>
                   </select>
                 </div>
@@ -397,7 +397,7 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Prioridad">Nombres:</label>
-                  <input type="number" class="form-control" id="Nombres" placeholder="Ingrese la Nombres" v-model="trabajador.Nombres">
+                  <input type="text" class="form-control" id="Nombres" placeholder="Ingrese la Nombres" v-model="trabajador.Nombres">
                 </div>
               </div>
             </div>
@@ -405,7 +405,8 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="tipoOperacion">Identificacion:</label>
-                  <input type="number" class="form-control" id="Identificacion" placeholder="Ingrese la Identificacion" v-model="trabajador.Identificacion">
+                  <p v-if="cedmsg">{{ cedmsg }}</p>
+                  <input type="number" class="form-control" id="Identificacion" placeholder="Ingrese la Identificacion" v-model="trabajador.Identificacion" @input="validarIdentificacion">
                 </div>
               </div>
               <div class="column marginColum">
@@ -463,7 +464,7 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Ocupacion">Ocupacion:</label>
-                  <input type="text" class="form-control" id="Ocupacion" placeholder="Ingrese el Ocupacion" v-model="trabajador.Ocupacion">
+                  <input type="number" class="form-control" id="Ocupacion" placeholder="Ingrese el Ocupacion" v-model="trabajador.Ocupacion">
                 </div>
               </div>
               <div class="column marginColum">
@@ -559,12 +560,6 @@
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="BancoCTA_CTE">Banco CTA CTE:</label>
-                  <input type="text" class="form-control" id="BancoCTA_CTE" placeholder="Ingrese el Banco CTA CTE" v-model="trabajador.BancoCTA_CTE">
-                </div>
-              </div>
-              <div class="column marginColum">
-                <div class="form-group">
                   <label for="Tipo_Cuenta">Tipo Cuenta:</label>
                   <select class="form-control" id="Tipo_Cuenta" v-model="trabajador.Tipo_Cuenta">
                     <option v-for="(tipoCuen) in TipoCuentaCombo" :value="tipoCuen.Descripcion" :selected="trabajador.Tipo_Cuenta === tipoCuen.Codigo">{{ tipoCuen.Codigo }}</option>
@@ -583,16 +578,12 @@
                   <input type="number" class="form-control" id="BoniEspecial" placeholder="Ingrese el Bonificacion Especial" v-model="trabajador.BoniEspecial">
                 </div>
               </div>
+              <input type="hidden" class="form-control" value="1" v-model="trabajador.FormaCalculo13ro">
+              <input type="hidden" class="form-control" value="1" v-model="trabajador.FormaCalculo14ro">
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Remuneracion_Minima">Remuneracion Minima:</label>
                   <input type="number" class="form-control" id="Remuneracion_Minima" placeholder="Ingrese el Remuneracion Minima" v-model="trabajador.Remuneracion_Minima">
-                </div>
-              </div>
-              <div class="column marginColum">
-                <div class="form-group">
-                  <label for="CuotaCuentaCorriente">Cuota Cuenta Corriente:</label>
-                  <input type="number" class="form-control" id="CuotaCuentaCorriente" placeholder="Ingrese el Cuota Cuenta Corriente" v-model="trabajador.CuotaCuentaCorriente">
                 </div>
               </div>
               <div class="column marginColum">
@@ -628,6 +619,7 @@
 import axios from "axios";
 import LTable from "src/components/Table.vue";
 import Card from "src/components/Cards/Card.vue";
+/* import validarIdentificacion from "src/assets/js/validarIdentificacion.js" */
 export default {
   components: {
     LTable,
@@ -636,10 +628,7 @@ export default {
   data() {
     return {
       trabajador: {
-        COMP_Codigo: '',
-        Id_Trabajador: '',
         Tipo_trabajador: '',
-        Prioridad: '',
         Apellido_Paterno: '',
         Apellido_Materno: '',
         Nombres: '',
@@ -667,17 +656,12 @@ export default {
         FechaReingreso: '',
         Fecha_Ult_Actualizacion: '',
         EsReingreso: '',
-        BancoCTA_CTE: '',
         Tipo_Cuenta: '',
-        RSV_Indem_Acumul: '',
-        Año_Ult_Rsva_Indemni: '',
-        Mes_Ult_Rsva_Indemni: '',
         FormaCalculo13ro: '',
         FormaCalculo14ro: '',
         BoniComplementaria: '',
         BoniEspecial: '',
         Remuneracion_Minima: '',
-        CuotaCuentaCorriente: '',
         Fondo_Reserva: '',
         Mensaje: '',
       },
@@ -743,6 +727,9 @@ export default {
       isModalVisible: false,
       isMEliminarVisible: false,
       isMInsertarVisible: false,
+      resultado: '',
+      auxBool: '',
+      cedmsg: '',
     };
   },
   mounted() {
@@ -835,11 +822,11 @@ export default {
     showModal() {
       this.isModalVisible = true;
     },
-    eliminarTrabajador(trabajador) {
+    eliminarTrabajador(trabajadorE) {
       this.isMEliminarVisible = true;
-      console.log(trabajador)
-      this.trabajador.COMP_Codigo = trabajador.COMP_Codigo
-      this.trabajador.Tipo_trabajador = trabajador.Tipo_trabajador
+      console.log(trabajadorE)
+      this.trabajadorE.COMP_Codigo = trabajadorE.COMP_Codigo
+      this.trabajadorE.Id_Trabajador = trabajadorE.Id_Trabajador
     },
     closeModal() {
       this.isModalVisible = false;
@@ -872,31 +859,21 @@ export default {
     },
 
     async insertTrabajador(trabajador) {
-      
-      let formData = {
-        conceptos : movimiento.Concepto,
-        prioridad : movimiento.Prioridad,
-        tipooperacion : movimiento.TipoOperacion,
-        cuenta1 : movimiento.Cuenta1,
-        cuenta2 : movimiento.Cuenta2,
-        cuenta3 : movimiento.Cuenta3,
-        cuenta4 : movimiento.Cuenta4,
-        MovimientoExcepcion1 : movimiento.MovimientoExcepcion1,
-        MovimientoExcepcion2 : movimiento.MovimientoExcepcion2,
-        MovimientoExcepcion3 : movimiento.MovimientoExcepcion3,
-        Traba_Aplica_iess : movimiento.Aplica_iess,
-        Traba_Proyecto_imp_renta : movimiento.Aplica_imp_renta,
-        Aplica_Proy_Renta : movimiento.Aplica_imp_renta,
-        Empresa_Afecta_Iess : movimiento.Empresa_Afecta_Iess,
-      };
+      if(this.auxBool == 1) {this.showAlert(this.resultado); return;}
+      let formData = {};
+      formData['COMP_Codigo'] = localStorage.getItem('codigoEmisor');
+      const keys = Object.keys(trabajador);
+      keys.forEach((key) => {
+        formData[key] = trabajador[key];
+      });
       console.log(formData);
-      let url = `${process.env.apiWebsite}/api/insertMovimientoPlanilla/`;
+      let url = `${process.env.apiWebsite}/api/insertTrabajador/`;
       const { data } = await axios({
         method: "post",
         url: url,
         data: formData,
       });
-      this.isMInsertarVisible = false;
+      //this.isMInsertarVisible = false;
       console.log(data);
       this.showAlert(data.message)
       this.getTrabajadores();
@@ -911,9 +888,9 @@ export default {
       return date;
     },
 
-    editarMovimiento(trabajador) {
+    editarTrabajador(trabajador) {
       console.log('entra');
-      console.log(trabajador);
+      //console.log(trabajador);
       this.isModalVisible = true;
 
       this.trabajadorE = Object.assign({}, trabajador);
@@ -924,25 +901,15 @@ export default {
     },
 
     async updateTrabajador(trabajadorE) {
-      this.isModalVisible = false;
-      let formData = {
-        codigoplanilla : movimiento.CodigoConcepto,
-        conceptos : movimiento.Concepto,
-        prioridad : movimiento.Prioridad,
-        tipooperacion : movimiento.TipoOperacion,
-        cuenta1 : movimiento.Cuenta1,
-        cuenta2 : movimiento.Cuenta2,
-        cuenta3 : movimiento.Cuenta3,
-        cuenta4 : movimiento.Cuenta4,
-        MovimientoExcepcion1 : movimiento.MovimientoExcepcion1,
-        MovimientoExcepcion2 : movimiento.MovimientoExcepcion2,
-        MovimientoExcepcion3 : movimiento.MovimientoExcepcion3,
-        Traba_Aplica_iess : movimiento.Aplica_iess,
-        Traba_Proyecto_imp_renta : movimiento.Aplica_imp_renta,
-        Aplica_Proy_Renta : movimiento.Aplica_imp_renta,
-        Empresa_Afecta_Iess : movimiento.Empresa_Afecta_Iess,
-      };
+      if(this.auxBool == 1) {this.showAlert(this.resultado); return;}
+      let formData = {};
+      formData['COMP_Codigo'] = localStorage.getItem('codigoEmisor');
+      const keys = Object.keys(trabajadorE);
+      keys.forEach((key) => {
+        formData[key] = trabajadorE[key];
+      });
       console.log(formData);
+      this.isModalVisible = false;
       let url = `${process.env.apiWebsite}/api/updateMovimientoPlanilla/`;
       const { data } = await axios({
         method: "post",
@@ -955,6 +922,7 @@ export default {
     },
 
     async deleteTrabajador(COMP_Codigo, Id_Trabajador) {
+      console.log(COMP_Codigo, Id_Trabajador)
       this.isMEliminarVisible = false;
       let formData = {
         sucursal: COMP_Codigo,
@@ -969,11 +937,87 @@ export default {
       console.log(data);
       this.showAlert(data.message)
       this.getTrabajadores();
+    },
+
+    validarIdentificacion(){
+      // Eliminar espacios en blanco y guiones de la cédula
+      let Identificacion = this.trabajador.Identificacion
+      Identificacion = Identificacion.replace(/\s|-/g, '');
+
+      // Verificar que la cédula tenga 10 dígitos
+      if (Identificacion.length !== 10) {
+        this.resultado = 'La cédula debe tener 10 dígitos';
+        this.auxBool = 1;
+        console.log('La cédula debe tener 10 dígitos')
+        return;
+      }
+
+      // Obtener los primeros dos dígitos
+      let provincia = parseInt(Identificacion.substr(0, 2), 10);
+
+      // Verificar que los primeros dos dígitos estén en el rango válido
+      if (provincia < 0 || provincia > 24) {
+        this.resultado = 'Los dos primeros dígitos deben estar entre 0 y 24';
+        this.auxBool = 1;
+        console.log('Los dos primeros dígitos deben estar entre 0 y 24')
+        return;
+      }
+
+      // Obtener el tercer dígito
+      let tercerDigito = parseInt(Identificacion.charAt(2), 10);
+
+      // Verificar que el tercer dígito sea menor a 6
+      if (tercerDigito > 5) {
+        this.resultado = 'El tercer dígito debe ser menor o igual a 5';
+        this.auxBool = 1;
+        console.log('El tercer dígito debe ser menor o igual a 5')
+        return;
+      }
+
+      // Verificar que los siguientes dígitos sean consecutivos
+      let consecutivo = true;
+      for (let i = 3; i < 9; i++) {
+        if (parseInt(Identificacion.charAt(i), 10) !== i - 2) {
+          consecutivo = false;
+          break;
+        }
+      }
+
+      /* if (!consecutivo) {
+        this.resultado = 'Los dígitos del cuarto al noveno deben ser consecutivos';
+        this.auxBool = 1;
+        console.log('Los dígitos del cuarto al noveno deben ser consecutivos')
+        return;
+      } */
+
+      // Verificar el dígito verificador
+      let digitoVerificador = parseInt(Identificacion.charAt(9), 10);
+      let coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+      let suma = 0;
+
+      for (let i = 0; i < 9; i++) {
+        let producto = coeficientes[i] * parseInt(Identificacion.charAt(i), 10);
+        suma += producto >= 10 ? producto - 9 : producto;
+      }
+
+      let resultadoEsperado = (Math.ceil(suma / 10) * 10) - suma;
+      if (resultadoEsperado !== digitoVerificador) {
+        this.resultado = 'El dígito verificador no es válido';
+        this.auxBool = 1;
+        console.log('El dígito verificador no es válido')
+        return;
+      }
+      console.log('La cédula es válida')
+      //this.resultado = 'La cédula es válida';
+      this.auxBool = 0;
     }
   },
 };
 </script>
 <style>
+.p{
+  color: red;
+}
 .form-button {
   display: block;
   width: 100%;

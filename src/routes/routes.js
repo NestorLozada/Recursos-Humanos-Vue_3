@@ -4,11 +4,11 @@ import NotFound from '../pages/NotFoundPage.vue'
 
 // Admin pages
 import Overview from 'src/pages/Overview.vue'
-import UserProfile from 'src/pages/CentroCostosCRUD.vue'
+import CentroCosto from 'src/pages/CentroCostosCRUD.vue'
 import TableList from 'src/pages/LogginAuth.vue'
 import Trabajadores from 'src/pages/Trabajadores.vue'
 import Icons from 'src/pages/Icons.vue'
-import Maps from 'src/pages/ListaPlantillaCRUD.vue'
+import Movplantillas from 'src/pages/ListaPlantillaCRUD.vue'
 import Notifications from 'src/pages/Notifications.vue'
 import Upgrade from 'src/pages/InsertCC.vue'
 import Log from 'src/pages/Log.vue'
@@ -22,51 +22,81 @@ const routes = [
     path: '/admin',
     component: DashboardLayout,
     redirect: '/admin/overview',
+    meta: {
+      requiresAuth: true, // Agrega el metadato 'requiresAuth' a la ruta padre
+    },
     children: [
       {
         path: 'overview',
         name: 'Overview',
-        component: Overview
+        component: Overview,
+        meta: {
+          requiresAuth: true, // Agrega el metadato 'requiresAuth' a la ruta padre
+        },
       },
       {
-        path: 'user',
-        name: 'User',
-        component: UserProfile
+        path: 'centrocosto',
+        name: 'CentroCosto',
+        component: CentroCosto,
+        meta: {
+          requiresAuth: true, // Agrega el metadato 'requiresAuth' a la ruta padre
+        },
       },
       {
         path: 'table-list',
         name: 'Table List',
-        component: TableList
+        component: TableList,
+        meta: {
+          requiresAuth: true, // Agrega el metadato 'requiresAuth' a la ruta padre
+        },
       },
       {
-        path: 'typography',
+        path: 'trabajadores',
         name: 'Trabajadores',
-        component: Trabajadores
+        component: Trabajadores,
+        meta: {
+          requiresAuth: true, // Agrega el metadato 'requiresAuth' a la ruta padre
+        },
       },
       {
         path: 'icons',
         name: 'Icons',
-        component: Icons
+        component: Icons,
+        meta: {
+          requiresAuth: true, // Agrega el metadato 'requiresAuth' a la ruta padre
+        },
       },
       {
-        path: 'maps',
-        name: 'Maps',
-        component: Maps
+        path: 'movplantillas',
+        name: 'Movplantillas',
+        component: Movplantillas,
+        meta: {
+          requiresAuth: true, // Agrega el metadato 'requiresAuth' a la ruta padre
+        },
       },
       {
         path: 'notifications',
         name: 'Notifications',
-        component: Notifications
+        component: Notifications,
+        meta: {
+          requiresAuth: true, // Agrega el metadato 'requiresAuth' a la ruta padre
+        },
       },
       {
         path: 'upgrade',
         name: 'Upgrade to PRO',
-        component: Upgrade
+        component: Upgrade,
+        meta: {
+          requiresAuth: true, // Agrega el metadato 'requiresAuth' a la ruta padre
+        },
       },
       {
         path: 'clientes',
         name: 'Clientes',
-        component: clientes
+        component: clientes,
+        meta: {
+          requiresAuth: true, // Agrega el metadato 'requiresAuth' a la ruta padre
+        },
       }
     ]
   },
