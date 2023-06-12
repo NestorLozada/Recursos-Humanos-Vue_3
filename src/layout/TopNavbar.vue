@@ -1,13 +1,21 @@
 <template>
   <nav class="navbar navbar-expand-lg">
-    <ul class="nav-item">
-      <a><b>Usuario:</b> {{ user }}</a>
+    <ul class="navbar-nav ml-auto ">
+      <li class="nav-item">
+        <a>
+          <b>{{ user }}</b> 
+        </a>
+      </li>
     </ul>
-    <ul class="nav-item">
-      <a><b>Fecha:</b> {{ date }}</a>
+    <ul class="navbar-nav ml-auto ">
+      <li class="nav-item">
+        <a><b>{{ date }}</b></a>
+      </li>
     </ul>
-    <ul class="nav-item">
-      <a><b>Compañia:</b> {{ company }}</a>
+    <ul class="navbar-nav ml-auto ">
+      <li class="nav-item">
+        <a><b>{{ company }}</b></a>
+      </li>
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
@@ -18,7 +26,7 @@
 </template>
 <script>
 export default {
-  
+
   data() {
     return {
       activeNotifications: false,

@@ -6,14 +6,14 @@
           <button class="form-button" @click="insertarTrabajador">Nuevo</button>
         </div>
         <div class="column">
-          <!-- <div class="row">
+          <div class="row">
             <div class="column">
               <input v-model="search" class="form-control" placeholder="Search" />
             </div>
             <div class="column">
-              <button class="form-button" @click="buscarMovimiento">Buscar</button>
+              <button class="form-button" @click="buscarTrabajador">Buscar</button>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
       <div class="row">
@@ -70,7 +70,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(trabajador, index) in trabajadoresSearch" :key="index">
+                <tr v-for="(trabajador, index) in trabajadoresFiltrados" :key="index">
                   <td>{{ trabajador.Id_Trabajador }}</td>
                   <td>{{ trabajador.Tipo_trabajador }}</td>
                   <td>{{ trabajador.Nombres }}</td>
@@ -748,6 +748,18 @@ export default {
   created() {
     this.getTrabajadores();
   },
+  computed: {
+    trabajadoresFiltrados() {
+      const searchTerm = this.search.toLowerCase();
+      return this.trabajadores.filter(trabajador => {
+        // Aplica los criterios de búsqueda según tus necesidades
+        return trabajador.Nombres.toLowerCase().includes(searchTerm) ||
+          trabajador.Apellido_Paterno.toLowerCase().includes(searchTerm) ||
+          trabajador.Apellido_Materno.toLowerCase().includes(searchTerm) ||
+          trabajador.Identificacion.toLowerCase().includes(searchTerm);
+      });
+    },
+  },
   methods: {
     async getTipoTrabajador(){
       let url = `${process.env.apiWebsite}/api/getTipoTrabajador/`;
@@ -817,16 +829,9 @@ export default {
       this.trabajadores = data;
       ////console.log(data);
     },
-
-
+    
     showModal() {
       this.isModalVisible = true;
-    },
-    eliminarTrabajador(trabajadorE) {
-      this.isMEliminarVisible = true;
-      console.log(trabajadorE)
-      this.trabajadorE.COMP_Codigo = trabajadorE.COMP_Codigo
-      this.trabajadorE.Id_Trabajador = trabajadorE.Id_Trabajador
     },
     closeModal() {
       this.isModalVisible = false;
@@ -836,19 +841,15 @@ export default {
     showAlert(message) {
       this.$swal(message);
     },
-    async buscarMovimiento() {
-      let formData = {
-        Concepto: this.search,
-      };
-      let url = `${process.env.apiWebsite}/api/searchMovimientoPlanilla/`;
-      const { data } = await axios({
-        method: "post",
-        url: url,
-        data: formData,
-      });
-      console.log(data);
-      this.costosSearch = data;
-    },
+    buscarTrabajador() {
+    this.trabajadoresSearch = this.trabajadores.filter(trabajador => {
+      // Aplica los criterios de búsqueda según tus necesidades
+      return trabajador.Nombres.toLowerCase().includes(this.search.toLowerCase()) ||
+             trabajador.Apellido_Paterno.toLowerCase().includes(this.search.toLowerCase()) ||
+             trabajador.Apellido_Materno.toLowerCase().includes(this.search.toLowerCase()) ||
+             trabajador.Identificacion.toLowerCase().includes(this.search.toLowerCase());
+    });
+  },
     insertarTrabajador() {
       this.isMInsertarVisible = true;
       const keys = Object.keys(this.trabajador);
@@ -857,7 +858,6 @@ export default {
         this.trabajador[key] = '';
       });  
     },
-
     async insertTrabajador(trabajador) {
       if(this.auxBool == 1) {this.showAlert(this.resultado); return;}
       let formData = {};
@@ -878,7 +878,6 @@ export default {
       this.showAlert(data.message)
       this.getTrabajadores();
     },
-
     getDate(oldDate){
       const fecha = new Date(oldDate);
       const dia = fecha.getDate();
@@ -887,7 +886,6 @@ export default {
       const date = `${anio}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}`;
       return date;
     },
-
     editarTrabajador(trabajador) {
       console.log('entra');
       //console.log(trabajador);
@@ -899,7 +897,6 @@ export default {
       this.trabajadorE.FechaCese = this.getDate(trabajador.FechaCese)
       this.trabajadorE.FechaReingreso = this.getDate(trabajador.FechaReingreso)
     },
-
     async updateTrabajador(trabajadorE) {
       if(this.auxBool == 1) {this.showAlert(this.resultado); return;}
       let formData = {};
@@ -920,7 +917,12 @@ export default {
       this.showAlert(data.message)
       this.getTrabajadores();
     },
-
+    eliminarTrabajador(trabajadorE) {
+      this.isMEliminarVisible = true;
+      console.log(trabajadorE)
+      this.trabajadorE.COMP_Codigo = trabajadorE.COMP_Codigo
+      this.trabajadorE.Id_Trabajador = trabajadorE.Id_Trabajador
+    },
     async deleteTrabajador(COMP_Codigo, Id_Trabajador) {
       console.log(COMP_Codigo, Id_Trabajador)
       this.isMEliminarVisible = false;
@@ -938,7 +940,6 @@ export default {
       this.showAlert(data.message)
       this.getTrabajadores();
     },
-
     validarIdentificacion(){
       // Eliminar espacios en blanco y guiones de la cédula
       let Identificacion = this.trabajador.Identificacion
