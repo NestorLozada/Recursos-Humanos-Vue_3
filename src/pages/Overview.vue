@@ -89,18 +89,18 @@
         <div class="col-md-4">
           <chart-card :chart-data="pieChart.data" chart-type="Pie">
             <template slot="header">
-              <h4 class="card-title">Email Statistics</h4>
-              <p class="card-category">Last Campaign Performance</p>
+              <h4 class="card-title">Movimiento x Tipo Operación</h4>
+              <p class="card-category">Ingresos y Egresos</p>
             </template>
             <template slot="footer">
               <div class="legend">
-                <i class="fa fa-circle text-info"></i> Open
-                <i class="fa fa-circle text-danger"></i> Bounce
-                <i class="fa fa-circle text-warning"></i> Unsubscribe
+                <i class="fa fa-circle text-info"></i> Ingresos
+                <i class="fa fa-circle text-danger"></i> Egresos
+                <i class="fa fa-circle text-warning"></i> Ninguno
               </div>
               <hr>
               <div class="stats">
-                <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
+                <i class="fa fa-clock-o"></i> Realtime
               </div>
             </template>
           </chart-card>
@@ -170,6 +170,7 @@
   </div>
 </template>
 <script>
+  import axios from "axios";
   import ChartCard from 'src/components/Cards/ChartCard.vue'
   import StatsCard from 'src/components/Cards/StatsCard.vue'
   import LTable from 'src/components/Table.vue'
@@ -182,12 +183,20 @@
     },
     data () {
       return {
+        moviData: '',
+        movimientos: {
+          moviIngresos: '',
+          moviEgresos: '',
+          moviC1: '',
+          moviC2: '',
+          moviC3: '',
+        },
         editTooltip: 'Edit Task',
         deleteTooltip: 'Remove',
         pieChart: {
           data: {
-            labels: ['40%', '20%', '40%'],
-            series: [40, 20, 40]
+            labels: ['Ingresos', 'Egresos', 'Ninguno'],
+            series: [0, 0, 0]
           }
         },
         lineChart: {
@@ -263,8 +272,21 @@
             {title: 'Read "Following makes Medium better"', checked: false},
             {title: 'Unfollow 5 enemies from twitter', checked: false}
           ]
-        }
+        },
+        
       }
+    },
+    methods:{
+      async getMovPlanxTipoOperacion() {
+        let url = `${process.env.apiWebsite}/api/getMovPlanxTipoOperacion/`;
+        const { data } = await axios.get(url);
+        this.pieChart.data.labels = [data.ingresos, data.egresos, data.ninguno];
+        this.pieChart.data.series = [data.ingresos, data.egresos, data.ninguno];
+      },
+    },
+    mounted(){
+      this.getMovPlanxTipoOperacion();
+
     }
   }
 </script>
