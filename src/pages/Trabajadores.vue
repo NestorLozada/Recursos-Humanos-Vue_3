@@ -99,7 +99,7 @@
     <!-- Modal -->
     <div v-if="isModalVisible" class="modal modal-style" id="editTrabajador" tabindex="-1" role="dialog"
       aria-labelledby="editLabel" aria-hidden="true">>
-      <div class="modal-content1">
+      <div class="modal-content1 md2">
         <h2>Editar Trabajador</h2>
         <div class="modal-body">
           <!-- <div class="row"> -->
@@ -371,7 +371,7 @@
 
     <div v-if="isMInsertarVisible" class="modal modal-style" id="insertTrabajador" tabindex="-1" role="dialog"
       aria-labelledby="editLabel" aria-hidden="true">>
-      <div class="modal-content1">
+      <div class="modal-content1 md2">
         <h2>Insertar Trabajador</h2>
         <div class="modal-body">
           <!-- <div class="row"> -->
@@ -755,11 +755,13 @@ export default {
     trabajadoresFiltrados() {
       const searchTerm = this.search.toLowerCase();
       return this.trabajadores.filter(trabajador => {
+        const id = trabajador.Id_Trabajador.toString();
         // Aplica los criterios de búsqueda según tus necesidades
         return trabajador.Nombres.toLowerCase().includes(searchTerm) ||
           trabajador.Apellido_Paterno.toLowerCase().includes(searchTerm) ||
           trabajador.Apellido_Materno.toLowerCase().includes(searchTerm) ||
-          trabajador.Identificacion.toLowerCase().includes(searchTerm);
+          trabajador.Identificacion.toLowerCase().includes(searchTerm) ||
+          id.includes(searchTerm);
       });
     },
     trabajadoresPaginados() {
@@ -855,15 +857,6 @@ export default {
     showAlert(message) {
       this.$swal(message);
     },
-    /* buscarTrabajador() {
-    this.trabajadoresSearch = this.trabajadores.filter(trabajador => {
-      // Aplica los criterios de búsqueda según tus necesidades
-      return trabajador.Nombres.toLowerCase().includes(this.search.toLowerCase()) ||
-             trabajador.Apellido_Paterno.toLowerCase().includes(this.search.toLowerCase()) ||
-             trabajador.Apellido_Materno.toLowerCase().includes(this.search.toLowerCase()) ||
-             trabajador.Identificacion.toLowerCase().includes(this.search.toLowerCase());
-    });
-    }, */
     insertarTrabajador() {
       this.isMInsertarVisible = true;
       const keys = Object.keys(this.trabajador);
@@ -1033,42 +1026,11 @@ export default {
 };
 </script>
 <style>
-.p{
-  color: red;
-}
-.form-button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #333;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.rowSearchNew{
-  margin-bottom: 15px;
-}
-
 .form-control{
   width: 250px;
 }
 
-.modal1 {
-  position: fixed;
-  top: 0;
-  left: 0;
-  margin: 10% 30% 50% 50%;
-  background-color: #444;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.modal-content1 {
+.md2 {
   background-color: #fff;
   padding: 20px;
   border-radius: 20px;
@@ -1077,72 +1039,6 @@ export default {
   margin-right: 0;
 }
 
-.modal-content1 h3 {
-  margin-top: 0;
-}
-
-.modal-content1 button {
-  display: block;
-  margin: 0 auto;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #333;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btnMdiv {
-  display: flex;
-  margin: 5%;
-  transition: background-color 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content1 button:hover {
-  background-color: #444;
-}
-
-.btns {
-  display: flex;
-  justify-content: center;
-}
-
-.inputModal {
-  width: 500px;
-  justify-content: left;
-}
-
-.modal-content {
-  width: auto;
-  justify-content: left;
-}
-
-.ingresodatos {
-  display: flex;
-  padding: 1%;
-}
-
-.ingresodatos input {
-  justify-content: left;
-  margin-left: 20px;
-}
-
-.marginColum {
-  margin: 0 5px;
-}
-
-/* .modal{
-    display: block !important; /* I added this to see the modal, you don't need this
-}
-
-.modal-dialog{
-  display: inline-block;
-    overflow-y: initial !important
-} */
 .modal-body{
     height: 68vh;
     overflow-y: scroll;

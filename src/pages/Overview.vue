@@ -273,7 +273,6 @@
             {title: 'Unfollow 5 enemies from twitter', checked: false}
           ]
         },
-        
       }
     },
     methods:{
@@ -286,8 +285,7 @@
     },
     mounted(){
       this.getMovPlanxTipoOperacion();
-
-    }
+    },
   }
 </script>
 <style>

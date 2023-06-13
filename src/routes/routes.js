@@ -9,8 +9,8 @@ import TableList from 'src/pages/LogginAuth.vue'
 import Trabajadores from 'src/pages/Trabajadores.vue'
 import Icons from 'src/pages/Icons.vue'
 import Movplantillas from 'src/pages/ListaPlantillaCRUD.vue'
-import Notifications from 'src/pages/Notifications.vue'
-import Upgrade from 'src/pages/InsertCC.vue'
+import Parametros from 'src/pages/Parametros.vue'
+import Upgrade from 'src/pages/Notifications.vue'
 import Log from 'src/pages/Log.vue'
 import clientes from 'src/pages/ClientesCRUD.vue'
 const routes = [
@@ -75,9 +75,9 @@ const routes = [
         },
       },
       {
-        path: 'notifications',
-        name: 'Notifications',
-        component: Notifications,
+        path: 'parametros',
+        name: 'Parametros',
+        component: Parametros,
         meta: {
           requiresAuth: true, // Agrega el metadato 'requiresAuth' a la ruta padre
         },

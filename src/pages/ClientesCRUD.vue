@@ -146,10 +146,8 @@
 </div></template>
 <script>
 import axios from "axios";
-import * as $ from "jquery";
 import LTable from "src/components/Table.vue";
 import Card from "src/components/Cards/Card.vue";
-import InsertCC from "./InsertCC.vue";
 
 export default {
   components: {
@@ -263,7 +261,7 @@ export default {
 };
 </script>
 
-<style>
+<!-- <style>
 .form-button {
   display: block;
   margin: 0 20px;
@@ -341,4 +339,4 @@ export default {
 .modal-content {
   width: auto;
 }
-</style>
+</style> -->

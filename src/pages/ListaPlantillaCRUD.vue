@@ -10,9 +10,6 @@
             <div class="column">
               <input v-model="search" class="form-control" placeholder="Search" />
             </div>
-            <div class="column">
-              <button class="form-button" @click="buscarMovimiento">Buscar</button>
-            </div>
           </div>
         </div>
       </div>
@@ -64,7 +61,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(movimiento, index) in movimientosSearch" :key="index">
+                <tr v-for="(movimiento, index) in movimientosFiltrados" :key="index">
                   <td>{{ movimiento.CodigoConcepto }}</td>
                   <td>{{ movimiento.Concepto }}</td>
                   <td>{{ movimiento.TipoOperacion }}</td>
@@ -365,24 +362,7 @@
                   </select>
                 </div>
               </div>
-              <div class="column marginColum">
-                <!-- <div class="form-group">
-                  <label for="Aplica_Proy_Renta">Aplica Renta:</label>
-                  <select class="form-control" id="Aplica_Proy_Renta" v-model="movimiento.Aplica_Proy_Renta">
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-                  </select>
-                </div> -->
-              </div>
-              <div class="column marginColum">
-                <!-- <div class="form-group">
-                  <label for="Aplica_iess">Aplica IESS:</label>
-                  <input type="text" class="form-control" id="Aplica_iess" placeholder="Ingrese sin aplica IESS">
-                </div> -->
-              </div>
             </div>
-          <!-- </div> -->
         </div>
         <div class="modal-footer "></div>
         <div class="row btns">
@@ -473,35 +453,48 @@ export default {
   created() {
     this.obtenerMovimientoPlantilla();
   },
+  computed: {
+    movimientosFiltrados() {
+      const searchTerm = this.search.toLowerCase();
+      return this.movimientos.filter(movimiento => {
+        const codigo = movimiento.CodigoConcepto.toString(); // Convertir el código a cadena
+        return movimiento.Concepto.toLowerCase().includes(searchTerm) ||
+          movimiento.TipoOperacion.toLowerCase().includes(searchTerm) ||
+          movimiento.Empresa_Afecta_Iess.toLowerCase().includes(searchTerm) ||
+          movimiento.Aplica_imp_renta.toLowerCase().includes(searchTerm) ||
+          codigo.includes(searchTerm);
+      });
+    },
+  },
   methods: {
     async getTiposOperacion(){
       let url = `${process.env.apiWebsite}/api/getTiposOperacion/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.TipoOperacionCombo = data;
     },
     async getMovExcepcion1y2(){
       let url = `${process.env.apiWebsite}/api/getMovExcepcion1y2/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.movExcepcion1y2Combo = data;
     },
     async getMovExcepcion3(){
       let url = `${process.env.apiWebsite}/api/getMovExcepcion3/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.movExcepcion3Combo = data;
     },
     async getTrabaAfectaIESS(){
       let url = `${process.env.apiWebsite}/api/getTrabaAfectaIESS/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.trabaAfectaIESSCombo = data;
     },
     async getTrabAfecImpuestoRenta(){
       let url = `${process.env.apiWebsite}/api/getTrabAfecImpuestoRenta/`;
       const { data } = await axios.get(url);
-      console.log(data);
+      //console.log(data);
       this.trabAfecImpuestoRentaCombo = data;
     },
     async obtenerMovimientoPlantilla() {
@@ -509,18 +502,11 @@ export default {
       let url = `${process.env.apiWebsite}/api/getMovimientoPlanilla/`;
       const { data } = await axios.get(url);
       this.movimientos = data;
-      //console.log(data);
+      ////console.log(data);
     },
-
 
     showModal() {
       this.isModalVisible = true;
-    },
-    eliminarMovimiento(movimiento) {
-      this.isMEliminarVisible = true;
-      console.log(movimiento)
-      this.movimiento.CodigoConcepto = movimiento.CodigoConcepto
-      this.movimiento.Concepto = movimiento.Concepto
     },
     closeModal() {
       this.isModalVisible = false;
@@ -540,30 +526,18 @@ export default {
         url: url,
         data: formData,
       });
-      console.log(data);
+      //console.log(data);
       this.movimientosSearch = data;
     },
     insertarMovPlantilla() {
       this.isMInsertarVisible = true;
-      /* this.movimiento.CodigoConcepto = ''
-      this.movimiento.Concepto = ''
-      this.movimiento.Prioridad = ''
-      this.movimiento.TipoOperacion = ''
-      this.movimiento.Cuenta1 = ''
-      this.movimiento.Cuenta2 = ''
-      this.movimiento.Cuenta3 = ''
-      this.movimiento.Cuenta4 = ''
-      this.movimiento.MovimientoExcepcion1 = ''
-      this.movimiento.MovimientoExcepcion2 = ''
-      this.movimiento.MovimientoExcepcion3 = ''
-      this.movimiento.Aplica_iess = ''
-      this.movimiento.Aplica_imp_renta = ''
-      this.movimiento.Aplica_Proy_Renta = ''
-      this.movimiento.Empresa_Afecta_Iess = ''  */   
+      const keys = Object.keys(this.movimiento);
+      keys.forEach((key) => {
+        //console.log(key)
+        this.movimiento[key] = '';
+      });
     },
-
     async insertMovPlan(movimiento) {
-      
       let formData = {
         conceptos : movimiento.Concepto,
         prioridad : movimiento.Prioridad,
@@ -588,13 +562,11 @@ export default {
         data: formData,
       });
       this.isMInsertarVisible = false;
-      console.log(data);
+      //console.log(data);
       this.showAlert(data.message)
       this.obtenerMovimientoPlantilla();
     },
-
     editarMovimiento(movimiento) {
-      console.log('entra')
       console.log(movimiento)
       this.isModalVisible = true;
       this.movimientoE.CodigoConcepto = movimiento.CodigoConcepto;
@@ -613,7 +585,6 @@ export default {
       this.movimientoE.Aplica_Proy_Renta = movimiento.Aplica_Proy_Renta;
       this.movimientoE.Empresa_Afecta_Iess = movimiento.Empresa_Afecta_Iess;
     },
-
     async updateMovPlan(movimiento) {
       this.isModalVisible = false;
       let formData = {
@@ -640,11 +611,16 @@ export default {
         url: url,
         data: formData,
       });
-      console.log(data);
+      //console.log(data);
       this.showAlert(data.message)
       this.obtenerMovimientoPlantilla();
     },
-
+    eliminarMovimiento(movimiento) {
+      this.isMEliminarVisible = true;
+      console.log(movimiento)
+      this.movimiento.CodigoConcepto = movimiento.CodigoConcepto
+      this.movimiento.Concepto = movimiento.Concepto
+    },
     async deleteMovPlan(codConcepto, concepto) {
       this.isMEliminarVisible = false;
       let formData = {
@@ -657,7 +633,7 @@ export default {
         url: url,
         data: formData,
       });
-      console.log(data);
+      //console.log(data);
       this.showAlert(data.message)
       this.obtenerMovimientoPlantilla();
     }
@@ -665,120 +641,6 @@ export default {
 };
 </script>
 <style>
-.form-button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #333;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.rowSearchNew{
-  margin-bottom: 15px;
-}
-
-.form-control{
-  width: 250px;
-}
-
-.modal1 {
-  position: fixed;
-  top: 0;
-  left: 0;
-  margin: 10% 30% 50% 50%;
-  background-color: #444;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.modal-content1 {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 20px;
-  text-align: left;
-}
-
-.modal-content1 h3 {
-  margin-top: 0;
-}
-
-.modal-content1 button {
-  display: block;
-  margin: 0 auto;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #333;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btnMdiv {
-  display: flex;
-  margin: 5%;
-  transition: background-color 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content1 button:hover {
-  background-color: #444;
-}
-
-.btns {
-  display: flex;
-  justify-content: center;
-}
-
-.inputModal {
-  width: 500px;
-  justify-content: left;
-}
-
-.modal-content {
-  width: auto;
-  justify-content: left;
-}
-
-.ingresodatos {
-  display: flex;
-  padding: 1%;
-}
-
-.ingresodatos input {
-  justify-content: left;
-  margin-left: 20px;
-}
-
-.marginColum {
-  margin: 0 5px;
-}
 
 
-/* Create three equal columns that floats next to each other */
-/* .column {
-  float: left;
-  padding: 10px;
-} */
-
-/* Clear floats after the columns */
-/* .row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-table,
-th,
-td {
-  border: 1px solid black;
-  border-collapse: collapse;
-} */
 </style>

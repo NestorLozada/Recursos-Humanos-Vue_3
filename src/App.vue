@@ -38,6 +38,9 @@ export default {}
     transform: scale(1.2, 0.7);
   }
 }
+.p{
+  color: red;
+}
 .nav-item {
   margin-right: 10px;
   margin-top: 5px;
@@ -148,22 +151,23 @@ export default {}
   justify-self: flex-end;
 }
 
-/* Create three equal columns that floats next to each other */
-/* .column {
-  float: left;
+.form-button {
+  display: block;
+  width: 100%;
   padding: 10px;
-} */
-
-/* Clear floats after the columns */
-/* .row:after {
-  content: "";
-  display: table;
-  clear: both;
+  border-radius: 5px;
+  border: none;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-table,
-th,
-td {
-  border: 1px solid black;
-  border-collapse: collapse;
-} */
+
+.rowSearchNew{
+  margin-bottom: 15px;
+}
+
+.form-control{
+  width: 250px;
+}
 </style>

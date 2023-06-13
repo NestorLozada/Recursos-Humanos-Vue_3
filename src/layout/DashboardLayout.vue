@@ -18,9 +18,9 @@
         <i class="nc-icon nc-paper-2"></i>
         <p>Trabajador</p>
       </sidebar-link>
-      <sidebar-link to="/admin/clientes">
+      <sidebar-link to="/admin/parametros">
         <i class="nc-icon nc-circle-09"></i>
-        <p>Clientes</p>
+        <p>Parametros</p>
       </sidebar-link>
       <!-- <sidebar-link to="/admin/icons">
         <i class="nc-icon nc-atom"></i>
