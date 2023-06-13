@@ -47,12 +47,12 @@ export default {}
 }
 .form-button {
   display: block;
-  margin: 0 20px;
   width: 100%;
   padding: 10px;
   border-radius: 5px;
   border: none;
   background-color: #333;
+  color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -147,27 +147,41 @@ export default {}
   margin: 0 5px;
 }
 
+.modal-body{
+    height: auto;
+    //overflow-y: scroll;
+}
+
 .search {
   justify-self: flex-end;
 }
 
-.form-button {
+.form-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
   display: block;
+  margin-bottom: 5px;
+}
+
+.form-input {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
-  border: none;
-  background-color: #333;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  border: 1px solid #ccc;
 }
 
-.rowSearchNew{
-  margin-bottom: 15px;
+.form-button:hover {
+  background-color: #444;
 }
 
-.form-control{
-  width: 250px;
+.newBtn{
+  width: auto;
 }
 </style>

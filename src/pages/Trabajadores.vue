@@ -2,17 +2,14 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row rowSearchNew">
-        <div class="column" style="margin-right: 500px">
-          <button class="form-button" @click="insertarTrabajador">Nuevo</button>
+        <div class="col-6">
+          <div class="column">
+            <button class="form-button newBtn" @click="insertarTrabajador">Nuevo</button>
+          </div>
         </div>
-        <div class="column">
-          <div class="row">
-            <div class="column">
-              <input v-model="search" class="form-control" placeholder="Search" />
-            </div>
-            <!-- <div class="column">
-              <button class="form-button" @click="buscarTrabajador">Buscar</button>
-            </div> -->
+          <div class="col-6">
+          <div class="column">
+            <input v-model="search" class="form-control" placeholder="Search" />
           </div>
         </div>
       </div>
@@ -32,8 +29,6 @@
                   <th>NOMBRES</th>
                   <th>APELLIDOS</th>
                   <th>DNI</th>
-                  <!-- <th>BANCO</th> -->
-             <!-- <th>TELEFONO</th> -->
                   <th>EDITAR</th>
                   <th>ELIMINAR</th>
                 </tr>
@@ -46,8 +41,6 @@
                   <td>{{ trabajador.Nombres }}</td>
                   <td>{{ trabajador.Apellido_Paterno }} {{ trabajador.Apellido_Materno }}</td>
                   <td>{{ trabajador.Identificacion }}</td>
-                  <!-- <td>{{ trabajador.Entidad_Bancaria }}</td> -->
-                  <!-- <td>{{ trabajador.Telefono_Movil }}</td> -->
                   <td>
                     <button class="form-button" @click="editarTrabajador(trabajador)">Editar</button>
                   </td>
@@ -66,8 +59,6 @@
                   <th>NOMBRES</th>
                   <th>APELLIDOS</th>
                   <th>DNI</th>
-                  <!-- <th>BANCO</th> -->
-                  <!-- <th>TELEFONO</th> -->
                   <th>EDITAR</th>
                   <th>ELIMINAR</th>
                 </tr>
@@ -80,8 +71,6 @@
                   <td>{{ trabajador.Nombres }}</td>
                   <td>{{ trabajador.Apellido_Paterno }} {{ trabajador.Apellido_Materno }}</td>
                   <td>{{ trabajador.Identificacion }}</td>
-                  <!-- <td>{{ trabajador.Entidad_Bancaria }}</td> -->
-             <!-- <td>{{ trabajador.Telefono_Movil }}</td> -->
                   <td>
                     <button class="form-button" @click="editarTrabajador(trabajador)">Editar</button>
                   </td>
@@ -329,8 +318,8 @@
                   <input type="text" class="form-control" id="Fondo_Reserva" placeholder="Ingrese el Fondo Reserva" v-model="trabajadorE.Fondo_Reserva">
                 </div>
               </div>
-              <div class="row">
-                <div class="form-group mesageArea">
+              <div class="column marginColum">
+                <div class="form-group">
                   <label for="Mensaje">Mensaje:</label>
                   <textarea type="text" class="form-control" id="Mensaje" placeholder="Mensaje (Opcional)" v-model="trabajadorE.Mensaje"></textarea>
                 </div>
@@ -374,7 +363,6 @@
       <div class="modal-content1 md2">
         <h2>Insertar Trabajador</h2>
         <div class="modal-body">
-          <!-- <div class="row"> -->
             <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
@@ -402,8 +390,6 @@
                   <input type="text" class="form-control" id="Nombres" placeholder="Ingrese la Nombres" v-model="trabajador.Nombres">
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="tipoOperacion">Identificacion:</label>
@@ -455,8 +441,6 @@
                   <input type="text" class="form-control" id="Nro_Cuenta_Bancaria" placeholder="Ingrese el Nro Cuenta Bancaria" v-model="trabajador.Nro_Cuenta_Bancaria">
                 </div>
               </div>
-            </div>
-            <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Codigo_Categoria_Ocupacion">Codigo Categoria Ocupacion:</label>
@@ -594,14 +578,13 @@
                   <input type="text" class="form-control" id="Fondo_Reserva" placeholder="Ingrese el Fondo Reserva" v-model="trabajador.Fondo_Reserva">
                 </div>
               </div>
-              <div class="row">
+              <div class="column marginColum">
                 <div class="form-group mesageArea">
                   <label for="Mensaje">Mensaje:</label>
                   <textarea type="text" class="form-control" id="Mensaje" placeholder="Mensaje (Opcional)" v-model="trabajador.Mensaje"></textarea>
                 </div>
               </div>
             </div>
-          <!-- </div> -->
         </div>
         <div class="modal-footer "></div>
         <div class="row btns">
@@ -1039,17 +1022,13 @@ export default {
   margin-right: 0;
 }
 
-.modal-body{
+/* .modal-body{
     height: 68vh;
     overflow-y: scroll;
-}
-
-.mesageArea{
-  column-count: 2;
-  column-gap: 20px;
-}
+} */
 
 .row{
   display: flex;
 }
+
 </style>

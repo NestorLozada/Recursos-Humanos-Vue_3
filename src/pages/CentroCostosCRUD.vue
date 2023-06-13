@@ -2,14 +2,14 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row rowSearchNew">
-        <div class="column" style="margin-right: 500px">
-          <button class="form-button" @click="insertarCosto">Nuevo</button>
+        <div class="col-6">
+          <div class="column">
+            <button class="form-button newBtn" @click="insertarCosto">Nuevo</button>
+          </div>
         </div>
-        <div class="column">
-          <div class="row search">
-            <div class="column">
-              <input v-model="search" class="form-control" placeholder="Search" />
-            </div>
+          <div class="col-6">
+          <div class="column">
+            <input v-model="search" class="form-control" placeholder="Search" />
           </div>
         </div>
       </div>
@@ -78,7 +78,7 @@
         <h2>Editar costo N°<b>{{ costoE.CodigoE }}</b></h2>
         <div class="form-group inputModal">
           <input class="form-control" type="hidden" id="Codigo" v-model="costoE.CodigoE" />
-          <input class="form-control" type="text" id="NombreCentroCostos" v-model="costoE.NombreCentroCostosE" />
+          <input class="form-control m-auto" type="text" id="NombreCentroCostos" v-model="costoE.NombreCentroCostosE" />
         </div>
         <div class="modal-footer "></div>
         <div class="row btns">
@@ -119,11 +119,11 @@
         <div>
           <div class="form-group inputModal">
             <label for="movimientoPlanilla">Código</label>
-            <input type="number" placeholder="Código Centro Costos" class="form-control" id="Codigo" v-model="costos.Codigo" />
+            <input type="number" placeholder="Código Centro Costos" class="form-control m-auto" id="Codigo" v-model="costos.Codigo" />
           </div>
           <div class="form-group inputModal">
             <label for="movimientoPlanilla">Descripción</label>
-            <input type="text" placeholder="Descripción Centro Costos" class="form-control" id="NombreCentroCostos" v-model="costos.NombreCentroCostos" />
+            <input type="text" placeholder="Descripción Centro Costos" class="form-control m-auto" id="NombreCentroCostos" v-model="costos.NombreCentroCostos" />
           </div>
         </div>
         <div class="modal-footer"></div>

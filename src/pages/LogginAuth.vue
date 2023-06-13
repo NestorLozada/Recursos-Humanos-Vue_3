@@ -79,7 +79,7 @@ export default {
   },
 };
 </script>
-
+<!-- 
 <style>
 .container {
   display: flex;
@@ -132,4 +132,4 @@ export default {
 .form-button:hover {
   background-color: #444;
 }
-</style>
+</style> -->

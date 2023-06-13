@@ -2,15 +2,15 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row rowSearchNew">
-        <div class="column" style="margin-right: 500px">
-          <button class="form-button" @click="insertarMovPlantilla">Nuevo</button>
+        <div class="col-6">
+          <div class="column">
+            <button class="form-button newBtn" @click="insertarMovPlantilla">Nuevo</button>
+          </div>
         </div>
-        <div class="column">
-          <div class="row">
+          <div class="col-6">
             <div class="column">
               <input v-model="search" class="form-control" placeholder="Search" />
             </div>
-          </div>
         </div>
       </div>
       <div class="row">
