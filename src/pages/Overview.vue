@@ -12,7 +12,7 @@
               <h4 class="card-title">{{ totalCC }}</h4>
             </div>
             <div slot="footer">
-              <i class="fa fa-refresh"></i>Updated now
+              <i class="fa fa-clock-o"></i>Realtime
             </div>
           </stats-card>
         </div>
@@ -23,11 +23,11 @@
               <i class="nc-icon nc-light-3 text-success"></i>
             </div>
             <div slot="content">
-              <p class="card-category">Revenue</p>
-              <h4 class="card-title">$1,345</h4>
+              <p class="card-category">Trabajadores</p>
+              <h4 class="card-title">{{ totalTr }}</h4>
             </div>
             <div slot="footer">
-              <i class="fa fa-calendar-o"></i>Last day
+              <i class="fa fa-clock-o"></i>Realtime
             </div>
           </stats-card>
         </div>
@@ -38,11 +38,11 @@
               <i class="nc-icon nc-vector text-danger"></i>
             </div>
             <div slot="content">
-              <p class="card-category">Errors</p>
-              <h4 class="card-title">23</h4>
+              <p class="card-category">Movimientos Planilla</p>
+              <h4 class="card-title">{{ totalMov }}</h4>
             </div>
             <div slot="footer">
-              <i class="fa fa-clock-o"></i>Last day
+              <i class="fa fa-clock-o"></i>Realtime
             </div>
           </stats-card>
         </div>
@@ -57,7 +57,7 @@
               <h4 class="card-title">+45</h4>
             </div>
             <div slot="footer">
-              <i class="fa fa-refresh"></i>Updated now
+              <i class="fa fa-clock-o"></i>Realtime
             </div>
           </stats-card>
         </div>
@@ -192,6 +192,11 @@
           moviC3: '',
         },
         totalCC: 0,
+        totalTr: 0,
+        totalMov: 0,
+        ingresos: 0,
+        egresos: 0,
+        ninguno: 0,
         editTooltip: 'Edit Task',
         deleteTooltip: 'Remove',
         pieChart: {
@@ -278,13 +283,29 @@
     },
     mounted(){
       this.getMovPlanxTipoOperacion();
+      this.getTotales();
     },
     methods:{
       async getMovPlanxTipoOperacion() {
         let url = `${process.env.apiWebsite}/api/getMovPlanxTipoOperacion/`;
         const { data } = await axios.get(url);
-        this.pieChart.data.labels = [data.ingresos, data.egresos, data.ninguno];
         this.pieChart.data.series = [data.ingresos, data.egresos, data.ninguno];
+        this.pieChart.data.labels = [data.ingresos, data.egresos, data.ninguno];
+      },
+      async getTotales() {
+        let formData = {
+          sucursal: localStorage.getItem("codigoEmisor")
+        };
+        let url = `${process.env.apiWebsite}/api/getTotales/`;
+        const { data } = await axios({
+          method: "post",
+          url: url,
+          data: formData,
+        });
+        //console.log(data)
+        this.totalCC = data.totalCC;
+        this.totalTr = data.totalTr;
+        this.totalMov = data.totalMov;
       },
     }
   }
