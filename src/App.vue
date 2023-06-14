@@ -149,7 +149,7 @@ export default {}
 
 .modal-body{
     height: auto;
-    //overflow-y: scroll;
+    overflow-y: scroll;
 }
 
 .search {

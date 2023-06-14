@@ -8,8 +8,8 @@
               <i class="nc-icon nc-chart text-warning"></i>
             </div>
             <div slot="content">
-              <p class="card-category">Capacity</p>
-              <h4 class="card-title">105GB</h4>
+              <p class="card-category">Centros Costos</p>
+              <h4 class="card-title">{{ totalCC }}</h4>
             </div>
             <div slot="footer">
               <i class="fa fa-refresh"></i>Updated now
@@ -191,6 +191,7 @@
           moviC2: '',
           moviC3: '',
         },
+        totalCC: 0,
         editTooltip: 'Edit Task',
         deleteTooltip: 'Remove',
         pieChart: {
@@ -275,6 +276,9 @@
         },
       }
     },
+    mounted(){
+      this.getMovPlanxTipoOperacion();
+    },
     methods:{
       async getMovPlanxTipoOperacion() {
         let url = `${process.env.apiWebsite}/api/getMovPlanxTipoOperacion/`;
@@ -282,10 +286,7 @@
         this.pieChart.data.labels = [data.ingresos, data.egresos, data.ninguno];
         this.pieChart.data.series = [data.ingresos, data.egresos, data.ninguno];
       },
-    },
-    mounted(){
-      this.getMovPlanxTipoOperacion();
-    },
+    }
   }
 </script>
 <style>
