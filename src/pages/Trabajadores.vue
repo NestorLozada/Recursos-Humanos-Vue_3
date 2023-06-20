@@ -309,7 +309,7 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Remuneracion_Minima">Remuneracion Minima:</label>
-                  <input type="number" class="form-control" id="Remuneracion_Minima" placeholder="Ingrese el Remuneracion Minima" v-model="trabajadorE.Remuneracion_Minima">
+                  <input type="number" class="form-control" id="Remuneracion_Minima" value="0" placeholder="Ingrese el Remuneracion Minima" v-model="trabajadorE.Remuneracion_Minima">
                 </div>
               </div>
               <div class="column marginColum">
@@ -854,7 +854,11 @@ export default {
       formData['COMP_Codigo'] = localStorage.getItem('codigoEmisor');
       const keys = Object.keys(trabajador);
       keys.forEach((key) => {
-        formData[key] = trabajador[key];
+        if (!trabajador[key]) {
+          formData[key] = 0;/////////////////////aqui
+        } else {
+          formData[key] = trabajador[key];
+        }
       });
       formData['Fecha_Ult_Actualizacion'] = this.getDate(new Date);
       //console.log(getDate(new Date));

@@ -112,14 +112,15 @@
 
     </div>
 
-    <div v-if="isMInsertarVisible" class="modal modal-style" id="insertcc" tabindex="-1" role="dialog"
+    <!-- <div v-if="isMInsertarVisible" class="modal modal-style" id="insertcc" tabindex="-1" role="dialog"
       aria-labelledby="editLabel" aria-hidden="true">>
       <div class="modal-content">
         <h2>Insertar Centro Costo</h2>
         <div>
           <div class="form-group inputModal">
             <label for="movimientoPlanilla">Código</label>
-            <input type="number" placeholder="Código Centro Costos" class="form-control m-auto" id="Codigo" v-model="costos.Codigo" />
+            <input type="number" placeholder="Código Centro Costos" class="form-control m-auto" id="Codigo" v-model="costos.Codigo" required/>
+            <span>{{ errors }}</span>
           </div>
           <div class="form-group inputModal">
             <label for="movimientoPlanilla">Descripción</label>
@@ -136,13 +137,42 @@
           </div>
         </div>
       </div>
+    </div> -->
 
+    <div v-if="isMInsertarVisible" class="modal modal-style" id="insertcc" tabindex="-1" role="dialog" aria-labelledby="editLabel" aria-hidden="true">
+    <div class="modal-content">
+      <h2>Insertar Centro Costo</h2>
+      <div>
+        <div class="form-group inputModal">
+          <label for="movimientoPlanilla">Código</label>
+          <input type="number" placeholder="Código Centro Costos" class="form-control m-auto" id="Codigo" v-model="costos.Codigo" />
+          <span class="error-message">{{ errorMessages.Codigo }}</span>
+        </div>
+        <div class="form-group inputModal">
+          <label for="movimientoPlanilla">Descripción</label>
+          <input type="text" placeholder="Descripción Centro Costos" class="form-control m-auto" id="NombreCentroCostos" v-model="costos.NombreCentroCostos" />
+          <span class="error-message">{{ errorMessages.NombreCentroCostos }}</span>
+        </div>
+      </div>
+      <div class="modal-footer"></div>
+      <div class="row btns">
+        <div class="column">
+          <button class="btnModel" @click="insetCosto">Si</button>
+        </div>
+        <div class="column">
+          <button style="margin: 0 20px;" @click="closeModal">No</button>
+        </div>
+      </div>
     </div>
+  </div>
+
+
 
   </div>
 </template>
 <script>
 import axios from "axios";
+import ValidationProvider from 'vee-validate';
 import LTable from "src/components/Table.vue";
 import Card from "src/components/Cards/Card.vue";
 
@@ -150,6 +180,7 @@ export default {
   components: {
     LTable,
     Card,
+    ValidationProvider
   },
   data() {
     return {
@@ -161,6 +192,10 @@ export default {
       costoE: {
         CodigoE: '',
         NombreCentroCostosE: ''
+      },
+      errorMessages: {
+        Codigo: '',
+        NombreCentroCostos: ''
       },
       message: "",
       ncodigo: "",
@@ -187,6 +222,22 @@ export default {
     },
   },
   methods: {
+    validateForm() {
+    this.errorMessages = {
+      Codigo: '',
+      NombreCentroCostos: ''
+    };
+    let isValid = true;
+    if (!this.costos.Codigo) {
+      this.errorMessages.Codigo = 'El campo Código es obligatorio.';
+      isValid = false;
+    }
+    if (!this.costos.NombreCentroCostos) {
+      this.errorMessages.NombreCentroCostos = 'El campo Descripción es obligatorio.';
+      isValid = false;
+    }
+    return isValid;
+  },
     async obtenerCosto() {
       this.message = "";
       let url = `${process.env.apiWebsite}/api/getCentrosCostos/`;
@@ -223,20 +274,24 @@ export default {
       this.costoE.NombreCentroCostosE = ''
     },
     async insetCosto(codigo, NombreCentroCostos) {
-      this.isMInsertarVisible = false;
-      let formData = {
-        codigocentrocostos: codigo,
-        descripcioncentrocostos: NombreCentroCostos,
-      };
-      let url = `${process.env.apiWebsite}/api/insertCentrosCostos/`;
-      const { data } = await axios({
-        method: "post",
-        url: url,
-        data: formData,
-      });
-      //console.log(data);
-      this.showAlert(data.message.Mensaje)
-      this.obtenerCosto();
+      if (!this.validateForm()){ 
+        this.showModal('Errores en el formulario')
+      }else{
+        this.isMInsertarVisible = false;
+        let formData = {
+          codigocentrocostos: codigo,
+          descripcioncentrocostos: NombreCentroCostos,
+        };
+        let url = `${process.env.apiWebsite}/api/insertCentrosCostos/`;
+        const { data } = await axios({
+          method: "post",
+          url: url,
+          data: formData,
+        });
+        //console.log(data);
+        this.showAlert(data.message.Mensaje)
+        this.obtenerCosto();
+      }
     },
     editarCosto(costo) {
       console.log('entra')

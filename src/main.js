@@ -12,11 +12,15 @@ window.$ = window.jQuery = jQuery;
 import dotenv from 'dotenv';
 dotenv.config()
 // router setup
-import routes from "./routes/routes";
+import { defineRule } from 'vee-validate';
+import { required } from '@vee-validate/rules';
+import { Validator } from 'vee-validate';
+defineRule('required', required);
+Vue.component('Validator', Validator);
 
 import "./registerServiceWorker";
 import { isLoggedIn } from './guards';
-
+import routes from "./routes/routes";
 // plugin setup
 Vue.use(VueRouter);
 Vue.use(VueSweetalert2);
