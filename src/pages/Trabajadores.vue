@@ -174,8 +174,10 @@
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Codigo_Categoria_Ocupacion">Codigo Categoria Ocupacion:</label>
-                  <input required type="text" class="form-control" id="Codigo_Categoria_Ocupacion" placeholder="Ingrese el Codigo Categoria Ocupacion" v-model="trabajadorE.Codigo_Categoria_Ocupacion">
+                  <label for="Codigo_Categoria_Ocupacion">Categoria Ocupacion::</label>
+                  <select required class="form-control" id="Codigo_Categoria_Ocupacion" v-model="trabajadorE.Codigo_Categoria_Ocupacion">
+                    <option v-for="(catOcup) in CategoriaOcupacionCombo" :value="catOcup.Descripcion" :selected="trabajadorE.Codigo_Categoria_Ocupacion === catOcup.Codigo">{{ catOcup.Codigo }}</option>
+                  </select>
                 </div>
               </div>
               <div class="column marginColum">
@@ -223,12 +225,19 @@
                   </select>
                 </div>
               </div>
-              
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="EstadoCivil">Estado Civil</label>
                   <select required class="form-control" id="EstadoCivil" v-model="trabajadorE.EstadoCivil">
                     <option v-for="(estCivi) in EstadoCivilCombo" :value="estCivi.Descripcion" :selected="trabajadorE.EstadoCivil === estCivi.Codigo">{{ estCivi.Codigo }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="TipodeComision">Tipo de Comision</label>
+                  <select required class="form-control" id="TipodeComision" v-model="trabajadorE.TipodeComision">
+                    <option v-for="(tipoComi) in TipodeComisionCombo" :value="tipoComi.Descripcion" :selected="trabajadorE.TipodeComision === tipoComi.Codigo">{{ tipoComi.Codigo }}</option>
                   </select>
                 </div>
               </div>
@@ -287,13 +296,17 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="FormaCalculo13ro">Forma Calculo 13ro:</label>
-                  <input required type="number" class="form-control" id="FormaCalculo13ro" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajadorE.FormaCalculo13ro">
+                  <select required class="form-control" id="FormaCalculo13ro" v-model="trabajadorE.FormaCalculo13ro">
+                    <option v-for="(decimo) in DecimoTerceroDecimoCuartoCombo" :value="decimo.Codigo" :selected="trabajadorE.FormaCalculo13ro === decimo.Codigo">{{ decimo.Descripcion }}</option>
+                  </select>
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="FormaCalculo14ro">Forma Calculo 14ro:</label>
-                  <input required type="number" class="form-control" id="FormaCalculo14ro" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajadorE.FormaCalculo14ro">
+                  <select required class="form-control" id="FormaCalculo14ro" v-model="trabajadorE.FormaCalculo14ro">
+                    <option v-for="(decimo) in DecimoTerceroDecimoCuartoCombo" :value="decimo.Codigo" :selected="trabajadorE.FormaCalculo14ro === decimo.Codigo">{{ decimo.Descripcion }}</option>
+                  </select>
                 </div>
               </div>
               <div class="column marginColum">
@@ -445,8 +458,10 @@
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="Codigo_Categoria_Ocupacion">Codigo Categoria Ocupacion:</label>
-                  <input required type="text" class="form-control" id="Codigo_Categoria_Ocupacion" placeholder="Ingrese el Codigo Categoria Ocupacion" v-model="trabajador.Codigo_Categoria_Ocupacion">
+                  <label for="Codigo_Categoria_Ocupacion">Categoria Ocupacion::</label>
+                  <select required class="form-control" id="Codigo_Categoria_Ocupacion" v-model="trabajador.Codigo_Categoria_Ocupacion">
+                    <option v-for="(catOcup) in CategoriaOcupacionCombo" :value="catOcup.Descripcion" :selected="trabajador.Codigo_Categoria_Ocupacion === catOcup.Codigo">{{ catOcup.Codigo }}</option>
+                  </select>
                 </div>
               </div>
               <div class="column marginColum">
@@ -494,12 +509,19 @@
                   </select>
                 </div>
               </div>
-              
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="EstadoCivil">Estado Civil</label>
                   <select required class="form-control" id="EstadoCivil" v-model="trabajador.EstadoCivil">
                     <option v-for="(estCivi) in EstadoCivilCombo" :value="estCivi.Descripcion" :selected="trabajador.EstadoCivil === estCivi.Codigo">{{ estCivi.Codigo }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="TipodeComision">Tipo de Comision</label>
+                  <select required class="form-control" id="TipodeComision" v-model="trabajador.TipodeComision">
+                    <option v-for="(tipoComi) in TipodeComisionCombo" :value="tipoComi.Descripcion" :selected="trabajador.TipodeComision === tipoComi.Codigo">{{ tipoComi.Codigo }}</option>
                   </select>
                 </div>
               </div>
@@ -552,6 +574,22 @@
                   <label for="Tipo_Cuenta">Tipo Cuenta:</label>
                   <select required class="form-control" id="Tipo_Cuenta" v-model="trabajador.Tipo_Cuenta">
                     <option v-for="(tipoCuen) in TipoCuentaCombo" :value="tipoCuen.Descripcion" :selected="trabajador.Tipo_Cuenta === tipoCuen.Codigo">{{ tipoCuen.Codigo }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="FormaCalculo13ro">Forma Calculo 13ro:</label>
+                  <select required class="form-control" id="FormaCalculo13ro" v-model="trabajador.FormaCalculo13ro">
+                    <option v-for="(decimo) in DecimoTerceroDecimoCuartoCombo" :value="decimo.Codigo" :selected="trabajador.FormaCalculo13ro === decimo.Codigo">{{ decimo.Descripcion }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="column marginColum">
+                <div class="form-group">
+                  <label for="FormaCalculo14ro">Forma Calculo 14ro:</label>
+                  <select required class="form-control" id="FormaCalculo14ro" v-model="trabajador.FormaCalculo14ro">
+                    <option v-for="(decimo) in DecimoTerceroDecimoCuartoCombo" :value="decimo.Codigo" :selected="trabajador.FormaCalculo14ro === decimo.Codigo">{{ decimo.Descripcion }}</option>
                   </select>
                 </div>
               </div>
@@ -706,6 +744,9 @@ export default {
       EstadoTrabajadorCombo: "",
       TipoCeseCombo: "",
       TipoContratoCombo: "",
+      TipodeComisionCombo: "",
+      CategoriaOcupacionCombo: "",
+      DecimoTerceroDecimoCuartoCombo: "",
       EstadoCivilCombo: "",
       EsReingresoCombo: "",
       TipoCuentaCombo: "",
@@ -730,6 +771,9 @@ export default {
     this.getTipoContrato();
     this.getTipoCese();
     this.getEstadoCivil();
+    this.getTipodeComision();
+    this.getCategoriaOcupacion();
+    this.getDecimoTerceroDecimoCuarto();
     this.getEsReingreso();
     this.getTipoCuenta();
     this.getCentrosCostos();
@@ -798,6 +842,24 @@ export default {
       const { data } = await axios.get(url);
       //console.log(data);
       this.EstadoCivilCombo = data;
+    },
+    async getTipodeComision(){
+      let url = `${process.env.apiWebsite}/api/getTipodeComision/`;
+      const { data } = await axios.get(url);
+      //console.log(data);
+      this.TipodeComisionCombo = data;
+    },
+    async getCategoriaOcupacion(){
+      let url = `${process.env.apiWebsite}/api/getCategoriaOcupacion/`;
+      const { data } = await axios.get(url);
+      //console.log(data);
+      this.CategoriaOcupacionCombo = data;
+    },
+    async getDecimoTerceroDecimoCuarto(){
+      let url = `${process.env.apiWebsite}/api/getDecimoTerceroDecimoCuarto/`;
+      const { data } = await axios.get(url);
+      //console.log(data);
+      this.DecimoTerceroDecimoCuartoCombo = data;
     },
     async getEsReingreso(){
       let url = `${process.env.apiWebsite}/api/getEsReingreso/`;
@@ -1051,11 +1113,6 @@ export default {
   width: 142vh;
   margin-right: 0;
 }
-
-/* .modal-body{
-    height: 68vh;
-    overflow-y: scroll;
-} */
 
 .row{
   display: flex;
