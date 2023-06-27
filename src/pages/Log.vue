@@ -2,38 +2,20 @@
   <div class="container">
     <form class="form" @submit.prevent="handleSubmit">
       <h2 class="form-title">Iniciar sesión</h2>
-      <p v-if="message" value>{{ message }}</p>
+      <p class="pAlert" v-if="message" value>{{ message }}</p>
       <div class="form-group">
         <label for="username" class="form-label">Nombre de usuario</label>
-        <input
-          type="number"
-          id="username"
-          class="form-input"
-          v-model="username"
-          placeholder="Ingrese su nombre de usuario"
-          required
-        />
+        <input type="number" id="username" class="form-input" v-model="username" placeholder="Ingrese su nombre de usuario" required minlength="4" maxlength="4"/>
       </div>
       <div class="form-group">
         <label for="password" class="form-label">Contraseña</label>
-        <input
-          type="password"
-          id="password"
-          class="form-input"
-          v-model="password"
-          placeholder="Ingrese su contraseña"
-          required
-        />
+        <input type="password" id="password" class="form-input" v-model="password" placeholder="Ingrese su contraseña" required />
       </div>
       <div class="form-group">
         <label for="emisor" class="form-label">Emisor</label>
         <select class="form-input" v-model="emisor" required>
           <option disabled value="">Please select one</option>
-          <option
-            v-for="(item, index) in comboEmisor"
-            :key="item.Codigo"
-            :value="item.Codigo"
-          >
+          <option v-for="(item, index) in comboEmisor" :key="item.Codigo" :value="item.Codigo">
             {{ index + 1 }}. {{ item.NombreEmisor }}
           </option>
         </select>
@@ -69,6 +51,7 @@ export default {
       date: '',
       company: '',
       currtime: this.getCurrentDateTime(),
+      validator: false,
     };
   },
   mounted() {
@@ -84,7 +67,9 @@ export default {
       return currentDateTime;
     },
     async login() {
-      this.message = "";
+      this.message = ''
+      this.validateForm()
+      if(this.validator == true ) { return; }
       let formData = {
         nombreUsuario: this.username,
         passwordUsuario: this.password,
@@ -96,7 +81,7 @@ export default {
         url: url,
         data: formData,
       });
-      console.log(data.success)
+      //console.log(data.success)
       this.getComboEmisores();
       if(data.success == 1){
         let token = data.access_token;
@@ -116,7 +101,20 @@ export default {
       }else{
         this.showAlert(data.message)
       }
-      
+    },
+
+    validateForm(){
+      if (this.username.length != 4) {
+        this.message = 'El nombre del usuario debe tener 4 dígitos'
+        this.validator = true
+        return;
+      }
+      if (this.emisor == ''){ 
+        this.message = 'Falta Código de Emisor'
+        this.validator = true
+        return;
+      }
+      this.validator = false
     },
 
     async getComboEmisores() {
@@ -130,7 +128,7 @@ export default {
     },
     showModal() {
       this.modalVisible = true;
-      console.log('se muestra')
+      //console.log('se muestra')
     },
     hideModal() {
       this.modalVisible = false;

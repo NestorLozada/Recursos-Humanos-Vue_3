@@ -9,7 +9,7 @@
         </div>
           <div class="col-6">
           <div class="column">
-            <input v-model="search" class="form-control" placeholder="Search" />
+            <input required v-model="search" class="form-control" placeholder="Search" />
           </div>
         </div>
       </div>
@@ -91,13 +91,14 @@
       <div class="modal-content1 md2">
         <h2>Editar Trabajador</h2>
         <div class="modal-body">
+          <p class="pAlert" v-if="message" value>{{ message }}</p>
           <!-- <div class="row"> -->
             <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="tipoOperacion">Tipo Trabajador:</label>
                   <input type="hidden" v-model="trabajadorE.Id_Trabajador" />
-                  <select class="form-control" id="tipoOperacion" v-model="trabajadorE.Tipo_trabajador">
+                  <select required class="form-control" id="tipoOperacion" v-model="trabajadorE.Tipo_trabajador">
                     <option v-for="(tipoTra) in TipoTrabajadorCombo" :value="tipoTra.Descripcion" :selected="tipoTra.Codigo === trabajadorE.Tipo_trabajador">{{ tipoTra.Codigo }}</option>
                   </select>
                 </div>
@@ -105,62 +106,62 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="CodigoConcepto">Apellido Paterno:</label>
-                  <input type="text" class="form-control" id="CodigoConcepto" placeholder="Ingrese el Apellido Paterno" v-model="trabajadorE.Apellido_Paterno">
+                  <input required type="text" class="form-control" id="CodigoConcepto" placeholder="Ingrese el Apellido Paterno" v-model="trabajadorE.Apellido_Paterno">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="concepto">Apellido Materno:</label>
-                  <input type="text" class="form-control" id="concepto" placeholder="Ingrese el Apellido Materno" v-model="trabajadorE.Apellido_Materno">
+                  <input required type="text" class="form-control" id="concepto" placeholder="Ingrese el Apellido Materno" v-model="trabajadorE.Apellido_Materno">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Prioridad">Nombres:</label>
-                  <input type="text" class="form-control" id="Nombres" placeholder="Ingrese la Nombres" v-model="trabajadorE.Nombres">
+                  <input required type="text" class="form-control" id="Nombres" placeholder="Ingrese la Nombres" v-model="trabajadorE.Nombres">
                 </div>
               </div>
               
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="tipoOperacion">Identificacion:</label>
-                  <input type="text" class="form-control" id="Identificacion" placeholder="Ingrese la Identificacion" v-model="trabajadorE.Identificacion">
+                  <input required type="text" class="form-control" id="Identificacion" placeholder="Ingrese la Identificacion" v-model="trabajadorE.Identificacion">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Entidad_Bancaria">Entidad Bancaria:</label>
-                  <input type="text" class="form-control" id="Entidad_Bancaria" placeholder="Ingrese la Entidad Bancaria" v-model="trabajadorE.Entidad_Bancaria">
+                  <input required type="text" class="form-control" id="Entidad_Bancaria" placeholder="Ingrese la Entidad Bancaria" v-model="trabajadorE.Entidad_Bancaria">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="CarnetIESS">Carnet IESS:</label>
-                  <input type="text" class="form-control" id="CarnetIESS" placeholder="Ingrese el Carnet IESS" v-model="trabajadorE.CarnetIESS">
+                  <input required type="text" class="form-control" id="CarnetIESS" placeholder="Ingrese el Carnet IESS" v-model="trabajadorE.CarnetIESS">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Direccion">Direccion:</label>
-                  <input type="text" class="form-control" id="Direccion" placeholder="Ingrese la Direccion" v-model="trabajadorE.Direccion">
+                  <input required type="text" class="form-control" id="Direccion" placeholder="Ingrese la Direccion" v-model="trabajadorE.Direccion">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Telefono_Fijo">Telefono Fijo:</label>
-                  <input type="text" class="form-control" id="Telefono_Fijo" placeholder="Ingrese el Telefono Fijo" v-model="trabajadorE.Telefono_Fijo">
+                  <input required type="number" class="form-control" id="Telefono_Fijo" placeholder="Ingrese el Telefono Fijo" v-model="trabajadorE.Telefono_Fijo">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Telefono_Movil">Telefono Movil:</label>
-                  <input type="text" class="form-control" id="Telefono_Movil" placeholder="Ingrese el Telefono Movil" v-model="trabajadorE.Telefono_Movil">
+                  <input required type="number" class="form-control" id="Telefono_Movil" placeholder="Ingrese el Telefono Movil" v-model="trabajadorE.Telefono_Movil">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Genero">Genero:</label>
-                  <select class="form-control" id="Genero" v-model="trabajadorE.Genero">
+                  <select required class="form-control" id="Genero" v-model="trabajadorE.Genero">
                     <option v-for="(gene) in GeneroCombo" :value="gene.Descripcion" :selected="trabajadorE.Genero === gene.Codigo">{{ gene.Codigo }}</option>
                   </select>
                 </div>
@@ -168,25 +169,25 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Nro_Cuenta_Bancaria">Nro Cuenta Bancaria:</label>
-                  <input type="text" class="form-control" id="Nro_Cuenta_Bancaria" placeholder="Ingrese el Nro Cuenta Bancaria" v-model="trabajadorE.Nro_Cuenta_Bancaria">
+                  <input required type="text" class="form-control" id="Nro_Cuenta_Bancaria" placeholder="Ingrese el Nro Cuenta Bancaria" v-model="trabajadorE.Nro_Cuenta_Bancaria">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Codigo_Categoria_Ocupacion">Codigo Categoria Ocupacion:</label>
-                  <input type="text" class="form-control" id="Codigo_Categoria_Ocupacion" placeholder="Ingrese el Codigo Categoria Ocupacion" v-model="trabajadorE.Codigo_Categoria_Ocupacion">
+                  <input required type="text" class="form-control" id="Codigo_Categoria_Ocupacion" placeholder="Ingrese el Codigo Categoria Ocupacion" v-model="trabajadorE.Codigo_Categoria_Ocupacion">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Ocupacion">Ocupacion:</label>
-                  <input type="text" class="form-control" id="Ocupacion" placeholder="Ingrese el Ocupacion" v-model="trabajadorE.Ocupacion">
+                  <input required type="text" class="form-control" id="Ocupacion" placeholder="Ingrese el Ocupacion" v-model="trabajadorE.Ocupacion">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Centro_Costos">Centro Costos:</label>
-                  <select class="form-control" id="Centro_Costos" v-model="trabajadorE.Centro_Costos">
+                  <select required class="form-control" id="Centro_Costos" v-model="trabajadorE.Centro_Costos">
                     <option v-for="(cenCos) in CentroCostosCombo" :value="cenCos.Codigo" :selected="trabajadorE.Centro_Costos === cenCos.NombreCentroCostos">{{ cenCos.Codigo }} - {{ cenCos.NombreCentroCostos }}</option>
                   </select>
                 </div>
@@ -194,13 +195,13 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Ocupacion">Nivel Salarial:</label>
-                  <input type="text" class="form-control" id="Nivel_Salarial" placeholder="Ingrese el Nivel Salarial" v-model="trabajadorE.Nivel_Salarial">
+                  <input required type="text" class="form-control" id="Nivel_Salarial" placeholder="Ingrese el Nivel Salarial" v-model="trabajadorE.Nivel_Salarial">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="EstadoTrabajador">Estado Trabajador:</label>
-                  <select class="form-control" id="EstadoTrabajador" v-model="trabajadorE.EstadoTrabajador">
+                  <select required class="form-control" id="EstadoTrabajador" v-model="trabajadorE.EstadoTrabajador">
                     <option v-for="(estTra) in EstadoTrabajadorCombo" :value="estTra.Descripcion" :selected="trabajadorE.Codigo === estTra.EstadoTrabajador">{{ estTra.Codigo }}</option>
                   </select>
                 </div>
@@ -208,7 +209,7 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Tipo_Contrato">Tipo Contrato:</label>
-                  <select class="form-control" id="Tipo_Contrato" v-model="trabajadorE.Tipo_Contrato">
+                  <select required class="form-control" id="Tipo_Contrato" v-model="trabajadorE.Tipo_Contrato">
                     <option v-for="(tipoCon) in TipoContratoCombo" :value="tipoCon.Descripcion" :selected="trabajadorE.Tipo_Contrato === tipoCon.Codigo">{{ tipoCon.Codigo }}</option>
                   </select>
                 </div>
@@ -217,6 +218,7 @@
                 <div class="form-group">
                   <label for="Tipo_Cese">Tipo Cese:</label>
                   <select class="form-control" id="Tipo_Cese" v-model="trabajadorE.Tipo_Cese">
+                    <option value="0">No Aplica</option>
                     <option v-for="(tipoCese) in TipoCeseCombo" :value="tipoCese.Descripcion" :selected="trabajadorE.Tipo_Cese === tipoCese.Codigo">{{ tipoCese.Codigo }}</option>
                   </select>
                 </div>
@@ -225,7 +227,7 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="EstadoCivil">Estado Civil</label>
-                  <select class="form-control" id="EstadoCivil" v-model="trabajadorE.EstadoCivil">
+                  <select required class="form-control" id="EstadoCivil" v-model="trabajadorE.EstadoCivil">
                     <option v-for="(estCivi) in EstadoCivilCombo" :value="estCivi.Descripcion" :selected="trabajadorE.EstadoCivil === estCivi.Codigo">{{ estCivi.Codigo }}</option>
                   </select>
                 </div>
@@ -233,43 +235,43 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="TipodeComision">Tipo de Comision:</label>
-                  <input type="text" class="form-control" id="TipodeComision" placeholder="Ingrese el Tipo de Comision" v-model="trabajadorE.TipodeComision">
+                  <input required type="text" class="form-control" id="TipodeComision" placeholder="Ingrese el Tipo de Comision" v-model="trabajadorE.TipodeComision">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="FechaNacimiento">Fecha de Nacimiento:</label>
-                  <input type="date" class="form-control" id="FechaNacimiento" placeholder="Ingrese el Fecha de Nacimiento" v-model="trabajadorE.FechaNacimiento">
+                  <input required type="date" class="form-control" id="FechaNacimiento" placeholder="Ingrese el Fecha de Nacimiento" v-model="trabajadorE.FechaNacimiento">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="FechaIngreso">Fecha de Ingreso:</label>
-                  <input type="date" class="form-control" id="FechaIngreso" placeholder="Ingrese el Fecha de Ingreso" v-model="trabajadorE.FechaIngreso">
+                  <input required type="date" class="form-control" id="FechaIngreso" placeholder="Ingrese el Fecha de Ingreso" v-model="trabajadorE.FechaIngreso">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="FechaCese">Fecha de Cese:</label>
-                  <input type="date" class="form-control" id="FechaCese" placeholder="Ingrese el Fecha de Cese" v-model="trabajadorE.FechaCese">
+                  <input required type="date" class="form-control" id="FechaCese" placeholder="Ingrese el Fecha de Cese" v-model="trabajadorE.FechaCese">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="PeriododeVacaciones">Periodo de Vacaciones:</label>
-                  <input type="number" class="form-control" id="PeriododeVacaciones" placeholder="Ingrese el Periodo de Vacaciones" v-model="trabajadorE.PeriododeVacaciones">
+                  <input required type="number" class="form-control" id="PeriododeVacaciones" placeholder="Ingrese el Periodo de Vacaciones" v-model="trabajadorE.PeriododeVacaciones">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="FechaReingreso">Fecha de Reingreso:</label>
-                  <input type="date" class="form-control" id="FechaReingreso" placeholder="Ingrese el Fecha de Reingreso" v-model="trabajadorE.FechaReingreso">
+                  <input required type="date" class="form-control" id="FechaReingreso" placeholder="Ingrese el Fecha de Reingreso" v-model="trabajadorE.FechaReingreso">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="EsReingreso">Es Reingreso:</label>
-                  <select class="form-control" id="EsReingreso" v-model="trabajadorE.EsReingreso">
+                  <select required class="form-control" id="EsReingreso" v-model="trabajadorE.EsReingreso">
                     <option v-for="(esRein) in EsReingresoCombo" :value="esRein.Descripcion" :selected="trabajadorE.EsReingreso === esRein.Codigo">{{ esRein.Codigo }}</option>
                   </select>
                 </div>
@@ -277,7 +279,7 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Tipo_Cuenta">Tipo Cuenta:</label>
-                  <select class="form-control" id="Tipo_Cuenta" v-model="trabajadorE.Tipo_Cuenta">
+                  <select required class="form-control" id="Tipo_Cuenta" v-model="trabajadorE.Tipo_Cuenta">
                     <option v-for="(tipoCuen) in TipoCuentaCombo" :value="tipoCuen.Descripcion" :selected="trabajadorE.Tipo_Cuenta === tipoCuen.Codigo">{{ tipoCuen.Codigo }}</option>
                   </select>
                 </div>
@@ -285,37 +287,37 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="FormaCalculo13ro">Forma Calculo 13ro:</label>
-                  <input type="number" class="form-control" id="FormaCalculo13ro" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajadorE.FormaCalculo13ro">
+                  <input required type="number" class="form-control" id="FormaCalculo13ro" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajadorE.FormaCalculo13ro">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="FormaCalculo14ro">Forma Calculo 14ro:</label>
-                  <input type="number" class="form-control" id="FormaCalculo14ro" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajadorE.FormaCalculo14ro">
+                  <input required type="number" class="form-control" id="FormaCalculo14ro" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajadorE.FormaCalculo14ro">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="BoniComplementaria">Bonificacion Complementaria:</label>
-                  <input type="number" class="form-control" id="BoniComplementaria" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajadorE.BoniComplementaria">
+                  <input required type="number" class="form-control" id="BoniComplementaria" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajadorE.BoniComplementaria">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="BoniEspecial">Bonificacion Especial:</label>
-                  <input type="number" class="form-control" id="BoniEspecial" placeholder="Ingrese el Bonificacion Especial" v-model="trabajadorE.BoniEspecial">
+                  <input required type="number" class="form-control" id="BoniEspecial" placeholder="Ingrese el Bonificacion Especial" v-model="trabajadorE.BoniEspecial">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Remuneracion_Minima">Remuneracion Minima:</label>
-                  <input type="number" class="form-control" id="Remuneracion_Minima" value="0" placeholder="Ingrese el Remuneracion Minima" v-model="trabajadorE.Remuneracion_Minima">
+                  <input required type="number" class="form-control" id="Remuneracion_Minima" value="0" placeholder="Ingrese el Remuneracion Minima" v-model="trabajadorE.Remuneracion_Minima">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Fondo_Reserva">Fondo Reserva:</label>
-                  <input type="text" class="form-control" id="Fondo_Reserva" placeholder="Ingrese el Fondo Reserva" v-model="trabajadorE.Fondo_Reserva">
+                  <input required type="text" class="form-control" id="Fondo_Reserva" placeholder="Ingrese el Fondo Reserva" v-model="trabajadorE.Fondo_Reserva">
                 </div>
               </div>
               <div class="column marginColum">
@@ -363,11 +365,12 @@
       <div class="modal-content1 md2">
         <h2>Insertar Trabajador</h2>
         <div class="modal-body">
+          <p class="pAlert" v-if="message" value>{{ message }}</p>
             <div class="row">
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="tipoTrabajador">Tipo Trabajador:</label>
-                  <select class="form-control" id="tipoTrabajador" v-model="trabajador.Tipo_trabajador">
+                  <select required class="form-control" id="tipoTrabajador" v-model="trabajador.Tipo_trabajador">
                     <option v-for="(tipoTra) in TipoTrabajadorCombo" :value="tipoTra.Descripcion" :selected="tipoTra.Codigo === trabajador.Tipo_trabajador">{{ tipoTra.Codigo }}</option>
                   </select>
                 </div>
@@ -375,62 +378,61 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="CodigoConcepto">Apellido Paterno:</label>
-                  <input type="text" class="form-control" id="CodigoConcepto" placeholder="Ingrese el Apellido Paterno" v-model="trabajador.Apellido_Paterno">
+                  <input required type="text" class="form-control" id="CodigoConcepto" placeholder="Ingrese el Apellido Paterno" v-model="trabajador.Apellido_Paterno">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="concepto">Apellido Materno:</label>
-                  <input type="text" class="form-control" id="concepto" placeholder="Ingrese el Apellido Materno" v-model="trabajador.Apellido_Materno">
+                  <input required type="text" class="form-control" id="concepto" placeholder="Ingrese el Apellido Materno" v-model="trabajador.Apellido_Materno">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Prioridad">Nombres:</label>
-                  <input type="text" class="form-control" id="Nombres" placeholder="Ingrese la Nombres" v-model="trabajador.Nombres">
+                  <input required type="text" class="form-control" id="Nombres" placeholder="Ingrese la Nombres" v-model="trabajador.Nombres">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
-                  <label for="tipoOperacion">Identificacion:</label>
-                  <p v-if="cedmsg">{{ cedmsg }}</p>
-                  <input type="number" class="form-control" id="Identificacion" placeholder="Ingrese la Identificacion" v-model="trabajador.Identificacion" @input="validarIdentificacion">
+                  <label for="Identificacion">Identificacion:</label>
+                  <input required type="number" class="form-control" id="Identificacion" placeholder="Ingrese la Identificacion" v-model="trabajador.Identificacion" @input="validarIdentificacion">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Entidad_Bancaria">Entidad Bancaria:</label>
-                  <input type="text" class="form-control" id="Entidad_Bancaria" placeholder="Ingrese la Entidad Bancaria" v-model="trabajador.Entidad_Bancaria">
+                  <input required type="text" class="form-control" id="Entidad_Bancaria" placeholder="Ingrese la Entidad Bancaria" v-model="trabajador.Entidad_Bancaria">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="CarnetIESS">Carnet IESS:</label>
-                  <input type="text" class="form-control" id="CarnetIESS" placeholder="Ingrese el Carnet IESS" v-model="trabajador.CarnetIESS">
+                  <input required type="text" class="form-control" id="CarnetIESS" placeholder="Ingrese el Carnet IESS" v-model="trabajador.CarnetIESS">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Direccion">Direccion:</label>
-                  <input type="text" class="form-control" id="Direccion" placeholder="Ingrese la Direccion" v-model="trabajador.Direccion">
+                  <input required type="text" class="form-control" id="Direccion" placeholder="Ingrese la Direccion" v-model="trabajador.Direccion">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Telefono_Fijo">Telefono Fijo:</label>
-                  <input type="text" class="form-control" id="Telefono_Fijo" placeholder="Ingrese el Telefono Fijo" v-model="trabajador.Telefono_Fijo">
+                  <input required type="number" class="form-control" id="Telefono_Fijo" placeholder="Ingrese el Telefono Fijo" v-model="trabajador.Telefono_Fijo">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Telefono_Movil">Telefono Movil:</label>
-                  <input type="text" class="form-control" id="Telefono_Movil" placeholder="Ingrese el Telefono Movil" v-model="trabajador.Telefono_Movil">
+                  <input required type="number" class="form-control" id="Telefono_Movil" placeholder="Ingrese el Telefono Movil" v-model="trabajador.Telefono_Movil">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Genero">Genero:</label>
-                  <select class="form-control" id="Genero" v-model="trabajador.Genero">
+                  <select required class="form-control" id="Genero" v-model="trabajador.Genero">
                     <option v-for="(gene) in GeneroCombo" :value="gene.Descripcion" :selected="trabajador.Genero === gene.Codigo">{{ gene.Codigo }}</option>
                   </select>
                 </div>
@@ -438,25 +440,25 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Nro_Cuenta_Bancaria">Nro Cuenta Bancaria:</label>
-                  <input type="text" class="form-control" id="Nro_Cuenta_Bancaria" placeholder="Ingrese el Nro Cuenta Bancaria" v-model="trabajador.Nro_Cuenta_Bancaria">
+                  <input required type="text" class="form-control" id="Nro_Cuenta_Bancaria" placeholder="Ingrese el Nro Cuenta Bancaria" v-model="trabajador.Nro_Cuenta_Bancaria">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Codigo_Categoria_Ocupacion">Codigo Categoria Ocupacion:</label>
-                  <input type="text" class="form-control" id="Codigo_Categoria_Ocupacion" placeholder="Ingrese el Codigo Categoria Ocupacion" v-model="trabajador.Codigo_Categoria_Ocupacion">
+                  <input required type="text" class="form-control" id="Codigo_Categoria_Ocupacion" placeholder="Ingrese el Codigo Categoria Ocupacion" v-model="trabajador.Codigo_Categoria_Ocupacion">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Ocupacion">Ocupacion:</label>
-                  <input type="number" class="form-control" id="Ocupacion" placeholder="Ingrese el Ocupacion" v-model="trabajador.Ocupacion">
+                  <input required type="number" class="form-control" id="Ocupacion" placeholder="Ingrese el Ocupacion" v-model="trabajador.Ocupacion">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Centro_Costos">Centro Costos:</label>
-                  <select class="form-control" id="Centro_Costos" v-model="trabajador.Centro_Costos">
+                  <select required class="form-control" id="Centro_Costos" v-model="trabajador.Centro_Costos">
                     <option v-for="(cenCos) in CentroCostosCombo" :value="cenCos.Codigo" :selected="trabajador.Centro_Costos === cenCos.NombreCentroCostos">{{ cenCos.Codigo }} - {{ cenCos.NombreCentroCostos }}</option>
                   </select>
                 </div>
@@ -464,13 +466,13 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Ocupacion">Nivel Salarial:</label>
-                  <input type="text" class="form-control" id="Nivel_Salarial" placeholder="Ingrese el Nivel Salarial" v-model="trabajador.Nivel_Salarial">
+                  <input required type="text" class="form-control" id="Nivel_Salarial" placeholder="Ingrese el Nivel Salarial" v-model="trabajador.Nivel_Salarial">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="EstadoTrabajador">Estado Trabajador:</label>
-                  <select class="form-control" id="EstadoTrabajador" v-model="trabajador.EstadoTrabajador">
+                  <select required class="form-control" id="EstadoTrabajador" v-model="trabajador.EstadoTrabajador">
                     <option v-for="(estTra) in EstadoTrabajadorCombo" :value="estTra.Descripcion" :selected="trabajador.Codigo === estTra.EstadoTrabajador">{{ estTra.Codigo }}</option>
                   </select>
                 </div>
@@ -478,7 +480,7 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Tipo_Contrato">Tipo Contrato:</label>
-                  <select class="form-control" id="Tipo_Contrato" v-model="trabajador.Tipo_Contrato">
+                  <select required class="form-control" id="Tipo_Contrato" v-model="trabajador.Tipo_Contrato">
                     <option v-for="(tipoCon) in TipoContratoCombo" :value="tipoCon.Descripcion" :selected="trabajador.Tipo_Contrato === tipoCon.Codigo">{{ tipoCon.Codigo }}</option>
                   </select>
                 </div>
@@ -487,6 +489,7 @@
                 <div class="form-group">
                   <label for="Tipo_Cese">Tipo Cese:</label>
                   <select class="form-control" id="Tipo_Cese" v-model="trabajador.Tipo_Cese">
+                    <option value="0">No Aplica</option>
                     <option v-for="(tipoCese) in TipoCeseCombo" :value="tipoCese.Descripcion" :selected="trabajador.Tipo_Cese === tipoCese.Codigo">{{ tipoCese.Codigo }}</option>
                   </select>
                 </div>
@@ -495,7 +498,7 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="EstadoCivil">Estado Civil</label>
-                  <select class="form-control" id="EstadoCivil" v-model="trabajador.EstadoCivil">
+                  <select required class="form-control" id="EstadoCivil" v-model="trabajador.EstadoCivil">
                     <option v-for="(estCivi) in EstadoCivilCombo" :value="estCivi.Descripcion" :selected="trabajador.EstadoCivil === estCivi.Codigo">{{ estCivi.Codigo }}</option>
                   </select>
                 </div>
@@ -503,43 +506,43 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="TipodeComision">Tipo de Comision:</label>
-                  <input type="text" class="form-control" id="TipodeComision" placeholder="Ingrese el Tipo de Comision" v-model="trabajador.TipodeComision">
+                  <input required type="text" class="form-control" id="TipodeComision" placeholder="Ingrese el Tipo de Comision" v-model="trabajador.TipodeComision">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="FechaNacimiento">Fecha de Nacimiento:</label>
-                  <input type="date" class="form-control" id="FechaNacimiento" placeholder="Ingrese el Fecha de Nacimiento" v-model="trabajador.FechaNacimiento">
+                  <input required type="date" class="form-control" id="FechaNacimiento" placeholder="Ingrese el Fecha de Nacimiento" v-model="trabajador.FechaNacimiento">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="FechaIngreso">Fecha de Ingreso:</label>
-                  <input type="date" class="form-control" id="FechaIngreso" placeholder="Ingrese el Fecha de Ingreso" v-model="trabajador.FechaIngreso">
+                  <input required type="date" class="form-control" id="FechaIngreso" placeholder="Ingrese el Fecha de Ingreso" v-model="trabajador.FechaIngreso">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="FechaCese">Fecha de Cese:</label>
-                  <input type="date" class="form-control" id="FechaCese" placeholder="Ingrese el Fecha de Cese" v-model="trabajador.FechaCese">
+                  <input required type="date" class="form-control" id="FechaCese" placeholder="Ingrese el Fecha de Cese" v-model="trabajador.FechaCese" value="1900-01-01">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="PeriododeVacaciones">Periodo de Vacaciones:</label>
-                  <input type="number" class="form-control" id="PeriododeVacaciones" placeholder="Ingrese el Periodo de Vacaciones" v-model="trabajador.PeriododeVacaciones">
+                  <input required type="number" class="form-control" id="PeriododeVacaciones" placeholder="Ingrese el Periodo de Vacaciones" v-model="trabajador.PeriododeVacaciones">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="FechaReingreso">Fecha de Reingreso:</label>
-                  <input type="date" class="form-control" id="FechaReingreso" placeholder="Ingrese el Fecha de Reingreso" v-model="trabajador.FechaReingreso">
+                  <input required type="date" class="form-control" id="FechaReingreso" placeholder="Ingrese el Fecha de Reingreso" v-model="trabajador.FechaReingreso">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="EsReingreso">Es Reingreso:</label>
-                  <select class="form-control" id="EsReingreso" v-model="trabajador.EsReingreso">
+                  <select required class="form-control" id="EsReingreso" v-model="trabajador.EsReingreso">
                     <option v-for="(esRein) in EsReingresoCombo" :value="esRein.Descripcion" :selected="trabajador.EsReingreso === esRein.Codigo">{{ esRein.Codigo }}</option>
                   </select>
                 </div>
@@ -547,7 +550,7 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Tipo_Cuenta">Tipo Cuenta:</label>
-                  <select class="form-control" id="Tipo_Cuenta" v-model="trabajador.Tipo_Cuenta">
+                  <select required class="form-control" id="Tipo_Cuenta" v-model="trabajador.Tipo_Cuenta">
                     <option v-for="(tipoCuen) in TipoCuentaCombo" :value="tipoCuen.Descripcion" :selected="trabajador.Tipo_Cuenta === tipoCuen.Codigo">{{ tipoCuen.Codigo }}</option>
                   </select>
                 </div>
@@ -555,13 +558,13 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="BoniComplementaria">Bonificacion Complementaria:</label>
-                  <input type="number" class="form-control" id="BoniComplementaria" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajador.BoniComplementaria">
+                  <input required type="number" class="form-control" id="BoniComplementaria" placeholder="Ingrese el Bonificacion Complementaria" v-model="trabajador.BoniComplementaria">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="BoniEspecial">Bonificacion Especial:</label>
-                  <input type="number" class="form-control" id="BoniEspecial" placeholder="Ingrese el Bonificacion Especial" v-model="trabajador.BoniEspecial">
+                  <input required type="number" class="form-control" id="BoniEspecial" placeholder="Ingrese el Bonificacion Especial" v-model="trabajador.BoniEspecial">
                 </div>
               </div>
               <input type="hidden" class="form-control" value="1" v-model="trabajador.FormaCalculo13ro">
@@ -569,13 +572,13 @@
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Remuneracion_Minima">Remuneracion Minima:</label>
-                  <input type="number" class="form-control" id="Remuneracion_Minima" placeholder="Ingrese el Remuneracion Minima" v-model="trabajador.Remuneracion_Minima">
+                  <input required type="number" class="form-control" id="Remuneracion_Minima" placeholder="Ingrese el Remuneracion Minima" v-model="trabajador.Remuneracion_Minima">
                 </div>
               </div>
               <div class="column marginColum">
                 <div class="form-group">
                   <label for="Fondo_Reserva">Fondo Reserva:</label>
-                  <input type="text" class="form-control" id="Fondo_Reserva" placeholder="Ingrese el Fondo Reserva" v-model="trabajador.Fondo_Reserva">
+                  <input required type="text" class="form-control" id="Fondo_Reserva" placeholder="Ingrese el Fondo Reserva" v-model="trabajador.Fondo_Reserva">
                 </div>
               </div>
               <div class="column marginColum">
@@ -715,7 +718,7 @@ export default {
       isMInsertarVisible: false,
       resultado: '',
       auxBool: '',
-      cedmsg: '',
+      validator: false,
     };
   },
   mounted() {
@@ -840,16 +843,36 @@ export default {
     showAlert(message) {
       this.$swal(message);
     },
+    validateForm(type){
+      let Telefono_Fijo = (type == 'I') ? this.trabajador.Telefono_Fijo : this.trabajadorE.Telefono_Fijo
+      let Telefono_Movil = (type == 'I') ? this.trabajador.Telefono_Movil : this.trabajadorE.Telefono_Movil
+      if (Telefono_Fijo.length != 9) {
+        this.message = 'El telefono fijo debe tener 9 dígitos'
+        this.validator = true
+        return;
+      }
+      if (Telefono_Movil.length != 10) {
+        this.message = 'El telefono móvil debe tener 10 dígitos'
+        this.validator = true
+        return;
+      }
+      this.validator = false
+    },
     insertarTrabajador() {
       this.isMInsertarVisible = true;
       const keys = Object.keys(this.trabajador);
       keys.forEach((key) => {
         //console.log(key)
         this.trabajador[key] = '';
-      });  
+      });
+      this.trabajador.Tipo_Cese = 0
+      this.trabajador.FechaCese = this.getDate('01-01-1900')
     },
     async insertTrabajador(trabajador) {
-      if(this.auxBool == 1) {this.showAlert(this.resultado); return;}
+      this.message = "";
+      if(this.auxBool == 1) { this.message = this.resultado; return;}
+      this.validateForm('I')
+      if(this.validator == true ) { return; }
       let formData = {};
       formData['COMP_Codigo'] = localStorage.getItem('codigoEmisor');
       const keys = Object.keys(trabajador);
@@ -883,7 +906,7 @@ export default {
       return date;
     },
     editarTrabajador(trabajador) {
-      console.log('entra');
+      //console.log('entra');
       //console.log(trabajador);
       this.isModalVisible = true;
 
@@ -892,9 +915,12 @@ export default {
       this.trabajadorE.FechaIngreso = this.getDate(trabajador.FechaIngreso)
       this.trabajadorE.FechaCese = this.getDate(trabajador.FechaCese)
       this.trabajadorE.FechaReingreso = this.getDate(trabajador.FechaReingreso)
+      this.trabajadorE.Tipo_Cese = 0
     },
     async updateTrabajador(trabajadorE) {
-      if(this.auxBool == 1) {this.showAlert(this.resultado); return;}
+      if(this.auxBool == 1) { this.message = this.resultado; return;}
+      this.validateForm('E')
+      if(this.validator == true ) { return; }
       let formData = {};
       formData['COMP_Codigo'] = localStorage.getItem('codigoEmisor');
       const keys = Object.keys(trabajadorE);
@@ -902,15 +928,15 @@ export default {
         formData[key] = trabajadorE[key];
       });
       formData['Fecha_Ult_Actualizacion'] = this.getDate(new Date);
-      console.log(formData);
-      //this.isModalVisible = false;
+      //console.log(formData);
+      this.isModalVisible = false;
       let url = `${process.env.apiWebsite}/api/updateTrabajador/`;
       const { data } = await axios({
         method: "post",
         url: url,
         data: formData,
       });
-      console.log(data);
+      //console.log(data);
       this.showAlert(data.message)
       this.getTrabajadores();
     },

@@ -38,7 +38,7 @@ export default {}
     transform: scale(1.2, 0.7);
   }
 }
-.p{
+.pAlert{
   color: red;
 }
 .nav-item {
