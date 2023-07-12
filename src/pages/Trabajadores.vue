@@ -7,7 +7,7 @@
             <button class="form-button newBtn" @click="insertarTrabajador">Nuevo</button>
           </div>
         </div>
-          <div class="col-6">
+        <div class="col-6">
           <div class="column">
             <input required v-model="search" class="form-control" placeholder="Search" />
           </div>
@@ -17,8 +17,26 @@
         <div class="col-12">
           <card class="strpied-tabled-with-hover" body-classes="table-full-width table-responsive">
             <template slot="header">
-              <h4 class="card-title">Trabajadores</h4>
-              <p class="card-category">Tabla</p>
+              <div class="row">
+                <div class="col-6">
+                  <div class="column">
+                    <h4 class="card-title">Trabajadores</h4>
+                    <p class="card-category">Tabla</p>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="column">
+                    <export-excel
+                      class   = "form-button excelBtn"
+                      :data   = "trabajadorExcel"
+                      :fields = "fields"
+                      worksheet = "Trabajadores"
+                      :name    = excelName>
+                      (.xls)
+                    </export-excel>
+                  </div>
+                </div>
+              </div>
             </template>
             <table v-if="search == ''" class="table">
               <thead>
@@ -162,7 +180,7 @@
                 <div class="form-group">
                   <label for="Genero">Genero:</label>
                   <select required class="form-control" id="Genero" v-model="trabajadorE.Genero">
-                    <option v-for="(gene) in GeneroCombo" :value="gene.Descripcion" :selected="trabajadorE.Genero === gene.Codigo">{{ gene.Codigo }}</option>
+                    <option v-for="(gene) in GeneroCombo" :value="gene.Codigo" :selected="trabajadorE.Genero === gene.Codigo">{{ gene.Descripcion }}</option>
                   </select>
                 </div>
               </div>
@@ -176,7 +194,7 @@
                 <div class="form-group">
                   <label for="Codigo_Categoria_Ocupacion">Categoria Ocupacion::</label>
                   <select required class="form-control" id="Codigo_Categoria_Ocupacion" v-model="trabajadorE.Codigo_Categoria_Ocupacion">
-                    <option v-for="(catOcup) in CategoriaOcupacionCombo" :value="catOcup.Descripcion" :selected="trabajadorE.Codigo_Categoria_Ocupacion === catOcup.Codigo">{{ catOcup.Codigo }}</option>
+                    <option v-for="(catOcup) in CategoriaOcupacionCombo" :value="catOcup.Codigo" :selected="trabajadorE.Codigo_Categoria_Ocupacion === catOcup.Codigo">{{ catOcup.Descripcion }}</option>
                   </select>
                 </div>
               </div>
@@ -204,7 +222,7 @@
                 <div class="form-group">
                   <label for="EstadoTrabajador">Estado Trabajador:</label>
                   <select required class="form-control" id="EstadoTrabajador" v-model="trabajadorE.EstadoTrabajador">
-                    <option v-for="(estTra) in EstadoTrabajadorCombo" :value="estTra.Descripcion" :selected="trabajadorE.Codigo === estTra.EstadoTrabajador">{{ estTra.Codigo }}</option>
+                    <option v-for="(estTra) in EstadoTrabajadorCombo" :value="estTra.Codigo" :selected="trabajadorE.Codigo === estTra.Codigo">{{ estTra.Descripcion }}</option>
                   </select>
                 </div>
               </div>
@@ -212,7 +230,7 @@
                 <div class="form-group">
                   <label for="Tipo_Contrato">Tipo Contrato:</label>
                   <select required class="form-control" id="Tipo_Contrato" v-model="trabajadorE.Tipo_Contrato">
-                    <option v-for="(tipoCon) in TipoContratoCombo" :value="tipoCon.Descripcion" :selected="trabajadorE.Tipo_Contrato === tipoCon.Codigo">{{ tipoCon.Codigo }}</option>
+                    <option v-for="(tipoCon) in TipoContratoCombo" :value="tipoCon.Codigo" :selected="trabajadorE.Tipo_Contrato === tipoCon.Codigo">{{ tipoCon.Descripcion }}</option>
                   </select>
                 </div>
               </div>
@@ -221,7 +239,7 @@
                   <label for="Tipo_Cese">Tipo Cese:</label>
                   <select class="form-control" id="Tipo_Cese" v-model="trabajadorE.Tipo_Cese">
                     <option value="0">No Aplica</option>
-                    <option v-for="(tipoCese) in TipoCeseCombo" :value="tipoCese.Descripcion" :selected="trabajadorE.Tipo_Cese === tipoCese.Codigo">{{ tipoCese.Codigo }}</option>
+                    <option v-for="(tipoCese) in TipoCeseCombo" :value="tipoCese.Codigo" :selected="trabajadorE.Tipo_Cese === tipoCese.Codigo">{{ tipoCese.Descripcion }}</option>
                   </select>
                 </div>
               </div>
@@ -229,7 +247,7 @@
                 <div class="form-group">
                   <label for="EstadoCivil">Estado Civil</label>
                   <select required class="form-control" id="EstadoCivil" v-model="trabajadorE.EstadoCivil">
-                    <option v-for="(estCivi) in EstadoCivilCombo" :value="estCivi.Descripcion" :selected="trabajadorE.EstadoCivil === estCivi.Codigo">{{ estCivi.Codigo }}</option>
+                    <option v-for="(estCivi) in EstadoCivilCombo" :value="estCivi.Codigo" :selected="trabajadorE.EstadoCivil === estCivi.Codigo">{{ estCivi.Descripcion }}</option>
                   </select>
                 </div>
               </div>
@@ -281,7 +299,7 @@
                 <div class="form-group">
                   <label for="EsReingreso">Es Reingreso:</label>
                   <select required class="form-control" id="EsReingreso" v-model="trabajadorE.EsReingreso">
-                    <option v-for="(esRein) in EsReingresoCombo" :value="esRein.Descripcion" :selected="trabajadorE.EsReingreso === esRein.Codigo">{{ esRein.Codigo }}</option>
+                    <option v-for="(esRein) in EsReingresoCombo" :value="esRein.Codigo" :selected="trabajadorE.EsReingreso === esRein.Codigo">{{ esRein.Descripcion }}</option>
                   </select>
                 </div>
               </div>
@@ -289,7 +307,7 @@
                 <div class="form-group">
                   <label for="Tipo_Cuenta">Tipo Cuenta:</label>
                   <select required class="form-control" id="Tipo_Cuenta" v-model="trabajadorE.Tipo_Cuenta">
-                    <option v-for="(tipoCuen) in TipoCuentaCombo" :value="tipoCuen.Descripcion" :selected="trabajadorE.Tipo_Cuenta === tipoCuen.Codigo">{{ tipoCuen.Codigo }}</option>
+                    <option v-for="(tipoCuen) in TipoCuentaCombo" :value="tipoCuen.Codigo" :selected="trabajadorE.Tipo_Cuenta === tipoCuen.Codigo">{{ tipoCuen.Descripcion }}</option>
                   </select>
                 </div>
               </div>
@@ -646,7 +664,7 @@ import axios from "axios";
 import LTable from "src/components/Table.vue";
 import Card from "src/components/Cards/Card.vue";
 import Paginate from 'vuejs-paginate';
-/* import validarIdentificacion from "src/assets/js/validarIdentificacion.js" */
+
 export default {
   components: {
     LTable,
@@ -760,11 +778,21 @@ export default {
       resultado: '',
       auxBool: '',
       validator: false,
+      trabajadorExcel: [],
+      fields: {
+        'Apellido Materno': 'Apellido_Materno',
+        'Apellido Paterno': 'Apellido_Paterno',
+        'Nombres'         : 'Nombres',
+        'Identificación'  : 'Identificacion',
+        'Telefono Movil'  : 'Telefono_Movil',
+        'Telefono Fijo'   : 'Telefono_Fijo',
+      },
+      excelName: '',
     };
   },
   mounted() {
     this.message = "";
-    this.getTrabajadores();
+    //this.getTrabajadores();
     this.getTipoTrabajador();
     this.getGenero();
     this.getEstadoTrabajador();
@@ -777,6 +805,7 @@ export default {
     this.getEsReingreso();
     this.getTipoCuenta();
     this.getCentrosCostos();
+    this.getExcelName();
   },
   created() {
     this.getTrabajadores();
@@ -804,6 +833,18 @@ export default {
     },
   },
   methods: {
+    getExcelName(){
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      let mm = today.getMonth() + 1; // Months start at 0!
+      let dd = today.getDate();
+
+      if (dd < 10) dd = '0' + dd;
+      if (mm < 10) mm = '0' + mm;
+
+      const formattedToday = dd + mm + yyyy;
+      this.excelName = 'listadoTrabajadores' + formattedToday;
+    },
     changePage(pageNumber) {
     this.currentPage = pageNumber;
   },
@@ -890,6 +931,7 @@ export default {
         url: url,
         data: formData,
       });
+      this.trabajadorExcel = data;
       this.trabajadores = data;
       ////console.log(data);
     },
@@ -1118,4 +1160,9 @@ export default {
   display: flex;
 }
 
+.excelBtn{
+  width: fit-content;
+  background-color: green;
+  float: right;
+}
 </style>

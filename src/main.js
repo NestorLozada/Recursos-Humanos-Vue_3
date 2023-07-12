@@ -21,6 +21,9 @@ Vue.use(VueRouter);
 Vue.use(VueSweetalert2);
 Vue.use(LightBootstrap);
 
+import excel from 'vue-excel-export'
+Vue.use(excel)
+
 // configure router
 const router = new VueRouter({
   routes, // short for routes: routes

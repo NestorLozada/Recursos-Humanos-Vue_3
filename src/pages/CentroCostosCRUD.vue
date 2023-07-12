@@ -157,7 +157,7 @@
       <div class="modal-footer"></div>
       <div class="row btns">
         <div class="column">
-          <button class="btnModel" @click="insetCosto">Si</button>
+          <button class="btnModel" @click="insetCosto(costos.Codigo, costos.NombreCentroCostos)">Si</button>
         </div>
         <div class="column">
           <button style="margin: 0 20px;" @click="closeModal">No</button>
@@ -172,15 +172,13 @@
 </template>
 <script>
 import axios from "axios";
-import ValidationProvider from 'vee-validate';
 import LTable from "src/components/Table.vue";
 import Card from "src/components/Cards/Card.vue";
 
 export default {
   components: {
     LTable,
-    Card,
-    ValidationProvider
+    Card
   },
   data() {
     return {
@@ -282,14 +280,15 @@ export default {
           codigocentrocostos: codigo,
           descripcioncentrocostos: NombreCentroCostos,
         };
+        console.log(formData)
         let url = `${process.env.apiWebsite}/api/insertCentrosCostos/`;
         const { data } = await axios({
           method: "post",
           url: url,
           data: formData,
         });
-        //console.log(data);
-        this.showAlert(data.message.Mensaje)
+        console.log(data);
+        this.showAlert(data)
         this.obtenerCosto();
       }
     },

@@ -115,7 +115,7 @@
                 <div class="form-group">
                   <label for="tipoOperacion">Tipo de Operacion:</label>
                   <select class="form-control" id="tipoOperacion" v-model="movimientoE.TipoOperacion">
-                    <option v-for="(tipoOp) in TipoOperacionCombo" :value="tipoOp.NombreOperacion" :selected="movimientoE.TipoOperacion === tipoOp.CodigoTipooperacion">{{ tipoOp.CodigoTipooperacion }}</option>
+                    <option v-for="(tipoOp) in TipoOperacionCombo" :value="tipoOp.CodigoTipooperacion" :selected="movimientoE.TipoOperacion === tipoOp.NombreOperacion">{{ tipoOp.NombreOperacion }}</option>
                   </select>
                 </div>
               </div>
