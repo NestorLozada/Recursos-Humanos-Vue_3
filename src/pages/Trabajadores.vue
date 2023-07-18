@@ -780,12 +780,22 @@ export default {
       validator: false,
       trabajadorExcel: [],
       fields: {
-        'Apellido Materno': 'Apellido_Materno',
-        'Apellido Paterno': 'Apellido_Paterno',
-        'Nombres'         : 'Nombres',
-        'Identificación'  : 'Identificacion',
-        'Telefono Movil'  : 'Telefono_Movil',
-        'Telefono Fijo'   : 'Telefono_Fijo',
+        'Apellido Materno'    : 'Apellido_Materno',
+        'Apellido Paterno'    : 'Apellido_Paterno',
+        'Edad'                : 'Edad',
+        'Genero'              : 'Genero',
+        'Direccion'           : 'Direccion',
+        'Nombres'             : 'Nombres',
+        'Telefono Movil'      : 'Telefono_Movil',
+        'Telefono Fijo'       : 'Telefono_Fijo',
+        'Remuneracion_Minima' : 'Remuneracion_Minima',
+        'FormaCalculo13ro'    : 'FormaCalculo13ro',
+        'FormaCalculo14ro'    : 'FormaCalculo14ro',
+        'Fondo_Reserva'       : 'Fondo_Reserva',
+        'Entidad_Bancaria'    : 'Entidad_Bancaria',
+        'Tipo_Cuenta'         : 'Tipo_Cuenta',
+        'BancoCTA_CTE'        : 'BancoCTA_CTE',
+        'FechaIngreso'        : 'FechaIngreso',
       },
       excelName: '',
     };
@@ -931,9 +941,39 @@ export default {
         url: url,
         data: formData,
       });
-      this.trabajadorExcel = data;
+      //this.trabajadorExcel = data;
+      this.getTrabajadoresExcel(data);
       this.trabajadores = data;
       ////console.log(data);
+    },
+
+    getTrabajadoresExcel(trabajadores){
+      trabajadores.forEach(item => {
+        const trabajador = {
+          Apellido_Materno    : item.Apellido_Materno,
+          Apellido_Paterno    : item.Apellido_Paterno,
+          Edad                : this.getAge(item.FechaNacimiento),
+          Genero              : this.getDescripcionByCodigo(this.GeneroCombo, item.Genero),
+          Direccion           : item.Direccion,
+          Nombres             : item.Nombres,
+          Telefono_Movil      : item.Telefono_Movil,
+          Telefono_Fijo       : item.Telefono_Fijo,
+          Remuneracion_Minima : item.Remuneracion_Minima,
+          FormaCalculo13ro    : this.getDescripcionByCodigo(this.DecimoTerceroDecimoCuartoCombo, item.FormaCalculo13ro),
+          FormaCalculo14ro    : this.getDescripcionByCodigo(this.DecimoTerceroDecimoCuartoCombo, item.FormaCalculo14ro),
+          Fondo_Reserva       : item.Fondo_Reserva,
+          Entidad_Bancaria    : item.Entidad_Bancaria,
+          Tipo_Cuenta         : this.getDescripcionByCodigo(this.TipoCuentaCombo, item.Tipo_Cuenta),
+          BancoCTA_CTE        : item.BancoCTA_CTE,
+          FechaIngreso        : this.getDate(item.FechaIngreso),
+        };
+        this.trabajadorExcel.push(trabajador);
+      });
+    },
+
+    getDescripcionByCodigo(combo, codigo) {
+      const resultado = combo.find(item => item.Codigo === codigo.toString());
+      return resultado ? resultado.Descripcion : "";
     },
     
     showModal() {
@@ -1008,6 +1048,18 @@ export default {
       const anio = fecha.getFullYear();
       const date = `${anio}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}`;
       return date;
+    },
+    getAge(fechaNacimiento){
+      const fechaNac = this.getDate(fechaNacimiento);
+      const fechaActual = new Date();
+      const fechaNacDate = new Date(fechaNac);
+      let edad = fechaActual.getFullYear() - fechaNacDate.getFullYear();
+      const mesActual = fechaActual.getMonth();
+      const mesNac = fechaNacDate.getMonth();
+      if (mesActual < mesNac || (mesActual === mesNac && fechaActual.getDate() < fechaNacDate.getDate())) {
+        edad--;
+      }
+      return edad;
     },
     editarTrabajador(trabajador) {
       //console.log('entra');
