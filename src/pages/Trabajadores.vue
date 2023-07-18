@@ -43,7 +43,7 @@
                 <tr>
                   <th><b>N°</b></th>
                   <th>ID</th>
-                  <th>TIPO TRABAJADOR</th>
+                  <th>TIPO</th>
                   <th>NOMBRES</th>
                   <th>APELLIDOS</th>
                   <th>DNI</th>
@@ -60,6 +60,9 @@
                   <td>{{ trabajador.Apellido_Paterno }} {{ trabajador.Apellido_Materno }}</td>
                   <td>{{ trabajador.Identificacion }}</td>
                   <td>
+                    <button class="form-button pdfBtn" @click="exportToPDF(trabajador)">PDF</button>
+                  </td>
+                  <td>
                     <button class="form-button" @click="editarTrabajador(trabajador)">Editar</button>
                   </td>
                   <td>
@@ -73,7 +76,7 @@
                 <tr>
                   <th><b>N°</b></th>
                   <th>ID</th>
-                  <th>TIPO TRABAJADOR</th>
+                  <th>TIPO</th>
                   <th>NOMBRES</th>
                   <th>APELLIDOS</th>
                   <th>DNI</th>
@@ -656,6 +659,25 @@
         </div>
       </div>
     </div>
+
+    <div hidden id="element-to-convert">
+      <h2>Ficha del Trabajador {{ trabajadorPDF.Id_Trabajador }}</h2>
+      <p>Nombre de la sucursal: {{ company }}</p>
+      <p>Apellidos: {{ trabajadorPDF.Apellido_Paterno }} {{ trabajadorPDF.Apellido_Materno }}</p>
+      <p>Nombre: {{ trabajadorPDF.Nombres }}</p>
+      <p>Edad: {{ trabajadorPDF.Identificacion }}</p>
+      <p>Género: {{ trabajadorPDF.Genero }}</p>
+      <p>Dirección: {{ trabajadorPDF.Direccion }}</p>
+      <p>Teléfonos: {{ trabajadorPDF.Telefono_Fijo }} - {{ trabajadorPDF.Telefono_Movil }}</p>
+      <p>Salario: {{ trabajadorPDF.Remuneracion_Minima }}</p>
+      <p>Acumula 13ro: {{ trabajadorPDF.FormaCalculo13ro }}</p>
+      <p>Acumula 14to: {{ trabajadorPDF.FormaCalculo14ro }}</p>
+      <p>Acumula Fondos reserva: {{ trabajadorPDF.Fondo_Reserva }}</p>
+      <p>Entidad Bancaria: {{ trabajadorPDF.Entidad_Bancaria }}</p>
+      <p>Tipo Cuenta: {{ trabajadorPDF.Tipo_Cuenta }}</p>
+      <p>Número de Cuenta: {{ trabajadorPDF.BancoCTA_CTE }}</p>
+      <p>Fecha de Ingreso: {{ trabajadorPDF.FechaIngreso }}</p>
+    </div>
   </div>
 </template>
 
@@ -664,17 +686,58 @@ import axios from "axios";
 import LTable from "src/components/Table.vue";
 import Card from "src/components/Cards/Card.vue";
 import Paginate from 'vuejs-paginate';
+import pdf from 'vue-pdf'
+import html2pdf from "html2pdf.js";
 
 export default {
   components: {
     LTable,
     Card,
     Paginate,
+    pdf
   },
   data() {
     return {
-      currentPage: 1,
-      itemsPerPage: 10,
+      company: localStorage.getItem("company"),
+      Element: false,
+      trabajadorPDF: {
+        Tipo_trabajador: '',
+        Apellido_Paterno: '',
+        Apellido_Materno: '',
+        Nombres: '',
+        Identificacion: '',
+        Entidad_Bancaria: '',
+        CarnetIESS: '',
+        Direccion: '',
+        Telefono_Fijo: '',
+        Telefono_Movil: '',
+        Genero: '',
+        Nro_Cuenta_Bancaria: '',
+        Codigo_Categoria_Ocupacion: '',
+        Ocupacion: '',
+        Centro_Costos: '',
+        Nivel_Salarial: '',
+        EstadoTrabajador: '',
+        Tipo_Contrato: '',
+        Tipo_Cese: '',
+        EstadoCivil: '',
+        TipodeComision: '',
+        FechaNacimiento: '',
+        FechaIngreso: '',
+        FechaCese: '',
+        PeriododeVacaciones: '',
+        FechaReingreso: '',
+        Fecha_Ult_Actualizacion: '',
+        EsReingreso: '',
+        Tipo_Cuenta: '',
+        FormaCalculo13ro: '',
+        FormaCalculo14ro: '',
+        BoniComplementaria: '',
+        BoniEspecial: '',
+        Remuneracion_Minima: '',
+        Fondo_Reserva: '',
+        Mensaje: '',
+      },
       trabajador: {
         Tipo_trabajador: '',
         Apellido_Paterno: '',
@@ -843,6 +906,15 @@ export default {
     },
   },
   methods: {
+    exportToPDF(trabajador) {
+      this.trabajadorPDF = trabajador
+      const element = document.getElementById('element-to-convert');
+      element.hidden = false;
+      html2pdf(document.getElementById("element-to-convert"), {
+				margin: 2,
+  			filename: "trabajador_" + trabajador.Id_Trabajador,
+			});
+    },
     getExcelName(){
       const today = new Date();
       const yyyy = today.getFullYear();
@@ -1216,5 +1288,9 @@ export default {
   width: fit-content;
   background-color: green;
   float: right;
+}
+
+.pdfBtn{
+  background-color: red;
 }
 </style>
