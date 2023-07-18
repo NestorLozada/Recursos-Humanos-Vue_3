@@ -1013,10 +1013,9 @@ export default {
         url: url,
         data: formData,
       });
-      //this.trabajadorExcel = data;
       this.getTrabajadoresExcel(data);
       this.trabajadores = data;
-      ////console.log(data);
+      //console.log(data);
     },
 
     getTrabajadoresExcel(trabajadores){

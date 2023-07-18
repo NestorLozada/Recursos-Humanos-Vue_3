@@ -17,8 +17,26 @@
         <div class="col-12">
           <card class="strpied-tabled-with-hover" body-classes="table-full-width table-responsive">
             <template slot="header">
-              <h4 class="card-title">Movimiento Plantilla</h4>
-              <p class="card-category">Tabla</p>
+              <div class="row">
+                <div class="col-6">
+                  <div class="column">
+                    <h4 class="card-title">Movimiento Plantilla</h4>
+                    <p class="card-category">Tabla</p>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="column">
+                    <export-excel
+                      class   = "form-button excelBtn"
+                      :data   = "movimientosExcel"
+                      :fields = "fields"
+                      worksheet = "Movimientos"
+                      :name    = excelName>
+                      (.xls)
+                    </export-excel>
+                  </div>
+                </div>
+              </div>
             </template>
             <table v-if="search == ''" class="table">
               <thead>
@@ -427,6 +445,24 @@ export default {
         Aplica_Proy_Renta: '',
         Empresa_Afecta_Iess: '',
       },
+      movimientosExcel: [],
+      fields: {
+        'Codigo Concepto': 'CodigoConcepto',
+        'Concepto': 'Concepto',
+        'Prioridad': 'Prioridad',
+        'Tipo Operacion': 'TipoOperacion',
+        'Cuenta 1': 'Cuenta1',
+        'Cuenta 2': 'Cuenta2',
+        'Cuenta 3': 'Cuenta3',
+        'Cuenta 4': 'Cuenta4',
+        'Movimiento Excepcion 1': 'MovimientoExcepcion1',
+        'Movimiento Excepcion 2': 'MovimientoExcepcion2',
+        'Movimiento Excepcion 3': 'MovimientoExcepcion3',
+        'Aplica IESS': 'Aplica_iess',
+        'Aplica Imp Renta': 'Aplica_imp_renta',
+        'Aplica Proy Renta': 'Aplica_Proy_Renta',
+        'Empresa Afecta Iess': 'Empresa_Afecta_Iess',
+      },
       movimientos: "",
       TipoOperacionCombo: "",
       movExcepcion1y2Combo: "",
@@ -439,16 +475,17 @@ export default {
       isModalVisible: false,
       isMEliminarVisible: false,
       isMInsertarVisible: false,
+      excelName: ''
     };
   },
   mounted() {
     this.message = "";
-    this.obtenerMovimientoPlantilla();
     this.getTiposOperacion();
     this.getMovExcepcion1y2();
     this.getMovExcepcion3();
     this.getTrabAfecImpuestoRenta();
     this.getTrabaAfectaIESS();
+    this.getExcelName();
   },
   created() {
     this.obtenerMovimientoPlantilla();
@@ -501,10 +538,46 @@ export default {
       this.message = "";
       let url = `${process.env.apiWebsite}/api/getMovimientoPlanilla/`;
       const { data } = await axios.get(url);
+      this.getMovimientosExcel(data)
       this.movimientos = data;
-      ////console.log(data);
+      //console.log(data);
     },
 
+    getMovimientosExcel(movimientos){
+      movimientos.forEach(item => {
+        const movimiento = {
+          CodigoConcepto : item.CodigoConcepto,
+          Concepto : item.Concepto,
+          Prioridad : item.Prioridad,
+          TipoOperacion : item.TipoOperacion,
+          Cuenta1 : item.Cuenta1,
+          Cuenta2 : item.Cuenta2,
+          Cuenta3 : item.Cuenta3,
+          Cuenta4 : item.Cuenta4,
+          MovimientoExcepcion1 : item.MovimientoExcepcion1,
+          MovimientoExcepcion2 : item.MovimientoExcepcion2,
+          MovimientoExcepcion3 : item.MovimientoExcepcion3,
+          Aplica_iess : item.Aplica_iess,
+          Aplica_imp_renta : item.Aplica_imp_renta,
+          Aplica_Proy_Renta : item.Aplica_Proy_Renta,
+          Empresa_Afecta_Iess : item.Empresa_Afecta_Iess,
+        };
+        this.movimientosExcel.push(movimiento);
+      });
+    },
+
+    getExcelName(){
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      let mm = today.getMonth() + 1;
+      let dd = today.getDate();
+
+      if (dd < 10) dd = '0' + dd;
+      if (mm < 10) mm = '0' + mm;
+
+      const formattedToday = dd + mm + yyyy;
+      this.excelName = 'listadoMovimientos' + formattedToday;
+    },
     showModal() {
       this.isModalVisible = true;
     },
