@@ -38,8 +38,8 @@
               <i class="nc-icon nc-vector text-danger"></i>
             </div>
             <div slot="content">
-              <p class="card-category">Movimientos Planilla</p>
-              <h4 class="card-title">{{ totalMov }}</h4>
+              <p class="card-category">Promedio Salario</p>
+              <h4 class="card-title">{{ promedioSueldo }}</h4>
             </div>
             <div slot="footer">
               <i class="fa fa-clock-o"></i>Realtime
@@ -53,8 +53,8 @@
               <i class="nc-icon nc-favourite-28 text-primary"></i>
             </div>
             <div slot="content">
-              <p class="card-category">Followers</p>
-              <h4 class="card-title">+45</h4>
+              <p class="card-category">Promedio Edad</p>
+              <h4 class="card-title">{{ promedioEdad }}</h4>
             </div>
             <div slot="footer">
               <i class="fa fa-clock-o"></i>Realtime
@@ -89,14 +89,13 @@
         <div class="col-md-4">
           <chart-card :chart-data="pieChart.data" chart-type="Pie">
             <template slot="header">
-              <h4 class="card-title">Movimiento x Tipo Operación</h4>
-              <p class="card-category">Ingresos y Egresos</p>
+              <h4 class="card-title">Género</h4>
+              <p class="card-category">Trabajadores</p>
             </template>
             <template slot="footer">
               <div class="legend">
-                <i class="fa fa-circle text-info"></i> Ingresos
-                <i class="fa fa-circle text-danger"></i> Egresos
-                <i class="fa fa-circle text-warning"></i> Ninguno
+                <i class="fa fa-circle text-info"></i> Mujer
+                <i class="fa fa-circle text-danger"></i> Hombre
               </div>
               <hr>
               <div class="stats">
@@ -192,6 +191,9 @@
           moviC3: '',
         },
         totalCC: 0,
+        trabajadores:'',
+        promedioSueldo:0,
+        promedioEdad:0,
         totalTr: 0,
         totalMov: 0,
         ingresos: 0,
@@ -201,8 +203,8 @@
         deleteTooltip: 'Remove',
         pieChart: {
           data: {
-            labels: ['Ingresos', 'Egresos', 'Ninguno'],
-            series: [0, 0, 0]
+            labels: ['Mujer', 'Hombre'],
+            series: [0, 0]
           }
         },
         lineChart: {
@@ -284,13 +286,14 @@
     mounted(){
       this.getMovPlanxTipoOperacion();
       this.getTotales();
+      this.getTrabajadores();
     },
     methods:{
       async getMovPlanxTipoOperacion() {
         let url = `${process.env.apiWebsite}/api/getMovPlanxTipoOperacion/`;
         const { data } = await axios.get(url);
-        this.pieChart.data.series = [data.ingresos, data.egresos, data.ninguno];
-        this.pieChart.data.labels = [data.ingresos, data.egresos, data.ninguno];
+        //this.pieChart.data.series = [data.ingresos, data.egresos, data.ninguno];
+        //this.pieChart.data.labels = [data.ingresos, data.egresos, data.ninguno];
       },
       async getTotales() {
         let formData = {
@@ -307,6 +310,86 @@
         this.totalTr = data.totalTr;
         this.totalMov = data.totalMov;
       },
+      async getTrabajadores() {
+        this.message = "";
+        let formData = {
+          sucursal: localStorage.getItem("codigoEmisor")
+        };
+        let url = `${process.env.apiWebsite}/api/getTrabajador/`;
+        const { data } = await axios({
+          method: "post",
+          url: url,
+          data: formData,
+        });
+        this.getPromedioSalario(data);
+        this.getPromedioEdad(data);
+        this.getPromedioGenero(data);
+        //console.log(data);
+      },
+
+      getPromedioSalario(trabajadores){
+        let total = trabajadores.length;
+        let promedio = '';
+        let suma = 0
+        trabajadores.forEach(item => {
+          suma += item.Remuneracion_Minima;
+        });
+
+        promedio = suma / total
+        this.promedioSueldo = promedio.toFixed(2);
+      },
+
+      getPromedioEdad(trabajadores){
+        let total = trabajadores.length;
+        let promedio = '';
+        let suma = 0
+        trabajadores.forEach(item => {
+          suma += this.getAge(item.FechaNacimiento);
+        });
+
+        promedio = suma / total
+        this.promedioEdad = promedio.toFixed(2);
+      },
+      getPromedioGenero(trabajadores){
+        let total = trabajadores.length;
+        let promedio = '';
+        let suma = 0
+        let m = ''
+        let h = ''
+        trabajadores.forEach(item => {
+          if (item.Genero == "M"){
+            m++;
+          }else{
+            h++;
+          }
+        });
+        
+        this.porcentajeM = (m / total) * 100;
+        this.porcentajeH = (h / total) * 100;
+        this.pieChart.data.series = [this.porcentajeM.toFixed(2), this.porcentajeH.toFixed(2)];
+        this.pieChart.data.labels = [this.porcentajeM.toFixed(2) + "%", this.porcentajeH.toFixed(2) + "%"];
+      },
+      getDate(oldDate){
+        const fecha = new Date(oldDate);
+        const dia = fecha.getDate();
+        const mes = fecha.getMonth() + 1; // Los meses en JavaScript comienzan desde 0
+        const anio = fecha.getFullYear();
+        const date = `${anio}-${mes < 10 ? '0' + mes : mes}-${dia < 10 ? '0' + dia : dia}`;
+        return date;
+      },
+      getAge(fechaNacimiento){
+        const fechaNac = this.getDate(fechaNacimiento);
+        const fechaActual = new Date();
+        const fechaNacDate = new Date(fechaNac);
+        let edad = fechaActual.getFullYear() - fechaNacDate.getFullYear();
+        const mesActual = fechaActual.getMonth();
+        const mesNac = fechaNacDate.getMonth();
+        if (mesActual < mesNac || (mesActual === mesNac && fechaActual.getDate() < fechaNacDate.getDate())) {
+          edad--;
+        }
+        return edad;
+      },
+
     }
   }
 </script>
