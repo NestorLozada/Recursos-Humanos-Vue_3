@@ -31,13 +31,16 @@
                       :data   = "trabajadorExcel"
                       :fields = "fields"
                       worksheet = "Trabajadores"
-                      :name    = excelName>
+                      :name    = excelName
+                      @before-export="showLoading"
+                      @after-export="hideLoading">
                       (.xls)
                     </export-excel>
                   </div>
                 </div>
               </div>
             </template>
+            <div v-if="loading" class="loading-bar red"><h3>Cargando...</h3></div>
             <table v-if="search == ''" class="table">
               <thead>
                 <tr>
@@ -698,6 +701,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       company: localStorage.getItem("company"),
       Element: false,
       trabajadorPDF: {
@@ -906,6 +910,12 @@ export default {
     },
   },
   methods: {
+    showLoading() {
+      this.loading = true; // Mostrar la barra de carga
+    },
+    hideLoading() {
+      this.loading = false; // Ocultar la barra de carga
+    },
     exportToPDF(trabajador) {
       console.log(trabajador.Tipo_Cuenta)
       console.log(this.getDescripcionByCodigo(this.TipoCuentaCombo, trabajador.Tipo_Cuenta))
