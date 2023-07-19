@@ -665,11 +665,11 @@
       <p>Nombre de la sucursal: {{ company }}</p>
       <p>Apellidos: {{ trabajadorPDF.Apellido_Paterno }} {{ trabajadorPDF.Apellido_Materno }}</p>
       <p>Nombre: {{ trabajadorPDF.Nombres }}</p>
-      <p>Edad: {{ trabajadorPDF.Identificacion }}</p>
+      <p>Edad: {{ trabajadorPDF.Edad }} años</p>
       <p>Género: {{ trabajadorPDF.Genero }}</p>
       <p>Dirección: {{ trabajadorPDF.Direccion }}</p>
       <p>Teléfonos: {{ trabajadorPDF.Telefono_Fijo }} - {{ trabajadorPDF.Telefono_Movil }}</p>
-      <p>Salario: {{ trabajadorPDF.Remuneracion_Minima }}</p>
+      <p>Salario: $ {{ trabajadorPDF.Remuneracion_Minima }}</p>
       <p>Acumula 13ro: {{ trabajadorPDF.FormaCalculo13ro }}</p>
       <p>Acumula 14to: {{ trabajadorPDF.FormaCalculo14ro }}</p>
       <p>Acumula Fondos reserva: {{ trabajadorPDF.Fondo_Reserva }}</p>
@@ -907,7 +907,14 @@ export default {
   },
   methods: {
     exportToPDF(trabajador) {
+      console.log(trabajador.Tipo_Cuenta)
+      console.log(this.getDescripcionByCodigo(this.TipoCuentaCombo, trabajador.Tipo_Cuenta))
       this.trabajadorPDF = trabajador
+      this.trabajadorPDF.Edad = this.getAge(trabajador.FechaNacimiento)
+      this.trabajadorPDF.FormaCalculo13ro = this.getDescripcionByCodigo(this.DecimoTerceroDecimoCuartoCombo, trabajador.FormaCalculo13ro)
+      this.trabajadorPDF.FormaCalculo14ro = this.getDescripcionByCodigo(this.DecimoTerceroDecimoCuartoCombo, trabajador.FormaCalculo14ro)
+      this.trabajadorPDF.Tipo_Cuenta = this.getDescripcionByCodigo(this.TipoCuentaCombo, trabajador.Tipo_Cuenta)
+      this.trabajadorPDF.Genero = this.getDescripcionByCodigo(this.GeneroCombo, trabajador.Genero)
       const element = document.getElementById('element-to-convert');
       element.hidden = false;
       html2pdf(document.getElementById("element-to-convert"), {
